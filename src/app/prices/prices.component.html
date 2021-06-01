@@ -1,0 +1,28 @@
+<ng-container *ngIf="servicesPrices.length > 0; else noServices">
+    <table class="servicesPricesTable">
+        <tr>
+            <th>Lp.</th>
+            <th>Nazwa usługi</th>
+            <th>Cena od [PLN]</th>
+            <th>Ilość</th>
+        </tr>
+        <tr *ngFor="let servicePrice of servicesPrices; let i = index">
+            <td>
+                {{i + 1}}
+            </td>
+            <td>
+                {{servicePrice.serviceName}}
+            </td>
+            <td class="spCenter">
+                {{servicePrice.price}}
+            </td>
+            <td class="spCenter">
+                {{servicePrice.count}}
+            </td>
+        </tr>
+    </table>
+</ng-container>
+
+<ng-template #noServices>
+    <p style="color:red; font-weight: bold;">Brak konfiguracji</p>
+</ng-template>

@@ -1,0 +1,17 @@
+.img-container {
+  display: block;
+  text-align: center;
+}
+
+div.row p{
+  text-align: justify;
+}
+
+div.row h2 {
+  text-align: center;
+}
+
+.marginsDiv {
+  margin-left: 1%;
+  margin-right: 1%;
+}

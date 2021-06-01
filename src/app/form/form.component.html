@@ -1,0 +1,90 @@
+<div class="col-md-8 order-md-1 centerDiv">
+  <h4 class="mb-3">Zgłoś się do nas!</h4>
+  <form class="needs-validation" novalidate>
+    <div class="mb-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">VIN</span>
+        </div>
+        <input type="text" class="form-control" id="vinNumber" placeholder="" required>
+        <div class="invalid-feedback" style="width: 100%;">
+          Numer VIN pojazdu jest wymagany.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mb-3">
+        <input type="text" class="form-control" id="make" placeholder="Marka" value="" required>
+        <div class="invalid-feedback">
+          Podanie marki pojazdu jest wymagane.
+        </div>
+      </div>
+      <div class="col mb-3">
+        <input type="text" class="form-control" id="model" placeholder="Model" value="" required>
+        <div class="invalid-feedback">
+          Podanie modelu pojazdu jest wymagane.
+        </div>
+      </div>
+      <div class="col mb-3">
+        <input type="text" class="form-control" id="year" placeholder="Rocznik" value="" required>
+        <div class="invalid-feedback">
+          Podanie rocznika pojazdu jest wymagane.
+        </div>
+      </div>
+      <div class="col mb-3">
+        <input type="text" class="form-control" id="engine" placeholder="Silnik" value="" required>
+        <div class="invalid-feedback">
+          Podanie pojemności silnika jest wymagane.
+        </div>
+      </div>
+      <div class="col mb-3">
+        <input type="text" class="form-control" id="horsepower" placeholder="Moc" value="" required>
+        <div class="invalid-feedback">
+          Podanie mocy pojazdu jest wymagane.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <input type="text" class="form-control" id="firstName" placeholder="Imię" value="" required>
+        <div class="invalid-feedback">
+          Podanie imienia jest wymagane.
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <input type="text" class="form-control" id="lastName" placeholder="Nazwisko" value="" required>
+        <div class="invalid-feedback">
+          Podanie nazwiska jest wymagane.
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <input type="email" class="form-control" id="telephone" placeholder="Telefon kontaktowy" required>
+        <div class="invalid-feedback">
+          Wprowadź proszę telefon kontaktowy.
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <input type="email" class="form-control" id="email" placeholder="E-mail (opcjonalnie)">
+        <div class="invalid-feedback">
+          Wprowadź proszę prawidłowy adres mailowy.
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="input-group">
+        <input type="text" class="form-control" id="description" placeholder="Krótki opis problemu" required>
+        <div class="invalid-feedback" style="width: 100%;">
+         Opis problemu jest wymagany.
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-dark btn-sm btn-block" type="submit">Wyślij zgłoszenie</button>
+
+</form>
