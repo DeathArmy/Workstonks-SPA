@@ -1,24 +1,20 @@
-.servicesPricesTable {
-    border: 1px solid black;
-    border-collapse: collapse;
-    margin-left: auto;
-    margin-right: auto;
-    width: auto;
-    padding: 5px;
+/* table {
+  margin: auto;
+  width: 80%;
+} */
+
+
+
+.mat-form-field {
+  font-size: 16px;
+  width: 100%;
 }
 
-.servicesPricesTable td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 7px;
+table {
+  width: 100%;
 }
 
-.servicesPricesTable th {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 7px;
-}
-
-.spCenter {
-    text-align: center;
+.servicesPricesTabContainer {
+  width: 80%;
+  margin: auto;
 }

@@ -1,18 +1,31 @@
-<div class="col-md-8 order-md-1 centerDiv">
-  <h4 class="mb-3">Sprawdź status naprawy</h4>
-  <form class="needs-validation" novalidate>
-
+<div class="col-md-5 order-md-1 centerDiv">
+  <h3 class="mb-3">Tutaj możesz sprawdzić status naprawy. W tym celu wypełnij poniższe informacje.</h3>
+  <form class="trackingForm" (ngSubmit)="Submit()">
     <div class="row">
       <div class="col mb-3">
-        <input type="text" class="form-control" id="trackingVIN" placeholder="VIN" value="" required>
-        <div class="invalid-feedback">
-          Podanie numeru VIN pojazdu jest wymagane.
-        </div>
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>VIN</mat-label>
+          <input type="text" id="vinNumber" matInput [formControl]="vinFormControl" placeholder="ZAR93900009999999">
+          <mat-error *ngIf="vinFormControl.hasError('requred')">
+            <p [innerText]="vinErrorText"></p>
+          </mat-error>
+        </mat-form-field>
       </div>
       <div class="col mb-3">
-        <input type="text" class="form-control" id="trackingProtocolNumber" placeholder="Numer protokołu odbioru" value="" required>
-        <div class="invalid-feedback">
-          Podanie numeru protokołu odbioru jest wymagane.
-        </div>
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Numer protokołu odbioru</mat-label>
+          <input type="text" id="protocolNumber" matInput [formControl]="protocolFormControl" matInput [placeholder]="protocolFormPlaceholder">
+          <mat-error *ngIf="protocolFormControl.hasError('requred')">
+            <p [innerText]="protocolErrorText"></p>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col mb-3 subButton">
+        <button mat-raised-button type="submit" color="primary">Sprawdź</button>
       </div>
     </div>
+  </form>
+</div>
+
+
+

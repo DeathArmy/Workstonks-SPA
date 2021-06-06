@@ -1,28 +1,44 @@
-<ng-container *ngIf="servicesPrices.length > 0; else noServices">
-    <table class="servicesPricesTable">
-        <tr>
-            <th>Lp.</th>
-            <th>Nazwa usługi</th>
-            <th>Cena od [PLN]</th>
-            <th>Ilość</th>
-        </tr>
-        <tr *ngFor="let servicePrice of servicesPrices; let i = index">
-            <td>
-                {{i + 1}}
-            </td>
-            <td>
-                {{servicePrice.serviceName}}
-            </td>
-            <td class="spCenter">
-                {{servicePrice.price}}
-            </td>
-            <td class="spCenter">
-                {{servicePrice.count}}
-            </td>
-        </tr>
+<div class="servicesPricesTabContainer">
+  <ng-container *ngIf="servicesPrices.length > 0; else noServices">
+    <mat-form-field>
+      <mat-label>Wyszukiwanie</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Czego szukasz?" #input>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef> Lp. </th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="serviceName">
+        <th mat-header-cell *matHeaderCellDef> Nazwa usługi </th>
+        <td mat-cell *matCellDef="let element"> {{element.serviceName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="servicePrice">
+        <th mat-header-cell *matHeaderCellDef> Cena od [PLN] </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="serviceCount">
+        <th mat-header-cell *matHeaderCellDef> Ilość </th>
+        <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">Brak wyników dla {{input.value}}</td>
+      </tr>
     </table>
-</ng-container>
+
+  </ng-container>
+</div>
+
+
 
 <ng-template #noServices>
-    <p style="color:red; font-weight: bold;">Brak konfiguracji</p>
+  <p style="color:red; font-weight: bold;">Brak konfiguracji</p>
 </ng-template>

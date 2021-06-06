@@ -1,90 +1,99 @@
-<div class="col-md-8 order-md-1 centerDiv">
-  <h4 class="mb-3">Zgłoś się do nas!</h4>
-  <form class="needs-validation" novalidate>
-    <div class="mb-3">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">VIN</span>
-        </div>
-        <input type="text" class="form-control" id="vinNumber" placeholder="" required>
-        <div class="invalid-feedback" style="width: 100%;">
-          Numer VIN pojazdu jest wymagany.
-        </div>
+<div class="col-md-9 order-md-1 centerDiv">
+  <h3>Wypełnij poniższy formularz, aby nasz pracownik mógł się z Tobą skontaktować w celu ustawienia dogodnego terminu przeprowadzenia naprawy.</h3>
+  <form class="registrationForm" (ngSubmit)="Submit()">
+
+    <div class="row">
+      <div class="col mb-1">
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>VIN</mat-label>
+          <input type="text" id="vinNumber" autocomplete="off" matInput placeholder="ZAR93900009999999">
+        </mat-form-field>
       </div>
     </div>
 
     <div class="row">
       <div class="col mb-3">
-        <input type="text" class="form-control" id="make" placeholder="Marka" value="" required>
-        <div class="invalid-feedback">
-          Podanie marki pojazdu jest wymagane.
-        </div>
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Marka</mat-label>
+          <input type="text" id="make" autocomplete="off" matInput placeholder="Alfa Romeo">
+        </mat-form-field>
       </div>
       <div class="col mb-3">
-        <input type="text" class="form-control" id="model" placeholder="Model" value="" required>
-        <div class="invalid-feedback">
-          Podanie modelu pojazdu jest wymagane.
-        </div>
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Model</mat-label>
+          <input type="text" id="model" autocomplete="off" matInput placeholder="159 SW">
+        </mat-form-field>
       </div>
       <div class="col mb-3">
-        <input type="text" class="form-control" id="year" placeholder="Rocznik" value="" required>
-        <div class="invalid-feedback">
-          Podanie rocznika pojazdu jest wymagane.
-        </div>
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Rocznik</mat-label>
+          <input type="text" id="yearProduction" autocomplete="off" matInput placeholder="2011">
+        </mat-form-field>
       </div>
       <div class="col mb-3">
-        <input type="text" class="form-control" id="engine" placeholder="Silnik" value="" required>
-        <div class="invalid-feedback">
-          Podanie pojemności silnika jest wymagane.
-        </div>
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Silnik</mat-label>
+          <input type="text" id="engineDescription" autocomplete="off" matInput placeholder="2.0 JTDm">
+        </mat-form-field>
       </div>
       <div class="col mb-3">
-        <input type="text" class="form-control" id="horsepower" placeholder="Moc" value="" required>
-        <div class="invalid-feedback">
-          Podanie mocy pojazdu jest wymagane.
-        </div>
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Moc</mat-label>
+          <input type="text" id="horsepower" autocomplete="off" matInput placeholder="170">
+          <mat-icon matSuffix>KM</mat-icon>
+        </mat-form-field>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-6 mb-3">
-        <input type="text" class="form-control" id="firstName" placeholder="Imię" value="" required>
-        <div class="invalid-feedback">
-          Podanie imienia jest wymagane.
-        </div>
+      <div class="col mb-3">
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Imię</mat-label>
+          <input type="text" id="name" autocomplete="off" matInput placeholder="Jan">
+        </mat-form-field>
       </div>
-      <div class="col-md-6 mb-3">
-        <input type="text" class="form-control" id="lastName" placeholder="Nazwisko" value="" required>
-        <div class="invalid-feedback">
-          Podanie nazwiska jest wymagane.
-        </div>
+      <div class="col mb-3">
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Nazwisko</mat-label>
+          <input type="text" id="surname" autocomplete="off" matInput placeholder="Kowalski">
+        </mat-form-field>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-6 mb-3">
-        <input type="email" class="form-control" id="telephone" placeholder="Telefon kontaktowy" required>
-        <div class="invalid-feedback">
-          Wprowadź proszę telefon kontaktowy.
-        </div>
+      <div class="col mb-3">
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Telefon kontaktowy</mat-label>
+          <span matPrefix>+48 &nbsp;</span>
+          <input type="tel" autocomplete="off" id="phoneNumber" matInput placeholder="602-700-700">
+        </mat-form-field>
       </div>
-      <div class="col-md-6 mb-3">
-        <input type="email" class="form-control" id="email" placeholder="E-mail (opcjonalnie)">
-        <div class="invalid-feedback">
-          Wprowadź proszę prawidłowy adres mailowy.
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <div class="input-group">
-        <input type="text" class="form-control" id="description" placeholder="Krótki opis problemu" required>
-        <div class="invalid-feedback" style="width: 100%;">
-         Opis problemu jest wymagany.
-        </div>
+      <div class="col mb-3">
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>E-mail</mat-label>
+          <input type="email" id="email" autocomplete="off" [formControl]="emailFormControl" matInput placeholder="jan.kowalski@przyklad.pl">
+          <mat-icon matSuffix>(Opcjonalnie)</mat-icon>
+          <mat-error *ngIf="emailFormControl.hasError('email')">
+          Wprowadź proszę prawidłowy adres e-mail
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
 
-    <button class="btn btn-dark btn-sm btn-block" type="submit">Wyślij zgłoszenie</button>
+    <div class="row">
+      <div class="col mb-3">
+        <mat-form-field class="full-width" appearance="standard">
+          <mat-label>Opis problemu</mat-label>
+          <input type="text" id="description" autocomplete="off" matInput placeholder="Auto hałasuje podczas jazdy po nierównościach">
+        </mat-form-field>
+      </div>
+    </div>
 
-</form>
+    <div class="row">
+      <div class="col mb-3 subButton">
+        <button mat-raised-button type="submit" color="primary">Wyślij</button>
+      </div>
+    </div>
+
+  </form>
+</div>

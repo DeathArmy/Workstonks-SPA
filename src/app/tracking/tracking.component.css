@@ -3,3 +3,12 @@
   position: relative;
   margin: auto;
 }
+
+.subButton {
+  margin-bottom:auto;
+  margin-top: 1%;
+}
+
+.full-width {
+  width: 100%;
+}

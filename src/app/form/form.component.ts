@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormComponent implements OnInit {
 
+  vinFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  emailFormControl = new FormControl('', [
+    Validators.email
+  ]);
+  vinErrorText = "Podanie numeru VIN jest niezbędne."
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  Submit() {
+
   }
 
 }

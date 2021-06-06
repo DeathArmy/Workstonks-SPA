@@ -8,6 +8,13 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class HomeComponent implements OnInit {
+  homeFirstLabel = "Test1";
+  homeSecondLabel = "Test2";
+  homeThirdLabel = "Test3";
+  homeFisrtDescription = "Opis1";
+  homeSecondDescription = "Opis2";
+  homeThirdDescription = "Opis3";
+
   images = [111, 24, 69].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   homeFirstName = "Mechanika";
