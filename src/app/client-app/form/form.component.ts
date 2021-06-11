@@ -1,4 +1,4 @@
-import { FormService } from './../services/form.service';
+import { FormService } from '../../services/form.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 

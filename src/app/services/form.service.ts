@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { formFields } from '../form/form.component';
+import { formFields } from '../client-app/form/form.component';
 
 @Injectable()
 export class FormService {

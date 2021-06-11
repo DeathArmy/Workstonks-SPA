@@ -13,11 +13,11 @@ import { ConfigService } from './services/config.service'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TrackingComponent } from './tracking/tracking.component';
-import { ContactComponent } from './contact/contact.component';
-import { FormComponent } from './form/form.component';
-import { HomeComponent } from './home/home.component';
-import { PricesComponent } from './prices/prices.component';
+import { TrackingComponent } from './client-app/tracking/tracking.component';
+import { ContactComponent } from './client-app/contact/contact.component';
+import { FormComponent } from './client-app/form/form.component';
+import { HomeComponent } from './client-app/home/home.component';
+import { PricesComponent } from './client-app/prices/prices.component';
 import { HttpClientModule } from '@angular/common/http'
 
 
