@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { ConfigService } from './services/config.service'
@@ -40,6 +41,7 @@ import { HttpClientModule } from '@angular/common/http'
     MatTableModule,
     MatInputModule,
     MatButtonModule,
+    MatCardModule,
     HttpClientModule
   ],
   providers: [{

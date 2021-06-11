@@ -5,7 +5,7 @@
       <div class="col mb-3">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>VIN</mat-label>
-          <input type="text" id="vinNumber" matInput [formControl]="vinFormControl" placeholder="ZAR93900009999999">
+          <input type="text" id="vinNumber" [(ngModel)]="vin" matInput [formControl]="vinFormControl" placeholder="ZAR93900009999999">
           <mat-error *ngIf="vinFormControl.hasError('requred')">
             <p [innerText]="vinErrorText"></p>
           </mat-error>
@@ -14,7 +14,7 @@
       <div class="col mb-3">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>Numer protokołu odbioru</mat-label>
-          <input type="text" id="protocolNumber" matInput [formControl]="protocolFormControl" matInput [placeholder]="protocolFormPlaceholder">
+          <input type="text" id="protocolNumber" [(ngModel)]="protocolNumber" matInput [formControl]="protocolFormControl" matInput [placeholder]="protocolFormPlaceholder">
           <mat-error *ngIf="protocolFormControl.hasError('requred')">
             <p [innerText]="protocolErrorText"></p>
           </mat-error>
@@ -25,6 +25,19 @@
       </div>
     </div>
   </form>
+</div>
+
+<div *ngIf="trackingFilled == true">
+  <mat-card class="tracking-info">
+    <mat-card-header>
+      <mat-card-title>{{protocolNumber}}</mat-card-title>
+      <mat-card-subtitle>{{vin}}</mat-card-subtitle>
+    </mat-card-header>
+    <hr>
+    <mat-card-content>
+      <p>Brak danych</p>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 

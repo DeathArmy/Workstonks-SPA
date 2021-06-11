@@ -17,12 +17,18 @@ export class TrackingComponent implements OnInit {
   vinErrorText = "Podanie numeru VIN jest niezbędne.";
   protocolErrorText = "Podanie numeru protokołu jest niezbędne.";
   protocolFormPlaceholder = "0687/06/2021";
+
+  vin = "";
+  protocolNumber = "";
+
+  trackingFilled: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   Submit(){
-
+    this.trackingFilled = true;
   }
 }

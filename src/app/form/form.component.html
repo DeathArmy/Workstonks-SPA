@@ -1,12 +1,12 @@
 <div class="col-md-9 order-md-1 centerDiv">
   <h3>Wypełnij poniższy formularz, aby nasz pracownik mógł się z Tobą skontaktować w celu ustawienia dogodnego terminu przeprowadzenia naprawy.</h3>
-  <form class="registrationForm" (ngSubmit)="Submit()">
+  <form id="registrationForm" (ngSubmit)="Submit()">
 
     <div class="row">
       <div class="col mb-1">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>VIN</mat-label>
-          <input type="text" id="vinNumber" autocomplete="off" matInput placeholder="ZAR93900009999999">
+          <input type="text" name="vinNumber" autocomplete="off" (input)="getvinNumber($event)" matInput placeholder="ZAR93900009999999">
         </mat-form-field>
       </div>
     </div>
@@ -15,31 +15,31 @@
       <div class="col mb-3">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Marka</mat-label>
-          <input type="text" id="make" autocomplete="off" matInput placeholder="Alfa Romeo">
+          <input type="text" name="make" autocomplete="off" (input)="getmake($event)" matInput placeholder="Alfa Romeo">
         </mat-form-field>
       </div>
       <div class="col mb-3">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Model</mat-label>
-          <input type="text" id="model" autocomplete="off" matInput placeholder="159 SW">
+          <input type="text" name="model" autocomplete="off" (input)="getmodel($event)" matInput placeholder="159 SW">
         </mat-form-field>
       </div>
-      <div class="col mb-3">
+      <div class="col mb-2">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Rocznik</mat-label>
-          <input type="text" id="yearProduction" autocomplete="off" matInput placeholder="2011">
+          <input type="text" name="yearProduction" autocomplete="off" (input)="getyearProduction($event)" matInput placeholder="2011">
         </mat-form-field>
       </div>
-      <div class="col mb-3">
+      <div class="col mb-2">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Silnik</mat-label>
-          <input type="text" id="engineDescription" autocomplete="off" matInput placeholder="2.0 JTDm">
+          <input type="text" name="engineDescription" autocomplete="off" (input)="getengineDescription($event)" matInput placeholder="2.0 JTDm">
         </mat-form-field>
       </div>
-      <div class="col mb-3">
+      <div class="col mb-2">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Moc</mat-label>
-          <input type="text" id="horsepower" autocomplete="off" matInput placeholder="170">
+          <input type="text" name="horsepower" autocomplete="off" (input)="gethorsepower($event)" matInput placeholder="170">
           <mat-icon matSuffix>KM</mat-icon>
         </mat-form-field>
       </div>
@@ -49,13 +49,13 @@
       <div class="col mb-3">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Imię</mat-label>
-          <input type="text" id="name" autocomplete="off" matInput placeholder="Jan">
+          <input type="text" name="name" autocomplete="off" (input)="getname($event)" matInput placeholder="Jan">
         </mat-form-field>
       </div>
       <div class="col mb-3">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Nazwisko</mat-label>
-          <input type="text" id="surname" autocomplete="off" matInput placeholder="Kowalski">
+          <input type="text" name="surname" autocomplete="off" (input)="getsurname($event)" matInput placeholder="Kowalski">
         </mat-form-field>
       </div>
     </div>
@@ -65,13 +65,13 @@
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Telefon kontaktowy</mat-label>
           <span matPrefix>+48 &nbsp;</span>
-          <input type="tel" autocomplete="off" id="phoneNumber" matInput placeholder="602-700-700">
+          <input type="tel" autocomplete="off" name="phoneNumber" (input)="getphoneNumber($event)" matInput placeholder="602-700-700">
         </mat-form-field>
       </div>
-      <div class="col mb-3">
+      <div class="col mb-6">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>E-mail</mat-label>
-          <input type="email" id="email" autocomplete="off" [formControl]="emailFormControl" matInput placeholder="jan.kowalski@przyklad.pl">
+          <input type="email" name="email" autocomplete="off" [formControl]="emailFormControl" (input)="getemail($event)" matInput placeholder="jan.kowalski@przyklad.pl">
           <mat-icon matSuffix>(Opcjonalnie)</mat-icon>
           <mat-error *ngIf="emailFormControl.hasError('email')">
           Wprowadź proszę prawidłowy adres e-mail
@@ -81,10 +81,10 @@
     </div>
 
     <div class="row">
-      <div class="col mb-3">
+      <div class="col mb-6">
         <mat-form-field class="full-width" appearance="standard">
           <mat-label>Opis problemu</mat-label>
-          <input type="text" id="description" autocomplete="off" matInput placeholder="Auto hałasuje podczas jazdy po nierównościach">
+          <input type="text" name="description" autocomplete="off" (input)="getdescription($event)" matInput placeholder="Auto hałasuje podczas jazdy po nierównościach">
         </mat-form-field>
       </div>
     </div>

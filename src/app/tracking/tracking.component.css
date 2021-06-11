@@ -12,3 +12,9 @@
 .full-width {
   width: 100%;
 }
+
+.tracking-info {
+  margin: auto;
+  max-width: 600px;
+  background-color: #CFCFCF;
+}

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { servicePrice } from './../prices/prices.component'
+import { configResponse } from '../Helpers/configResponse';
 
 
 @Injectable()
@@ -13,11 +13,10 @@ export class ConfigService {
   {
     return this.http.get<configResponse>(this.urlString + 'config?componentName=' + componentName);
   }
-  //GET / POST / PUT:
+  //PUT:
   //home
   //prices
   //contact
-
 
   postConfig(config: any, name: string) : Observable<configResponse>
   {
@@ -36,11 +35,4 @@ export class ConfigService {
   //POST:
   //form
 
-}
-
-export class configResponse {
-  id?: number;
-  componentName?: string;
-  data?: string;
-  isActive?: boolean;
 }

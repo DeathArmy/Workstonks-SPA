@@ -11,7 +11,7 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 export class HomeComponent implements OnInit {
   hc: homeConfiguration = new homeConfiguration;
 
-  images = [111, 24, 69].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  images = [1, 2, 3].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   constructor(private config: NgbCarouselConfig, private configS: ConfigService) {
     config.interval = 10000;
@@ -36,19 +36,19 @@ export class HomeComponent implements OnInit {
 }
 
 export class homeConfiguration {
-  homeFirstLabel = "Label1";
-  homeSecondLabel = "Label2";
-  homeThirdLabel = "Label3";
-  homeFisrtDescription = "Description1";
-  homeSecondDescription = "Description2";
-  homeThirdDescription = "Description3";
-  homeFirstName = "Name1";
-  homeFirstText = "<b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
-  homeFirstImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
-  homeSecondName = "Name2";
-  homeSecondText = "<b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
-  homeSecondImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
-  homeThirdName = "Name3";
-  homeThirdText = "<b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
-  homeThirdImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
+  homeFirstLabel?: string;
+  homeSecondLabel?: string;
+  homeThirdLabel?: string;
+  homeFisrtDescription?: string;
+  homeSecondDescription?: string;
+  homeThirdDescription?: string;
+  homeFirstName?: string;
+  homeFirstText?: string;
+  homeFirstImg?: string;
+  homeSecondName?: string;
+  homeSecondText?: string;
+  homeSecondImg?: string;
+  homeThirdName?: string;
+  homeThirdText?: string;
+  homeThirdImg?: string;
 }
