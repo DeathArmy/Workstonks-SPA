@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { ConfigService } from './services/config.service'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { ContactComponent } from './contact/contact.component';
 import { FormComponent } from './form/form.component';
 import { HomeComponent } from './home/home.component';
 import { PricesComponent } from './prices/prices.component';
+import { HttpClientModule } from '@angular/common/http'
 
 
 @NgModule({
@@ -37,10 +39,13 @@ import { PricesComponent } from './prices/prices.component';
     ReactiveFormsModule,
     MatTableModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ],
-  providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
+  providers: [{
+    provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }
+   },
+   ConfigService
   ],
   bootstrap: [AppComponent]
 })

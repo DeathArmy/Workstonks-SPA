@@ -6,24 +6,24 @@
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img [src]="images[0]" class="d-block w-100" [alt]="homeFirstLabel">
+      <img [src]="images[0]" class="d-block w-100" [alt]="hc.homeFirstLabel">
       <div class="carousel-caption d-none d-md-block">
-        <h5 [innerText]="homeFirstLabel"></h5>
-        <p [innerText]="homeFisrtDescription"></p>
+        <h5 [innerText]="hc.homeFirstLabel"></h5>
+        <p [innerText]="hc.homeFisrtDescription"></p>
       </div>
     </div>
     <div class="carousel-item">
-      <img [src]="images[1]" class="d-block w-100" [alt]="homeSecondLabel">
+      <img [src]="images[1]" class="d-block w-100" [alt]="hc.homeSecondLabel">
       <div class="carousel-caption d-none d-md-block">
-        <h5 [innerText]="homeSecondLabel"></h5>
-        <p [innerText]="homeSecondDescription"></p>
+        <h5 [innerText]="hc.homeSecondLabel"></h5>
+        <p [innerText]="hc.homeSecondDescription"></p>
       </div>
     </div>
     <div class="carousel-item">
-      <img [src]="images[2]" class="d-block w-100" [alt]="homeThirdLabel">
+      <img [src]="images[2]" class="d-block w-100" [alt]="hc.homeThirdLabel">
       <div class="carousel-caption d-none d-md-block">
-        <h5 [innerText]="homeThirdLabel"></h5>
-        <p [innerText]="homeThirdDescription"></p>
+        <h5 [innerText]="hc.homeThirdLabel"></h5>
+        <p [innerText]="hc.homeThirdDescription"></p>
       </div>
     </div>
   </div>
@@ -41,23 +41,23 @@
 <div class="row marginsDiv">
   <div class="col-lg-4">
     <div class="img-container">
-      <img class="rounded-circle" [src]="homeFirstImg" [alt]="homeFirstName" width="140" height="140">
+      <img class="rounded-circle" [src]="hc.homeFirstImg" [alt]="hc.homeFirstName" width="140" height="140">
     </div>
-    <h2>{{homeFirstName}}</h2>
-    <p [innerHTML]="homeFirstText"></p>
+    <h2>{{hc.homeFirstName}}</h2>
+    <p [innerHTML]="hc.homeFirstText"></p>
   </div>
   <div class="col-lg-4">
     <div class="img-container">
-      <img class="rounded-circle" [src]="homeSecondImg" [alt]="homeSecondName" width="140" height="140">
+      <img class="rounded-circle" [src]="hc.homeSecondImg" [alt]="hc.homeSecondName" width="140" height="140">
     </div>
-    <h2>{{homeSecondName}}</h2>
-    <p [innerHTML]="homeSecondText"></p>
+    <h2>{{hc.homeSecondName}}</h2>
+    <p [innerHTML]="hc.homeSecondText"></p>
   </div>
   <div class="col-lg-4">
     <div class="img-container">
-      <img class="rounded-circle" [src]="homeThirdImg" [alt]="homeThirdName" width="140" height="140">
+      <img class="rounded-circle" [src]="hc.homeThirdImg" [alt]="hc.homeThirdName" width="140" height="140">
     </div>
-    <h2>{{homeThirdName}}</h2>
-    <p [innerHTML]="homeThirdText"></p>
+    <h2>{{hc.homeThirdName}}</h2>
+    <p [innerHTML]="hc.homeThirdText"></p>
   </div>
 </div>
