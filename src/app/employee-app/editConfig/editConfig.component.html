@@ -1,0 +1,241 @@
+<mat-card class="homeConfig">
+  <mat-card-header>
+    <mat-card-title>
+      Strona główna
+    </mat-card-title>
+  </mat-card-header>
+  <hr>
+  <mat-card-content>
+    <form autocomplete="off">
+      <h3><b>Karuzela</b></h3>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Pierwszy tytuł</mat-label>
+              <input type="text" name="homeFirstLabel" [(ngModel)]="hc.homeFirstLabel" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Pierwszy opis</mat-label>
+              <input type="text" name="homeFisrtDescription" [(ngModel)]="hc.homeFisrtDescription" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Drugi tytuł</mat-label>
+              <input type="text" name="homeSecondLabel" [(ngModel)]="hc.homeSecondLabel" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Drugi opis</mat-label>
+              <input type="text" name="homeSecondDescription" [(ngModel)]="hc.homeSecondDescription" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Trzeci tytuł</mat-label>
+              <input type="text" name="homeThirdLabel" [(ngModel)]="hc.homeThirdLabel" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Trzeci opis</mat-label>
+              <input type="text" name="homeThirdDescription" [(ngModel)]="hc.homeThirdDescription" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      <div class="row">
+        <h3><b>Treść</b></h3>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Pierwszy tytuł</mat-label>
+            <input type="text" name="homeFirstName" [(ngModel)]="hc.homeFirstName" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Pierwszy opis (dozwolone znaczniki HTML)</mat-label>
+            <input type="text" name="homeFirstText" [(ngModel)]="hc.homeFirstText" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Drugi tytuł</mat-label>
+            <input type="text" name="homeSecondName" [(ngModel)]="hc.homeSecondName" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Drugi opis (dozwolone znaczniki HTML)</mat-label>
+            <input type="text" name="homeSecondText" [(ngModel)]="hc.homeSecondText" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Trzeci tytuł</mat-label>
+            <input type="text" name="homeThirdName" [(ngModel)]="hc.homeThirdName" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Trzeci opis (dozwolone znaczniki HTML)</mat-label>
+            <input type="text" name="homeThirdText" [(ngModel)]="hc.homeThirdText" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-label>Pierwsze zdjęcie</mat-label> <br/>
+          <input type="file" name="homeFirstImg" accept=".jpg, .jpeg, .png" (change)="firstImage($event)">
+          <img src="{{hc.homeFirstImg}}" height="75" width="75">
+        </div>
+        <div class="col">
+          <mat-label>Drugie zdjęcie</mat-label> <br/>
+          <input type="file" name="homeSecondImg" accept=".jpg, .jpeg, .png" (change)="secondImage($event)">
+          <img src="{{hc.homeSecondImg}}" height="75" width="75">
+        </div>
+        <div class="col">
+          <mat-label>Trzecie zdjęcie</mat-label> <br/>
+          <input type="file" name="homeThirdImg" accept=".jpg, .jpeg, .png" (change)="thirdImage($event)">
+          <img src="{{hc.homeThirdImg}}" height="75" width="75">
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <button mat-raised-button type="submit" color="primary" (click)="saveHomeConfig()">Zapisz zmiany</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<br/><br/>
+
+<mat-card class="servicePriceConfig">
+  <mat-card-header>
+    <mat-card-title>
+      Cennik
+    </mat-card-title>
+  </mat-card-header>
+  <hr>
+  <mat-card-content>
+    <form autocomplete="off">
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Nazwa usługi</mat-label>
+            <input type="text" name="homeSecondText" [(ngModel)]="sp.serviceName" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Cena</mat-label>
+            <input type="text" name="homeThirdName" [(ngModel)]="sp.price" matInput>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Ilość</mat-label>
+            <input type="text" name="homeThirdText" [(ngModel)]="sp.count" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <button mat-raised-button type="submit" color="primary" (click)="addServicePrice()">Dodaj usługę</button>
+      </div>
+    </form>
+    <br/>
+    <ng-container *ngIf="servicesPrices.length > 0; else noServices">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef> Lp. </th>
+          <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)"
+                          [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceName">
+          <th mat-header-cell *matHeaderCellDef> Nazwa usługi </th>
+          <td mat-cell *matCellDef="let element"> {{element.serviceName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="servicePrice">
+          <th mat-header-cell *matHeaderCellDef> Cena od [PLN] </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serviceCount">
+          <th mat-header-cell *matHeaderCellDef> Ilość </th>
+          <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
+
+      </table>
+    </ng-container>
+    <ng-template #noServices>
+      <p style="color:red; font-weight: bold;">Brak konfiguracji</p>
+    </ng-template>
+
+    <br/>
+
+    <div class="row">
+      <div class="col buttonCenter">
+        <button mat-raised-button type="submit" color="primary" (click)="deleteSelected()">Usuń zaznaczone</button>
+      </div>
+      <div class="col buttonCenter">
+        <button mat-raised-button type="submit" color="primary" (click)="saveServicePriceConfig()">Zapisz zmiany</button>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+<br/><br/>
+
+<mat-card class="contactConfig">
+  <mat-card-header>
+    <mat-card-title>
+      Kontakt
+    </mat-card-title>
+  </mat-card-header>
+  <hr>
+  <mat-card-content>
+    <form autocomplete="off">
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>Opis (dozwolone znaczniki HTML)</mat-label>
+            <textarea type="text" name="homeFirstName" [(ngModel)]="cc.contactDescription" matInput></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width" appearance="standard">
+            <mat-label>URL do mapy</mat-label>
+            <input type="text" name="homeFirstText" [(ngModel)]="cc.loadedSrcForMap" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <button mat-raised-button type="submit" color="primary" (click)="saveContactConfig()">Zapisz zmiany</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

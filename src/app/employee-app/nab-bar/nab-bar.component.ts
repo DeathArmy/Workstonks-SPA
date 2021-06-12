@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nab-bar.component.css']
 })
 export class NabBarComponent implements OnInit {
-
+  title = "workstonks"
   constructor() { }
 
   ngOnInit() {
