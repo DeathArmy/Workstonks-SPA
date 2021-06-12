@@ -1,3 +1,4 @@
+import { LoginService } from './../services/login.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EmployeeAppComponent implements OnInit {
 
-  constructor(private router: Router) {
-    router.navigate(['/login']);
+  constructor(private router: Router, private ls: LoginService) {
+    if (sessionStorage.getItem('token')) router.navigate(['employeeApp/home']);
+    else router.navigate(['employeeApp/login']);
    }
 
   ngOnInit(): void {

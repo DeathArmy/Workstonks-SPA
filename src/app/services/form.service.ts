@@ -11,7 +11,7 @@ export class FormService {
   postForm(form: any) : Observable<formFields>
   {
     let tempUrl = this.urlString + 'serviceRequest';
-    console.log(JSON.stringify(form));
+    //console.log(JSON.stringify(form));
     return this.http.post<formFields>(tempUrl, form);
   }
 }
