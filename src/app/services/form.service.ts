@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { formFields } from '../form/form.component';
+import { formFields } from '../client-app/form/form.component';
 
 @Injectable()
 export class FormService {
@@ -11,7 +11,7 @@ export class FormService {
   postForm(form: any) : Observable<formFields>
   {
     let tempUrl = this.urlString + 'serviceRequest';
-    console.log(JSON.stringify(form));
+    //console.log(JSON.stringify(form));
     return this.http.post<formFields>(tempUrl, form);
   }
 }

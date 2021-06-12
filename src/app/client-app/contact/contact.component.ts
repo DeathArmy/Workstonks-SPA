@@ -1,4 +1,4 @@
-import { ConfigService } from './../services/config.service';
+import { ConfigService } from '../../services/config.service';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 

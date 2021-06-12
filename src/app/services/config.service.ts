@@ -27,12 +27,12 @@ export class ConfigService {
     return this.http.post<configResponse>(tempUrl, conf);
   }
 
-
-
-  //GET:
-  //tracking
-
-  //POST:
-  //form
-
+  putConfig(config: any, name: string) : Observable<configResponse>
+  {
+    let conf: configResponse = new configResponse();
+    conf.componentName = name;
+    conf.data = JSON.stringify(config);
+    let tempUrl = this.urlString + 'config';
+    return this.http.put<configResponse>(tempUrl, conf);
+  }
 }
