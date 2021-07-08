@@ -1,6 +1,8 @@
 import { FormService } from '../../services/form.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { formFieldsModel } from '../../Models/formFields';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form',
@@ -10,85 +12,46 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class FormComponent implements OnInit {
 
-  vinFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  emailFormControl = new FormControl('', [
-    Validators.email
-  ]);
-  vinErrorText = "Podanie numeru VIN jest niezbędne."
+  form = new formFieldsModel;
+  email = new FormControl('', [Validators.email]);
+  emailErrorMsg = "Wprowadź prawidłowy adres e-mail";
+  vinControl = new FormControl('', [Validators.required, Validators.minLength(17), Validators.maxLength(17)]);
+  makeControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  modelControl = new FormControl('', [Validators.required]);
+  yearControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  engineControl = new FormControl('', [Validators.required]);
+  powerControl = new FormControl('', [Validators.required]);
+  nameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  surnameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  phoneControl = new FormControl('', [Validators.required]);
+  descriptionControl = new FormControl('', [Validators.required]);
+  fieldFillErrorMsg = "Pole wymagane";
 
-  form = new formFields;
-
-  constructor(private fs: FormService) {
-   }
+  constructor(private fs: FormService, private snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
   }
 
-  getvinNumber(event: any){
-    this.form.vin = event.target.value;
-  }
-  getmake(event: any){
-    this.form.make = event.target.value;
-  }
-  getmodel(event: any){
-    this.form.model = event.target.value;
-  }
-  getyearProduction(event: any){
-    this.form.productionYear = event.target.value;
-  }
-  getengineDescription(event: any){
-    this.form.engineDescription = event.target.value;
-  }
-  gethorsepower(event: any){
-    this.form.power = event.target.value;
-  }
-  getdescription(event: any){
-    this.form.description = event.target.value;
-  }
-  getname(event: any){
-    this.form.customer.name = event.target.value;
-  }
-  getsurname(event: any){
-    this.form.customer.surname = event.target.value;
-  }
-  getphoneNumber(event: any){
-    this.form.customer.phoneNumber = event.target.value;
-  }
-  getemail(event: any){
-    this.form.customer.email = event.target.value;
-  }
-
   Submit() {
-    this.fs.postForm(this.form).subscribe(post => {
-      console.log(post);
-    });
-    //let resetForm: HTMLFormElement = <HTMLFormElement>document.getElementsByClassName('registrationForm');
-
-    var resetForm:HTMLFormElement;
-    resetForm= <HTMLFormElement>document.getElementById('registrationForm');
-    resetForm.reset();
+    if (this.email.invalid || this.vinControl.invalid || this.makeControl.invalid || 
+        this.modelControl.invalid || this.yearControl.invalid || this.engineControl.invalid ||
+        this.powerControl.invalid || this.nameControl.invalid || this.surnameControl.invalid ||
+        this.phoneControl.invalid || this.descriptionControl.invalid)
+      {
+        this.snackBar.open("Formularz zawiera błędy", "OK", {horizontalPosition: "center", verticalPosition: "bottom"});
+      }
+    else {
+      this.fs.postForm(this.form).subscribe(post => {
+        console.log(post);
+      });
+      var resetForm:HTMLFormElement;
+      resetForm = <HTMLFormElement>document.getElementById('registrationForm');
+      resetForm.reset();
+      this.snackBar.open("Formularz został wysłany", "OK", {horizontalPosition: "center", verticalPosition: "bottom"});
+    }
   }
-
 }
 
-export class formFields {
-  vin?: string;
-  make?: string;
-  model?: string;
-  productionYear?: string;
-  engineDescription?: string;
-  power?: number;
-  description?: string;
 
-  customer = new Customer;
-}
 
-export class Customer {
-  id?: number;
-  name?: string;
-  surname?: string;
-  phoneNumber?: string;
-  email?: string;
-}

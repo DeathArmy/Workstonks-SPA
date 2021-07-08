@@ -1,99 +1,112 @@
 <div class="col-md-9 order-md-1 centerDiv">
-  <h3>Wypełnij poniższy formularz, aby nasz pracownik mógł się z Tobą skontaktować w celu ustawienia dogodnego terminu przeprowadzenia naprawy.</h3>
-  <form id="registrationForm" (ngSubmit)="Submit()" autocomplete="off">
-
-    <div class="row">
-      <div class="col mb-1">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>VIN</mat-label>
-          <input type="text" name="vinNumber" (input)="getvinNumber($event)" matInput placeholder="ZAR93900009999999">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col mb-3">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Marka</mat-label>
-          <input type="text" name="make" (input)="getmake($event)" matInput placeholder="Alfa Romeo">
-        </mat-form-field>
-      </div>
-      <div class="col mb-3">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Model</mat-label>
-          <input type="text" name="model" (input)="getmodel($event)" matInput placeholder="159 SW">
-        </mat-form-field>
-      </div>
-      <div class="col mb-2">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Rocznik</mat-label>
-          <input type="text" name="yearProduction" (input)="getyearProduction($event)" matInput placeholder="2011">
-        </mat-form-field>
-      </div>
-      <div class="col mb-2">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Silnik</mat-label>
-          <input type="text" name="engineDescription" (input)="getengineDescription($event)" matInput placeholder="2.0 JTDm">
-        </mat-form-field>
-      </div>
-      <div class="col mb-2">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Moc</mat-label>
-          <input type="text" name="horsepower" (input)="gethorsepower($event)" matInput placeholder="170">
-          <mat-icon matSuffix>KM</mat-icon>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col mb-3">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Imię</mat-label>
-          <input type="text" name="name" (input)="getname($event)" matInput placeholder="Jan">
-        </mat-form-field>
-      </div>
-      <div class="col mb-3">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Nazwisko</mat-label>
-          <input type="text" name="surname" (input)="getsurname($event)" matInput placeholder="Kowalski">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col mb-3">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Telefon kontaktowy</mat-label>
-          <span matPrefix>+48 &nbsp;</span>
-          <input type="tel" name="phoneNumber" (input)="getphoneNumber($event)" matInput placeholder="602-700-700">
-        </mat-form-field>
-      </div>
-      <div class="col mb-6">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>E-mail</mat-label>
-          <input type="email" name="email" [formControl]="emailFormControl" (input)="getemail($event)" matInput placeholder="jan.kowalski@przyklad.pl">
-          <mat-icon matSuffix>(Opcjonalnie)</mat-icon>
-          <mat-error *ngIf="emailFormControl.hasError('email')">
-          Wprowadź proszę prawidłowy adres e-mail
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col mb-6">
-        <mat-form-field class="full-width" appearance="standard">
-          <mat-label>Opis problemu</mat-label>
-          <input type="text" name="description" (input)="getdescription($event)" matInput placeholder="Auto hałasuje podczas jazdy po nierównościach">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col mb-3 subButton">
+  <mat-card class="formMatCard">
+    <mat-card-header>
+      <mat-card-title>
+       Formularz zgłoszeniowy
+      </mat-card-title>
+      <mat-card-subtitle>
+        Po przesłaniu poniższego formularza nasz pracownik skontaktuje się z Tobą w celu uzgodnienia terminu.
+      </mat-card-subtitle>
+    </mat-card-header>
+    <hr>
+    <mat-card-content>
+      <form id="registrationForm" (ngSubmit)="Submit()" autocomplete="off">
+        <div class="row">
+          <div class="col mb-1">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>VIN</mat-label>
+              <input type="text" [(ngModel)]="form.vin" matInput placeholder="ZAR93900009999999" [formControl]="vinControl" required>
+              <mat-error *ngIf="vinControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col mb-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Marka</mat-label>
+              <input type="text" [(ngModel)]="form.make" matInput placeholder="Alfa Romeo" [formControl]="makeControl" required>
+              <mat-error *ngIf="makeControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col mb-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Model</mat-label>
+              <input type="text" [(ngModel)]="form.model" matInput placeholder="159 SW" [formControl]="modelControl" required>
+              <mat-error *ngIf="modelControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col mb-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Rocznik</mat-label>
+              <input type="text" [(ngModel)]="form.productionYear" matInput placeholder="2011" [formControl]="yearControl" required>
+              <mat-error *ngIf="yearControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col mb-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Silnik</mat-label>
+              <input type="text" [(ngModel)]="form.engineDescription" matInput placeholder="2.0 JTDm" [formControl]="engineControl" required>
+              <mat-error *ngIf="engineControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col mb-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Moc</mat-label>
+              <input type="text" [(ngModel)]="form.power" matInput placeholder="170" [formControl]="powerControl" required>
+              <mat-error *ngIf="powerControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+              <mat-icon matSuffix>KM</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col mb-3">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Imię</mat-label>
+              <input type="text" [(ngModel)]="form.customer.name" matInput placeholder="Jan" [formControl]="nameControl" required>
+              <mat-error *ngIf="nameControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col mb-3">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Nazwisko</mat-label>
+              <input type="text" [(ngModel)]="form.customer.surname" matInput placeholder="Kowalski" [formControl]="surnameControl" required>
+              <mat-error *ngIf="surnameControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col mb-3">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Telefon kontaktowy</mat-label>
+              <span matPrefix>+48 &nbsp;</span>
+              <input type="tel" [(ngModel)]="form.customer.phoneNumber" matInput placeholder="602-700-700" [formControl]="phoneControl" required>
+              <mat-error *ngIf="phoneControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col mb-6">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>E-mail</mat-label>
+              <input type="email" [(ngModel)]="form.customer.email" matInput placeholder="jan.kowalski@przyklad.pl" [formControl]="email">
+              <mat-icon matSuffix>(Opcjonalnie)</mat-icon>
+              <mat-error *ngIf="email.invalid">{{emailErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col mb-6">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Opis problemu</mat-label>
+              <input type="text" [(ngModel)]="form.description" matInput placeholder="Auto hałasuje podczas jazdy po nierównościach" [formControl]="descriptionControl" required>
+              <mat-error *ngIf="descriptionControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
         <button mat-raised-button type="submit" color="primary">Wyślij</button>
-      </div>
-    </div>
-
-  </form>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>
