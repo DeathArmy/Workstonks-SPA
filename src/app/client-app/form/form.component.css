@@ -2,8 +2,21 @@
   text-align: center;
   position: relative;
   margin: auto;
+  width: 62.5%;
 }
 
 .full-width {
   width: 100%;
+}
+
+.formMatCard {
+  margin-top: 60px;
+}
+
+mat-card-header {
+  text-align: left;
+}
+
+::ng-deep .mat-card-header-text {
+  margin: 0 !important;
 }
