@@ -7,7 +7,7 @@ import { loginResponse } from '../Helpers/loginResponse';
 @Injectable()
 export class LoginService {
   public token: any;
-  private urlString: string = "https://localhost:5001/api/Auth/";
+  private urlString: string = "https://workstonks.herokuapp.com/api/Auth/";
 
   constructor(private http: HttpClient) {  }
 

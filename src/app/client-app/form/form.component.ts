@@ -23,7 +23,7 @@ export class FormComponent implements OnInit {
   powerControl = new FormControl('', [Validators.required]);
   nameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
   surnameControl = new FormControl('', [Validators.required, Validators.minLength(2)]);
-  phoneControl = new FormControl('', [Validators.required]);
+  phoneControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{9}')]);
   descriptionControl = new FormControl('', [Validators.required]);
   fieldFillErrorMsg = "Pole wymagane";
 
@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
   }
 
   Submit() {
-    if (this.email.invalid || this.vinControl.invalid || this.makeControl.invalid || 
+    if (this.email.invalid || this.vinControl.invalid || this.makeControl.invalid ||
         this.modelControl.invalid || this.yearControl.invalid || this.engineControl.invalid ||
         this.powerControl.invalid || this.nameControl.invalid || this.surnameControl.invalid ||
         this.phoneControl.invalid || this.descriptionControl.invalid)
@@ -43,8 +43,11 @@ export class FormComponent implements OnInit {
       }
     else {
       this.fs.postForm(this.form).subscribe(post => {
-        console.log(post);
-      });
+        console.log(post);},
+        error => {
+          console.log(error);
+        }
+      );
       var resetForm:HTMLFormElement;
       resetForm = <HTMLFormElement>document.getElementById('registrationForm');
       resetForm.reset();
@@ -52,6 +55,4 @@ export class FormComponent implements OnInit {
     }
   }
 }
-
-
 
