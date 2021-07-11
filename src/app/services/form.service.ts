@@ -5,7 +5,7 @@ import { formFieldsModel } from '../Models/formFields';
 
 @Injectable()
 export class FormService {
-  private urlString: string = "https://localhost:5001/api/CarService/";
+  private urlString: string = "https://workstonks.herokuapp.com/api/CarService/";
   constructor(private http: HttpClient) {  }
 
   postForm(form: any) : Observable<formFieldsModel>

@@ -28,16 +28,23 @@ export class EditConfigComponent implements OnInit {
       let tempSP: homeConfiguration = JSON.parse(<string>home.data);
       this.hc = tempSP;
       //console.log(this.hc.homeFirstImg);
+    },
+     error => {
+       console.log(error);
      });
      this.configS.getConfig("contact").subscribe(contact => {
       let tempSP: contact = JSON.parse(<string>contact.data);
-      this.cc = tempSP;
-     });
+      this.cc = tempSP;},
+      error => {
+        console.log(error);
+      });
      this.configS.getConfig("price").subscribe(prices => {
       let tempSP: Array<servicePrice> = JSON.parse(<string>prices.data);
       this.servicesPrices = tempSP;
       //console.log(this.servicesPrices)
-      this.dataSource = new MatTableDataSource(this.servicesPrices);
+      this.dataSource = new MatTableDataSource(this.servicesPrices);},
+     error => {
+       console.log(error);
      });
    }
 

@@ -6,7 +6,7 @@ import { configResponse } from '../Helpers/configResponse';
 
 @Injectable()
 export class ConfigService {
-  private urlString: string = "https://localhost:5001/api/ClientApp/";
+  private urlString: string = "https://workstonks.herokuapp.com/api/ClientApp/";
   constructor(private http: HttpClient) {  }
 
   getConfig(componentName: string): Observable<configResponse>
