@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { homeConfiguration } from '../../client-app/home/home.component'
 import { contact } from '../../client-app/contact/contact.component'
 import { servicePrice } from '../../client-app/prices/prices.component';
-import {MatTableDataSource} from '@angular/material/table';
-import {SelectionModel} from '@angular/cdk/collections';
-import { NumericLiteral } from 'typescript';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-editConfig',
@@ -22,30 +22,62 @@ export class EditConfigComponent implements OnInit {
   selection = new SelectionModel<PeriodicElement>(true, []);
   holdMyImg: string = "";
   sp: servicePrice = new servicePrice("", 0, 1);
+  homeEmpty: boolean = false;
+  contactEmpty: boolean = false;
+  priceEmpty: boolean = false;
 
   constructor(private configS: ConfigService) {
+    //download Home configuration
     this.configS.getConfig("home").subscribe(home => {
-      let tempSP: homeConfiguration = JSON.parse(<string>home.data);
-      this.hc = tempSP;
-      //console.log(this.hc.homeFirstImg);
-    },
-     error => {
-       console.log(error);
-     });
+        if (home == null) {
+          console.log("Brak konfiguracji dla Home.");
+          this.homeEmpty = true;
+        }
+        else {
+          this.homeEmpty = false;
+          let tempSP: homeConfiguration = JSON.parse(<string>home.data);
+          this.hc = tempSP;
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    );
+
+    //download Contact configuration
      this.configS.getConfig("contact").subscribe(contact => {
-      let tempSP: contact = JSON.parse(<string>contact.data);
-      this.cc = tempSP;},
-      error => {
-        console.log(error);
-      });
+      if (contact == null) {
+        console.log("Brak konfiguracji dla Contact.");
+        this.contactEmpty = true;
+      }
+      else {
+        this.contactEmpty = false;
+        let tempSP: contact = JSON.parse(<string>contact.data);
+        this.cc = tempSP;
+      }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    );
+
+    //download ServicePrice configuration
      this.configS.getConfig("price").subscribe(prices => {
-      let tempSP: Array<servicePrice> = JSON.parse(<string>prices.data);
-      this.servicesPrices = tempSP;
-      //console.log(this.servicesPrices)
-      this.dataSource = new MatTableDataSource(this.servicesPrices);},
-     error => {
-       console.log(error);
-     });
+       if (prices == null) {
+         console.log("Brak konfiguracji dla ServicePrice.");
+         this.priceEmpty = true;
+       }
+       else {
+        this.priceEmpty = false;
+        let tempSP: Array<servicePrice> = JSON.parse(<string>prices.data);
+        this.servicesPrices = tempSP;
+        this.dataSource = new MatTableDataSource(this.servicesPrices); 
+       }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    );
    }
 
   ngOnInit() {
@@ -89,29 +121,48 @@ export class EditConfigComponent implements OnInit {
 
   saveHomeConfig()
   {
-    this.configS.putConfig(this.hc, "home").subscribe(home => {
-      //console.log(home);
-    })
+    if (this.homeEmpty) {
+      this.configS.postConfig(this.hc, "home").subscribe(home => {
+      });
+      this.homeEmpty = false;
+    }
+    else {
+      this.configS.putConfig(this.hc, "home").subscribe(home => {
+      });
+    }
   }
 
   saveContactConfig()
   {
-    this.configS.putConfig(this.cc, "contact").subscribe(home => {
-      //console.log(home);
-    })
+    if (this.contactEmpty) {
+      this.configS.postConfig(this.cc, "contact").subscribe(home => {
+      });
+      this.homeEmpty = false;
+    }
+    else {
+      this.configS.putConfig(this.cc, "contact").subscribe(home => {
+      });
+    }
   }
 
   addServicePrice()
   {
     this.servicesPrices.push(this.sp);
     this.dataSource = new MatTableDataSource(this.servicesPrices);
+    this.sp = new servicePrice("", 0, 1);
   }
 
   saveServicePriceConfig()
   {
-    this.configS.putConfig(this.servicesPrices, "price").subscribe(home => {
-      //console.log(home);
-    })
+    if (this.priceEmpty) {
+      this.configS.postConfig(this.servicesPrices, "price").subscribe(home => {
+      });
+      this.homeEmpty = false;
+    }
+    else {
+      this.configS.putConfig(this.servicesPrices, "price").subscribe(home => {
+      });
+    }
   }
 
   isAllSelected() {

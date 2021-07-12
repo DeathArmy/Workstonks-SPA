@@ -1,6 +1,7 @@
 import { ConfigService } from '../../services/config.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -20,14 +21,17 @@ export class HomeComponent implements OnInit {
     config.pauseOnHover = false;
 
     this.configS.getConfig("home").subscribe(home => {
-      let tempSP: homeConfiguration = JSON.parse(<string>home.data);
-      this.hc = tempSP;
-      //console.log(this.hc);
+      if (home == null) {
+        console.log("Brak konfiguracji dla Home.");
+      }
+      else {
+        let tempSP: homeConfiguration = JSON.parse(<string>home.data);
+        this.hc = tempSP;
+      }
+     },
+     (error:HttpErrorResponse) => {
+      console.log(error.message);
      });
-
-    // this.configS.postConfig(this.hc, 'home').subscribe(post => {
-    //   console.log(post);
-    // });
    }
 
   ngOnInit(): void {

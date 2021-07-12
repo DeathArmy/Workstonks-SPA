@@ -13,10 +13,6 @@ export class ConfigService {
   {
     return this.http.get<configResponse>(this.urlString + 'config?componentName=' + componentName);
   }
-  //PUT:
-  //home
-  //prices
-  //contact
 
   postConfig(config: any, name: string) : Observable<configResponse>
   {

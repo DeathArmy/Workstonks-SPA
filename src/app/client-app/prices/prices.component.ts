@@ -16,13 +16,8 @@ export class PricesComponent implements OnInit {
     this.configService.getConfig("price").subscribe(prices => {
       let tempSP: Array<servicePrice> = JSON.parse(<string>prices.data);
       this.servicesPrices = tempSP;
-      //console.log(this.servicesPrices)
       this.dataSource = new MatTableDataSource(this.servicesPrices);
      });
-    // this.servicesPrices.push(new servicePrice('Wymiana oleju', 30.00, 1), new servicePrice('Ustawienie zbieżności', 80, 1), new servicePrice('Diagnostyka komputerowa', 50, 1), new servicePrice('Wymiana opon + wyważanie', 80, 4));
-    // this.configService.postConfig(this.servicesPrices, 'price').subscribe(post => {
-    //   console.log(post);
-    // });
   }
 
   ngOnInit(): void {

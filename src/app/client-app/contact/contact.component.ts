@@ -1,6 +1,7 @@
 import { ConfigService } from '../../services/config.service';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact',
@@ -15,15 +16,19 @@ export class ContactComponent implements OnInit {
 
   constructor(private santizier: DomSanitizer, private contactConfig: ConfigService) {
     this.contactConfig.getConfig("contact").subscribe(contact => {
-      this.contact = JSON.parse(<string>contact.data);
-      this.iframeMap = "<iframe width='100%' height='600' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='" + this.contact.loadedSrcForMap + "'</iframe>";
-      this.iframeMapSafe = this.santizier.bypassSecurityTrustHtml(this.iframeMap);
-      //console.log(this.contact);
-     });
-    // this.contactConfig.postConfig(this.contact, 'contact').subscribe(post => {
-    //   console.log(post);
-    // });
-
+      if (contact == null) {
+        console.log("Brak konfiguracji dla Contact.");
+      }
+      else {
+        this.contact = JSON.parse(<string>contact.data);
+        this.iframeMap = "<iframe width='100%' height='600' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='" + this.contact.loadedSrcForMap + "'</iframe>";
+        this.iframeMapSafe = this.santizier.bypassSecurityTrustHtml(this.iframeMap);
+      }
+     },
+     (error: HttpErrorResponse) => {
+       console.log(error.message);
+     }
+     );
    }
 
   ngOnInit(): void {
