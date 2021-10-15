@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+div {
+  margin: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-card-header {
+  text-align: left;
+}
+
+::ng-deep .mat-card-header-text {
+  margin: 0 !important;
+}

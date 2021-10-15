@@ -1,0 +1,10 @@
+mat-card {
+  width: 32%;
+  margin-left: 2%;
+}
+
+mat-card .tick {
+  margin: auto;
+  background-color: #ebebeb;
+  width: 95%;
+}

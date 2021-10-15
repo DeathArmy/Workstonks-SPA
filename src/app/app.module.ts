@@ -1,3 +1,4 @@
+import { OverlayServiceService } from './services/overlayService.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +20,7 @@ import { ContactComponent } from './client-app/contact/contact.component';
 import { FormComponent } from './client-app/form/form.component';
 import { HomeComponent } from './client-app/home/home.component';
 import { PricesComponent } from './client-app/prices/prices.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { HttpClientModule } from '@angular/common/http'
   providers: [{
     provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }
    },
-   ConfigService
+   ConfigService,
+   OverlayServiceService
   ],
   bootstrap: [AppComponent]
 })

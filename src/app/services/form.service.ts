@@ -13,4 +13,10 @@ export class FormService {
     let tempUrl = this.urlString + 'serviceRequest';
     return this.http.post<formFieldsModel>(tempUrl, form);
   }
+
+  getForms() : Observable<Array<formFieldsModel>>
+  {
+    let tempUrl = this.urlString + 'serviceRequests';
+    return this.http.get<Array<formFieldsModel>>(tempUrl);
+  }
 }

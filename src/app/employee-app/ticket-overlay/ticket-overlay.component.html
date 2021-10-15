@@ -1,0 +1,106 @@
+<ng-container class="col-md-9 order-md-1 centerDiv">
+  <mat-card class="formMatCard">
+    <mat-card-header>
+      <mat-card-title>
+       Formularz klienta
+      </mat-card-title>
+    </mat-card-header>
+    <hr>
+    <mat-card-content>
+      <form id="registrationForm" (ngSubmit)="Submit()" autocomplete="off">
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>VIN</mat-label>
+              <input type="text" [(ngModel)]="ticket.vin" matInput placeholder="ZAR93900009999999" [formControl]="vinControl" required>
+              <mat-error *ngIf="vinControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-sm-4 col-md-3">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Marka</mat-label>
+              <input type="text" [(ngModel)]="ticket.make" matInput placeholder="Alfa Romeo" [formControl]="makeControl" required>
+              <mat-error *ngIf="makeControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col col-sm-4 col-md-3">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Model</mat-label>
+              <input type="text" [(ngModel)]="ticket.model" matInput placeholder="159 SW" [formControl]="modelControl" required>
+              <mat-error *ngIf="modelControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col col-sm-4 col-md-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Rocznik</mat-label>
+              <input type="text" [(ngModel)]="ticket.productionYear" matInput placeholder="2011" [formControl]="yearControl" required>
+              <mat-error *ngIf="yearControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col col-sm-6 col-md-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Silnik</mat-label>
+              <input type="text" [(ngModel)]="ticket.engineDescription" matInput placeholder="2.0 JTDm" [formControl]="engineControl" required>
+              <mat-error *ngIf="engineControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col col-sm-6 col-md-2">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Moc</mat-label>
+              <input type="text" [(ngModel)]="ticket.power" matInput placeholder="170" [formControl]="powerControl" required>
+              <mat-error *ngIf="powerControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+              <mat-icon matSuffix>KM</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-lg-3 col-md-6 col-sm-6">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Imię</mat-label>
+              <input type="text" [(ngModel)]="ticket.customer.name" matInput placeholder="Jan" [formControl]="nameControl" required>
+              <mat-error *ngIf="nameControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-6">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Nazwisko</mat-label>
+              <input type="text" [(ngModel)]="ticket.customer.surname" matInput placeholder="Kowalski" [formControl]="surnameControl" required>
+              <mat-error *ngIf="surnameControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-6">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Telefon kontaktowy</mat-label>
+              <span matPrefix>+48 &nbsp;</span>
+              <input type="tel" [(ngModel)]="ticket.customer.phoneNumber" matInput placeholder="602-700-700" [formControl]="phoneControl" required>
+              <mat-error *ngIf="phoneControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-6">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>E-mail</mat-label>
+              <input type="email" [(ngModel)]="ticket.customer.email" matInput placeholder="jan.kowalski@przyklad.pl" [formControl]="email">
+              <mat-error *ngIf="email.invalid">{{emailErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-md-12">
+            <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Opis problemu</mat-label>
+              <input type="text" [(ngModel)]="ticket.description" matInput placeholder="Auto hałasuje podczas jazdy po nierównościach" [formControl]="descriptionControl" required>
+              <mat-error *ngIf="descriptionControl.invalid">{{fieldFillErrorMsg}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <button mat-raised-button type="submit" color="primary">Wyślij</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+

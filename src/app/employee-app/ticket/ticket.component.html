@@ -1,0 +1,36 @@
+<mat-card class="ticket">
+  <mat-card-header>
+    <mat-card-title>
+      Nowe zgłoszenia
+    </mat-card-title>
+      <p *ngIf="tickets.length != 0" style="text-align: right; width: 68%; font-weight: bold; font-size: 150%;">{{tickets.length}}</p>
+  </mat-card-header>
+  <hr>
+  <mat-card-content>
+    <ng-container *ngIf="tickets.length != 0; else noTickets">
+      <div *ngFor="let tick of tickets.slice(0, 5)">
+        <mat-card class="tick">
+          <mat-card-header>
+            <mat-card-title>
+              {{tick.make}} {{tick.model}} - {{tick.engineDescription}}, {{tick.power}}KM, {{tick.productionYear}} r.
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <b>Opis problemu: </b><i>{{tick.description}}</i><br/>
+            <b>Osoba kontaktowa: </b><i>{{tick.customer.name}}, tel. {{tick.customer.phoneNumber}}</i>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button style="color: red" (click)="showTicket()">Otwórz</button>
+          </mat-card-actions>
+        </mat-card>
+        <br/>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #noTickets>
+  <p style="color:red; font-weight: bold;">Brak nowych zgłoszeń</p>
+</ng-template>
+
+

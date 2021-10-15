@@ -11,7 +11,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Overlay, OverlayModule } from '@angular/cdk/overlay';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 import { EmployeeAppRoutingModule } from './employee-app-routing.module';
 import { EmployeeAppComponent } from './employee-app.component';
@@ -19,15 +21,19 @@ import { NabBarComponent } from './nab-bar/nab-bar.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { EditConfigComponent } from './editConfig/editConfig.component';
+import { TicketComponent } from './ticket/ticket.component';
+import { TicketOverlayComponent } from './ticket-overlay/ticket-overlay.component';
 
 
 @NgModule({
   declarations: [
     EmployeeAppComponent,
-      NabBarComponent,
-      LoginComponent,
-      HomeComponent,
-      EditConfigComponent
+    NabBarComponent,
+    LoginComponent,
+    HomeComponent,
+    EditConfigComponent,
+    TicketComponent,
+    TicketOverlayComponent
    ],
   imports: [
     CommonModule,
@@ -39,12 +45,15 @@ import { EditConfigComponent } from './editConfig/editConfig.component';
     MatCommonModule,
     MatButtonModule,
     FormsModule,
+    ReactiveFormsModule,
     MatDividerModule,
     MatListModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    OverlayModule
   ],
   providers: [
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},
     LoginService
   ]
 })
