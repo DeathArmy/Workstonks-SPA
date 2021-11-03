@@ -8,7 +8,7 @@
   <hr>
   <mat-card-content>
     <ng-container *ngIf="tickets.length != 0; else noTickets">
-      <div *ngFor="let tick of tickets.slice(0, 5)">
+      <div *ngFor="let tick of tickets.slice(0, 5); let i = index" [attr.data-index]="i">
         <mat-card class="tick">
           <mat-card-header>
             <mat-card-title>
@@ -20,7 +20,7 @@
             <b>Osoba kontaktowa: </b><i>{{tick.customer.name}}, tel. {{tick.customer.phoneNumber}}</i>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button style="color: red" (click)="showTicket()">Otwórz</button>
+            <button mat-button style="color: red" (click)="showTicket(i)">Otwórz</button>
           </mat-card-actions>
         </mat-card>
         <br/>

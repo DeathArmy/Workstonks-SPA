@@ -7,10 +7,11 @@ import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [{ path: '', component: EmployeeAppComponent, children: [
   {path: 'login', component: LoginComponent},
-  {path: 'home', component: HomeComponent, children:[
-    {path: 'config', component: EditConfigComponent, outlet: "content"}
-    // {path: 'config', component: EditConfigComponent}
-  ]},
+  // {path: 'home', component: HomeComponent, children:[
+  //   {path: 'config', component: EditConfigComponent, outlet: "content"}
+  // ]},
+  {path: 'home', component: HomeComponent},
+  {path: 'config', component: EditConfigComponent}
 ]}];
 
 @NgModule({

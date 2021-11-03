@@ -1,5 +1,7 @@
+import { Injectable } from '@angular/core';
 import {Customer} from './Customer'
 
+@Injectable()
 export class formFieldsModel {
     vin?: string;
     make?: string;
@@ -8,6 +10,6 @@ export class formFieldsModel {
     engineDescription?: string;
     power?: number;
     description?: string;
-  
+
     customer = new Customer;
   }

@@ -1,13 +1,17 @@
+import { FILE_PREVIEW_DIALOG_DATA } from './../employee-app/ticket-overlay/tikcet-overlay.tokens';
+import { formFieldsModel } from './../Models/formFields';
 import { TicketOverlayRef } from './../employee-app/ticket-overlay/ticket-overlay.component';
-import { Injectable } from '@angular/core';
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
+import { Injectable, Injector, ComponentRef } from '@angular/core';
+import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { TicketOverlayComponent } from '../employee-app/ticket-overlay/ticket-overlay.component';
 
 interface TicketViewConfig {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
+  data?: formFieldsModel;
+  ref?: OverlayRef;
 }
 
 const DEFAULT_CONFIG: TicketViewConfig = {
@@ -16,22 +20,23 @@ const DEFAULT_CONFIG: TicketViewConfig = {
   panelClass: 'tm-file-preview-dialog-panel'
 }
 
-@Injectable({
-  providedIn: 'root'
-})
 @Injectable()
 export class OverlayServiceService {
 
-  constructor(private overlay: Overlay) { }
+  constructor(
+    private injector: Injector,
+    private overlay: Overlay) { }
 
   open(config: TicketViewConfig = {})  {
     const overlayConfig = {...DEFAULT_CONFIG, ...config};
     const overlayRef = this.createOverlay(overlayConfig);
     const dialogRef = new TicketOverlayRef(overlayRef);
-    const ticketView = new ComponentPortal(TicketOverlayComponent);
-    overlayRef.attach(ticketView);
+    const ticketView = new ComponentPortal(TicketOverlayComponent, null, Injector.create({parent: this.injector, providers: [ {provide: FILE_PREVIEW_DIALOG_DATA, useValue: config.data}]}));
+    let ref = overlayRef.attach(ticketView);
 
-    overlayRef.backdropClick().subscribe(_ => dialogRef.close());
+    //overlayRef.backdropClick().subscribe(_ => dialogRef.close());
+
+    ref.instance.closeOverlay.subscribe(() => dialogRef.close());
 
     return dialogRef;
   }

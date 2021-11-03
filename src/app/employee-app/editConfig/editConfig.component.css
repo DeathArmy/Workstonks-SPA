@@ -1,5 +1,6 @@
+
 mat-card {
-  width: 90%;
+  width: 85%;
   margin: auto;
 }
 
@@ -23,4 +24,8 @@ table {
 
 .buttonCenter {
   text-align: center;
+}
+
+.homeConfig {
+  margin-top: 3%;
 }

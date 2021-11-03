@@ -1,3 +1,5 @@
+import { OverlayModule } from '@angular/cdk/overlay';
+import { TicketOverlayRef } from './employee-app/ticket-overlay/ticket-overlay.component';
 import { OverlayServiceService } from './services/overlayService.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -45,7 +47,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     MatSnackBarModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    OverlayModule
   ],
   providers: [{
     provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }

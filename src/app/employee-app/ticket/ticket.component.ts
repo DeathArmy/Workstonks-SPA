@@ -1,8 +1,8 @@
+import { formFieldsModel } from 'src/app/Models/formFields';
 import { TicketOverlayRef } from '../ticket-overlay/ticket-overlay.component';
 import { OverlayServiceService } from '../../services/overlayService.service';
 import { Component, OnInit } from '@angular/core';
 import { FormService } from '../../services/form.service';
-import { formFieldsModel } from '../../Models/formFields';
 
 @Component({
   selector: 'app-ticket',
@@ -26,8 +26,10 @@ export class TicketComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showTicket() {
-    let dialogRef: TicketOverlayRef = this.viewTicket.open();
+  showTicket(i: any) {
+    let dialogRef: TicketOverlayRef = this.viewTicket.open(
+      {
+       data: this.tickets[i]
+      });
   }
-
 }

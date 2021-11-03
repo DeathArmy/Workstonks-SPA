@@ -1,6 +1,9 @@
-<p>
+<!-- <p>
   <a [routerLink]="[{ outlets: {content: ['config']}}]" routerLinkActive="router-link">Link</a>
-</p>
+</p> -->
+<!-- <p>
+  <a routerLink="/home">Link</a>
+</p> -->
 
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
@@ -13,8 +16,11 @@
               <li class="nav-item">
               <a class="nav-link active" aria-current="page" routerLink="../home">Menu</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" [routerLink]="[{ outlets: {content: ['config']}}]" routerLinkActive="router-link">Konfiguracja</a>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link" routerLink="../config">Konfiguracja</a>
               </li>
           </ul>
       </div>
