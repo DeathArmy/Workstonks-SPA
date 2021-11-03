@@ -31,5 +31,6 @@ export class TicketComponent implements OnInit {
       {
        data: this.tickets[i]
       });
+    this.viewTicket.forceRealoadPage.subscribe(() => window.location.reload());
   }
 }

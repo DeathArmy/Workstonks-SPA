@@ -7,7 +7,7 @@
     </mat-card-header>
     <hr>
     <mat-card-content>
-      <form id="registrationForm" (ngSubmit)="Submit()" autocomplete="off">
+      <form id="registrationForm" autocomplete="off">
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width" appearance="standard">
@@ -98,7 +98,8 @@
             </mat-form-field>
           </div>
         </div>
-        <button mat-raised-button type="submit" color="primary">Wyślij</button>
+        <button mat-raised-button (click)="send()" color="primary">Przyjmij</button>
+        <button mat-raised-button color="warn" (click)="delete()">Usuń</button>
         <button mat-raised-button color="warn" (click)="closeWindow()">Zamknij</button>
       </form>
     </mat-card-content>

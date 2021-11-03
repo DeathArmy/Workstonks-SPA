@@ -3,6 +3,7 @@ import {Customer} from './Customer'
 
 @Injectable()
 export class formFieldsModel {
+    id?: number;
     vin?: string;
     make?: string;
     model?: string;

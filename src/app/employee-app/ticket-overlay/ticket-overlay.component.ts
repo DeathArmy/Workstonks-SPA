@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { formFieldsModel } from 'src/app/Models/formFields';
@@ -28,30 +29,57 @@ export class TicketOverlayComponent implements OnInit {
   fieldFillErrorMsg = "Pole wymagane";
   ticket = new formFieldsModel();
   changesCheck = new formFieldsModel();
-  helpInt = 0;
+  helpInt = false;
 
 
-  constructor(@Inject(FILE_PREVIEW_DIALOG_DATA) public componentData: any) {}
+  constructor(@Inject(FILE_PREVIEW_DIALOG_DATA) public componentData: any, private _snackBar: MatSnackBar, private _service: FormService) {}
 
   ngOnInit() {
     this.ticket = this.componentData;
-    this.changesCheck = this.ticket;
+    this.changesCheck.description = this.ticket.description
+    this.changesCheck.engineDescription = this.ticket.engineDescription
+    this.changesCheck.make = this.ticket.make
+    this.changesCheck.model = this.ticket.model
+    this.changesCheck.power = this.ticket.power
+    this.changesCheck.productionYear = this.ticket.productionYear
+    this.changesCheck.vin = this.ticket.vin
+    this.changesCheck.customer.email = this.ticket.customer.email
+    this.changesCheck.customer.name = this.ticket.customer.name
+    this.changesCheck.customer.phoneNumber = this.ticket.customer.phoneNumber
+    this.changesCheck.customer.surname = this.ticket.customer.surname
   }
 
-  Submit() {
+  send() {
+
+  }
+
+  delete() {
+    this._service.deleteTicket(this.ticket.id? this.ticket.id : 0).subscribe(response => {
+      console.log("Usunięto.");
+    });
+    this.closeOverlay.emit(true);
   }
 
   closeWindow() {
-    //sprawdzic czy cos uleglo zmianie, jesli tak wyrzucic komunikat
-    //jesli nie to zamknac okno
-    if (this.ticket.description == this.changesCheck.description && this.ticket.engineDescription == this.changesCheck.engineDescription && this.helpInt == 0)
+    if (this.helpInt || (this.ticket.description == this.changesCheck.description
+        && this.ticket.engineDescription == this.changesCheck.engineDescription
+        && this.ticket.make == this.changesCheck.make
+        && this.ticket.model == this.changesCheck.model
+        && this.ticket.power == this.changesCheck.power
+        && this.ticket.productionYear == this.changesCheck.productionYear
+        && this.ticket.vin == this.changesCheck.vin
+        && this.ticket.customer.email == this.changesCheck.customer.email
+        && this.ticket.customer.name == this.changesCheck.customer.name
+        && this.ticket.customer.phoneNumber == this.changesCheck.customer.phoneNumber
+        && this.ticket.customer.surname == this.changesCheck.customer.surname))
     {
-      this.helpInt++;
+      this.helpInt = false;
+      this.closeOverlay.emit(true);
     }
     else
     {
-      this.helpInt--;
-      this.closeOverlay.emit(true);
+      this.helpInt = true;
+      this._snackBar.open("Wykryto zmiany. Aby zamknąć użyj przycisku Zamknij raz jeszcze!","OK", {duration: 3000});
     }
   }
 

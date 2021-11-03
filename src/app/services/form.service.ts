@@ -19,4 +19,10 @@ export class FormService {
     let tempUrl = this.urlString + 'serviceRequests';
     return this.http.get<Array<formFieldsModel>>(tempUrl);
   }
+
+  deleteTicket(id: number) : Observable <any>
+  {
+    let tempUrl = this.urlString + 'serviceRequest?serviceRequestId=' + id ;
+    return this.http.delete<any>(tempUrl);
+  }
 }

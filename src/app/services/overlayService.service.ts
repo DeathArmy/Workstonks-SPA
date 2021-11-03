@@ -1,9 +1,9 @@
 import { FILE_PREVIEW_DIALOG_DATA } from './../employee-app/ticket-overlay/tikcet-overlay.tokens';
 import { formFieldsModel } from './../Models/formFields';
 import { TicketOverlayRef } from './../employee-app/ticket-overlay/ticket-overlay.component';
-import { Injectable, Injector, ComponentRef } from '@angular/core';
+import { Injectable, Injector, Output, EventEmitter } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { TicketOverlayComponent } from '../employee-app/ticket-overlay/ticket-overlay.component';
 
 interface TicketViewConfig {
@@ -22,7 +22,7 @@ const DEFAULT_CONFIG: TicketViewConfig = {
 
 @Injectable()
 export class OverlayServiceService {
-
+  @Output() forceRealoadPage: EventEmitter<boolean> = new EventEmitter();
   constructor(
     private injector: Injector,
     private overlay: Overlay) { }
@@ -34,9 +34,7 @@ export class OverlayServiceService {
     const ticketView = new ComponentPortal(TicketOverlayComponent, null, Injector.create({parent: this.injector, providers: [ {provide: FILE_PREVIEW_DIALOG_DATA, useValue: config.data}]}));
     let ref = overlayRef.attach(ticketView);
 
-    //overlayRef.backdropClick().subscribe(_ => dialogRef.close());
-
-    ref.instance.closeOverlay.subscribe(() => dialogRef.close());
+    ref.instance.closeOverlay.subscribe(() => {dialogRef.close(); this.forceRealoadPage.emit(true);});
 
     return dialogRef;
   }
