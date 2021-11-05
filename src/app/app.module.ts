@@ -1,5 +1,4 @@
 import { OverlayModule } from '@angular/cdk/overlay';
-import { TicketOverlayRef } from './employee-app/ticket-overlay/ticket-overlay.component';
 import { OverlayServiceService } from './services/overlayService.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,7 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,13 +49,16 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     MatCardModule,
     HttpClientModule,
-    OverlayModule
+    OverlayModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [{
     provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }
    },
    ConfigService,
-   OverlayServiceService
+   OverlayServiceService,
+   MatDatepickerModule
   ],
   bootstrap: [AppComponent]
 })

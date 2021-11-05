@@ -25,3 +25,11 @@ button {
 ::ng-deep .mat-card-header-text {
   margin: 0 !important;
 }
+
+table {
+  width: 100%;
+}
+
+.marginFix {
+  padding-left: 40px;
+}
