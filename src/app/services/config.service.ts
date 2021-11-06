@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { configResponse } from '../Helpers/configResponse';
@@ -25,6 +25,9 @@ export class ConfigService {
 
   putConfig(config: any, name: string) : Observable<configResponse>
   {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
     let conf: configResponse = new configResponse();
     conf.componentName = name;
     conf.data = JSON.stringify(config);

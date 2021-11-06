@@ -37,6 +37,7 @@ export class ContactComponent implements OnInit {
 
 export class contact {
   contactDescription?: string;
-  //Site to get SRC https://www.maps.ie/create-google-map/
+  // Site to get SRC https://www.maps.ie/create-google-map/
+  // https://maps.google.com/maps?width=720&amp;height=600&amp;hl=en&amp;q=Poznań%20Gdyńska%2010+(Workstonks)&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=B&amp;output=embed
   loadedSrcForMap?: string;
 }
