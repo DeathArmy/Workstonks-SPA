@@ -25,6 +25,9 @@ import { HomeComponent } from './home/home.component';
 import { EditConfigComponent } from './editConfig/editConfig.component';
 import { TicketComponent } from './ticket/ticket.component';
 import { TicketOverlayComponent } from './ticket-overlay/ticket-overlay.component';
+import { KanbanComponent } from './kanban/kanban.component';
+import { AdministrationComponent } from './administration/administration.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 @NgModule({
@@ -35,7 +38,10 @@ import { TicketOverlayComponent } from './ticket-overlay/ticket-overlay.componen
     HomeComponent,
     EditConfigComponent,
     TicketComponent,
-    TicketOverlayComponent
+    TicketOverlayComponent,
+    KanbanComponent,
+    AdministrationComponent,
+    ReportsComponent
    ],
   imports: [
     CommonModule,

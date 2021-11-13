@@ -7,7 +7,7 @@ export class formFieldsModel {
     vin?: string;
     make?: string;
     model?: string;
-    productionYear?: string;
+    productionYear?: number;
     engineDescription?: string;
     power?: number;
     description?: string;

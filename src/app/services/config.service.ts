@@ -11,11 +11,19 @@ export class ConfigService {
 
   getConfig(componentName: string): Observable<configResponse>
   {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
     return this.http.get<configResponse>(this.urlString + 'config?componentName=' + componentName);
   }
 
   postConfig(config: any, name: string) : Observable<configResponse>
   {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
     let conf: configResponse = new configResponse();
     conf.componentName = name;
     conf.data = JSON.stringify(config);
@@ -28,6 +36,7 @@ export class ConfigService {
     let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('key');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
     let conf: configResponse = new configResponse();
     conf.componentName = name;
     conf.data = JSON.stringify(config);

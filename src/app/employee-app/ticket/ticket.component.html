@@ -16,16 +16,14 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <b>Opis problemu: </b><i>{{tick.description}}</i><br/>
-            <b>Osoba kontaktowa: </b><i>{{tick.customer.name}}, tel. {{tick.customer.phoneNumber}}</i>
+            <i>{{tick.description}}</i>
           </mat-card-content>
-          <mat-card-actions>
-            <button mat-button style="color: red" (click)="showTicket(i)">Otwórz</button>
-          </mat-card-actions>
+          <button mat-raised-button color="primary" (click)="showTicket(i)">Otwórz</button>
         </mat-card>
         <br/>
       </div>
     </ng-container>
+    <button mat-raised-button (click)="showBlankTicket()">Dodaj zgłoszenie</button>
   </mat-card-content>
 </mat-card>
 

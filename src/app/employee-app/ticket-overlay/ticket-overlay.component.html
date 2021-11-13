@@ -96,13 +96,13 @@
           <div class="col col-md-4">
             <mat-form-field class="full-width" appearance="standard">
               <mat-label>Nazwa</mat-label>
-              <input type="text" matInput>
+              <input type="text" [(ngModel)]="kanbanTask.name" name="kanbanName" matInput>
             </mat-form-field>
           </div>
           <div class="col col-md-2">
             <mat-form-field appearance="standard">
               <mat-label>Data przyjęcia pojazdu</mat-label>
-              <input matInput [matDatepicker]="picker">
+              <input matInput [(ngModel)]="kanbanTask.dateOfCarDelivery" name="calendarCollectonDay" [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker touchUi #picker></mat-datepicker>
             </mat-form-field>
@@ -110,7 +110,7 @@
           <div class="col col-md-6 marginFix">
             <mat-form-field appearance="standard">
               <mat-label>Data oddania pojazdu</mat-label>
-              <input matInput [matDatepicker]="picker2">
+              <input matInput [(ngModel)]="kanbanTask.dateOfPlannedRealization" name="calendarRealizationDay" [matDatepicker]="picker2">
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker touchUi #picker2></mat-datepicker>
             </mat-form-field>
@@ -132,7 +132,7 @@
           </form>
         </div>
         <br/>
-        <ng-container class="full-width" *ngIf="subtaskList.length > 0; else noServices">
+        <ng-container class="full-width" *ngIf="kanbanTask.subtasks.length > 0; else noServices">
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
             <ng-container matColumnDef="index">
@@ -181,11 +181,7 @@
         <ng-template #noServices>
           <p style="color:red; font-weight: bold;">Niezdefiniowano żadnego zadania</p>
         </ng-template>
-
-
-
         <hr>
-
         <button mat-raised-button (click)="send()" color="primary">Przyjmij</button>
         <button mat-raised-button color="warn" (click)="abandoned()">Rezygnacja</button>
         <button mat-raised-button color="warn" (click)="delete()">Usuń</button>

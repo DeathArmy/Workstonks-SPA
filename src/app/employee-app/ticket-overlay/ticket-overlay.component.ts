@@ -1,3 +1,4 @@
+import { KanbanTaskDetails } from './../../Models/KanbanTask';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
@@ -8,6 +9,7 @@ import { FILE_PREVIEW_DIALOG_DATA } from './tikcet-overlay.tokens';
 import { Subtask } from '../../Models/Subtask';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { kanbanTasksService } from 'src/app/services/kanbanTasks.service';
 
 @Component({
   selector: 'app-ticket-overlay',
@@ -33,36 +35,54 @@ export class TicketOverlayComponent implements OnInit {
   ticket = new formFieldsModel();
   changesCheck = new formFieldsModel();
   helpInt = false;
+  kanbanTask = new KanbanTaskDetails();
 
-  subtaskList = new Array<Subtask>();
+  //subtaskList = new Array<Subtask>();
   displayedColumns: string[] = ['index', 'select', 'name', 'manHour'];
   dataSource: any;
   selection = new SelectionModel<PeriodicElement>(true, []);
   sub: Subtask = new Subtask();
 
-  constructor(@Inject(FILE_PREVIEW_DIALOG_DATA) public componentData: any, private _snackBar: MatSnackBar, private _service: FormService) {}
+  constructor(@Inject(FILE_PREVIEW_DIALOG_DATA) public componentData: any, private _snackBar: MatSnackBar, private _service: FormService, private _kanbanService: kanbanTasksService) {}
 
   ngOnInit() {
-    this.ticket = this.componentData;
-    this.changesCheck.description = this.ticket.description
-    this.changesCheck.engineDescription = this.ticket.engineDescription
-    this.changesCheck.make = this.ticket.make
-    this.changesCheck.model = this.ticket.model
-    this.changesCheck.power = this.ticket.power
-    this.changesCheck.productionYear = this.ticket.productionYear
-    this.changesCheck.vin = this.ticket.vin
-    this.changesCheck.customer.email = this.ticket.customer.email
-    this.changesCheck.customer.name = this.ticket.customer.name
-    this.changesCheck.customer.phoneNumber = this.ticket.customer.phoneNumber
-    this.changesCheck.customer.surname = this.ticket.customer.surname
+    if (this.componentData)
+    {
+      this.ticket = this.componentData;
+      this.changesCheck.description = this.ticket.description
+      this.changesCheck.engineDescription = this.ticket.engineDescription
+      this.changesCheck.make = this.ticket.make
+      this.changesCheck.model = this.ticket.model
+      this.changesCheck.power = this.ticket.power
+      this.changesCheck.productionYear = this.ticket.productionYear
+      this.changesCheck.vin = this.ticket.vin
+      this.changesCheck.customer.email = this.ticket.customer.email
+      this.changesCheck.customer.name = this.ticket.customer.name
+      this.changesCheck.customer.phoneNumber = this.ticket.customer.phoneNumber
+      this.changesCheck.customer.surname = this.ticket.customer.surname
+    }
   }
 
   send() {
-
+    this.kanbanTask.serviceRequestId = this.ticket.id;
+    this.kanbanTask.description = this.ticket.description;
+    this.kanbanTask.engineDescription = this.ticket.engineDescription;
+    this.kanbanTask.make = this.ticket.make;
+    this.kanbanTask.model = this.ticket.model;
+    this.kanbanTask.power = this.ticket.power;
+    this.kanbanTask.vin = this.ticket.vin;
+    this.kanbanTask.productionYear = this.ticket.productionYear;
+    this._kanbanService.createKanbanTask(this.kanbanTask).subscribe(response => {
+      console.log(response);
+    });
+    this.closeOverlay.emit(true);
   }
 
   abandoned() {
-
+    this._service.abondTicket(this.ticket.id? this.ticket.id : 0).subscribe(response => {
+      console.log("Anulowano.");
+    });
+    this.closeOverlay.emit(true);
   }
 
   delete() {
@@ -84,7 +104,7 @@ export class TicketOverlayComponent implements OnInit {
         && this.ticket.customer.name == this.changesCheck.customer.name
         && this.ticket.customer.phoneNumber == this.changesCheck.customer.phoneNumber
         && this.ticket.customer.surname == this.changesCheck.customer.surname
-        && this.subtaskList.length == 0))
+        && this.kanbanTask.subtasks.length == 0))
     {
       this.helpInt = false;
       this.closeOverlay.emit(true);
@@ -98,8 +118,8 @@ export class TicketOverlayComponent implements OnInit {
 
   addSubtask()
   {
-    this.subtaskList.push(this.sub);
-    this.dataSource = new MatTableDataSource(this.subtaskList);
+    this.kanbanTask.subtasks?.push(this.sub);
+    this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);
     this.sub = new Subtask();
   }
 
@@ -127,10 +147,10 @@ export class TicketOverlayComponent implements OnInit {
   deleteSelected(){
     console.log(this.selection.selected)
     this.selection.selected.forEach(e => {
-      let index = this.subtaskList.findIndex(i => i.id == e.index)
-      this.subtaskList.splice(index, 1);
+      let index = this.kanbanTask.subtasks.findIndex(i => i.id == e.index)
+      this.kanbanTask.subtasks.splice(index, 1);
     });
-    this.dataSource = new MatTableDataSource(this.subtaskList);
+    this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);
     this.selection.clear();
   }
 

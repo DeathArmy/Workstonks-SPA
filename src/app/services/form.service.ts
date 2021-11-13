@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { formFieldsModel } from '../Models/formFields';
@@ -14,15 +14,38 @@ export class FormService {
     return this.http.post<formFieldsModel>(tempUrl, form);
   }
 
-  getForms() : Observable<Array<formFieldsModel>>
+  // New = 0,
+  // Accepted = 1,
+  // Rejected = 2,
+  // ClientRejection = 3
+
+  getForms(state: number) : Observable<Array<formFieldsModel>>
   {
-    let tempUrl = this.urlString + 'serviceRequests';
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'serviceRequests?state=' + state;
     return this.http.get<Array<formFieldsModel>>(tempUrl);
   }
 
   deleteTicket(id: number) : Observable <any>
   {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
     let tempUrl = this.urlString + 'serviceRequest?serviceRequestId=' + id ;
     return this.http.delete<any>(tempUrl);
+  }
+
+  abondTicket(id: number) : Observable <any>
+  {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'serviceRequest/reject?id=' + id ;
+    return this.http.put<any>(tempUrl, null);
   }
 }

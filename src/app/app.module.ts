@@ -1,3 +1,4 @@
+import { kanbanTasksService } from './services/kanbanTasks.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OverlayServiceService } from './services/overlayService.service';
 import { NgModule } from '@angular/core';
@@ -58,7 +59,8 @@ import { HttpClientModule } from '@angular/common/http';
    },
    ConfigService,
    OverlayServiceService,
-   MatDatepickerModule
+   MatDatepickerModule,
+   kanbanTasksService
   ],
   bootstrap: [AppComponent]
 })

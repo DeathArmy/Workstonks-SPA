@@ -15,7 +15,7 @@ export class TicketComponent implements OnInit {
   tickets = new Array<formFieldsModel>();
 
   constructor(private fs: FormService, private viewTicket: OverlayServiceService) {
-    this.fs.getForms().subscribe(ticks => {
+    this.fs.getForms(0).subscribe(ticks => {
       for (let tick of ticks)
       {
         this.tickets.push(tick);
@@ -30,6 +30,13 @@ export class TicketComponent implements OnInit {
     let dialogRef: TicketOverlayRef = this.viewTicket.open(
       {
        data: this.tickets[i]
+      });
+    this.viewTicket.forceRealoadPage.subscribe(() => window.location.reload());
+  }
+
+  showBlankTicket() {
+    let dialogRef: TicketOverlayRef = this.viewTicket.open(
+      {
       });
     this.viewTicket.forceRealoadPage.subscribe(() => window.location.reload());
   }
