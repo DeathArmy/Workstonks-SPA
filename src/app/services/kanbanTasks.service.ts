@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class kanbanTasksService {
-  private urlString: string = "https://workstonks.herokuapp.com/api/Kanban";
+  private urlString: string = "https://workstonks.herokuapp.com/api/Kanban/";
 
   constructor(private http: HttpClient) {  }
 

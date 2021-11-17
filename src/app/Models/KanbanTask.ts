@@ -10,10 +10,10 @@ enum Status {
 }
 
 export class KanbanTask {
-  id?: number;
+  id?: number = 0;
   name?: string;
   dateOfPlannedRealization?: Date;
-  dateOfActualRealizatoin?: Date;
+  dateOfActualRealization?: Date;
   dateOfCarDelivery?: Date;
   status?: Status;
   make?: string;
@@ -27,7 +27,7 @@ export class KanbanTaskDetails {
   description?: string;
   dateOfCreation?: Date;
   dateOfPlannedRealization?: Date;
-  dateOfActualRealizatoin?: Date;
+  dateOfActualRealization?: Date;
   dateOfCarDelivery?: Date;
   status: Status = 0;
   isActive: boolean = true;

@@ -1,3 +1,4 @@
+import { KanbanTask } from './../Models/KanbanTask';
 import { LoginService } from './../services/login.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -66,7 +67,8 @@ import { ReportsComponent } from './reports/reports.component';
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},
     LoginService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    KanbanTask
   ]
 })
 export class EmployeeAppModule { }

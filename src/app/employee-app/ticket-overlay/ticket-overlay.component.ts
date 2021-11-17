@@ -73,7 +73,7 @@ export class TicketOverlayComponent implements OnInit {
     this.kanbanTask.vin = this.ticket.vin;
     this.kanbanTask.productionYear = this.ticket.productionYear;
     this._kanbanService.createKanbanTask(this.kanbanTask).subscribe(response => {
-      console.log(response);
+      //console.log(response);
     });
     this.closeOverlay.emit(true);
   }
