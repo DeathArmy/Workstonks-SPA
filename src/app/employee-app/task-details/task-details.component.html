@@ -1,0 +1,61 @@
+<br/><br/><br/>
+
+<div class='row'>
+  <div class='col col-md-10'>
+    <mat-card>
+      <mat-card-title>
+        Opis
+      </mat-card-title>
+      <mat-card-content>
+        {{taskDetails.description}}
+      </mat-card-content>
+      <hr>
+      <h2>Lista rzeczy do wykonania:</h2>
+      <ng-container *ngFor="let subtask of taskDetails.subtasks">
+        <mat-form-field appearance="outline">
+          <mat-label>Czynność</mat-label>
+          <input matInput value="{{subtask.name}}">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Planowana ilość roboczogodzin [h]</mat-label>
+          <input matInput value="{{subtask.manHour}}">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="selectedValue" name="status">
+            <mat-option *ngFor="let status of Statuses" [value]="subtask.status">
+              {{status.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br/>
+      </ng-container>
+      <mat-card-actions>
+        Miejsce na przyciski akcji
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class='col col-md-2'>
+    <mat-card>
+        <mat-card-title>
+          {{taskDetails.name}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{taskDetails.make}} {{taskDetails.model}}
+        </mat-card-subtitle>
+        <hr>
+        <mat-card-content>
+          VIN: {{taskDetails.vin}}<br/>
+          Rocznik: {{taskDetails.productionYear}}<br/>
+          Silnik: {{taskDetails.engineDescription}}<br/>
+          Moc: {{taskDetails.power}} KM
+          <hr>
+          {{customer.name}} {{customer.surname}}<br/>
+          Tel. {{customer.phoneNumber}}
+        </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+

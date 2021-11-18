@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KanbanTask } from 'src/app/Models/KanbanTask';
 import { kanbanTasksService } from 'src/app/services/kanbanTasks.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-kanban',
@@ -18,7 +19,7 @@ export class KanbanComponent implements OnInit {
   doneKT = new Array<KanbanTask>();
   date = new Date();
 
-  constructor(private _ktService: kanbanTasksService) {
+  constructor(private _ktService: kanbanTasksService, private router: Router) {
     this._ktService.getKanbanTasks().subscribe(tasks => {
       for (let task of tasks)
       {
@@ -44,7 +45,7 @@ export class KanbanComponent implements OnInit {
 
   openTask(id: number)
   {
-    console.log(id);
+    this.router.navigate(['employeeApp/task-details', id]);
   }
 
 }

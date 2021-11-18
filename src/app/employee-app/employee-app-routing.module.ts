@@ -1,3 +1,4 @@
+import { TaskDetailsComponent } from './task-details/task-details.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { ReportsComponent } from './reports/reports.component';
 import { KanbanComponent } from './kanban/kanban.component';
@@ -15,7 +16,8 @@ const routes: Routes = [{ path: '', component: EmployeeAppComponent, children: [
   {path: 'kanban', component: KanbanComponent},
   {path: 'reports', component: ReportsComponent},
   {path: 'administration', component: AdministrationComponent}
-]}];
+]},
+  {path: 'task-details/:id', component: TaskDetailsComponent}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

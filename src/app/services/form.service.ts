@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { templateJitUrl } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { formFieldsModel } from '../Models/formFields';
@@ -47,5 +48,15 @@ export class FormService {
 
     let tempUrl = this.urlString + 'serviceRequest/reject?id=' + id ;
     return this.http.put<any>(tempUrl, null);
+  }
+
+  getSR(id: number) : Observable <formFieldsModel>
+  {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'serviceRequest?id=' + id ;
+    return this.http.get<formFieldsModel>(tempUrl);
   }
 }

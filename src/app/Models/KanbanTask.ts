@@ -1,3 +1,4 @@
+import { Customer } from "./Customer";
 import { Subtask } from "./Subtask";
 
 enum Status {
@@ -23,6 +24,7 @@ export class KanbanTask {
 export class KanbanTaskDetails {
   id?: number;
   serviceRequestId?: number;
+  customerId?: number;
   name?: string;
   description?: string;
   dateOfCreation?: Date;
@@ -37,5 +39,6 @@ export class KanbanTaskDetails {
   productionYear?: number;
   engineDescription?: string;
   power?: number;
+  customer?: Customer;
   subtasks: Subtask[] = [];
 }

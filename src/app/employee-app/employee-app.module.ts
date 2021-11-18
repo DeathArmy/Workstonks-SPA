@@ -1,3 +1,4 @@
+import { FormService } from './../services/form.service';
 import { KanbanTask } from './../Models/KanbanTask';
 import { LoginService } from './../services/login.service';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -29,6 +31,7 @@ import { TicketOverlayComponent } from './ticket-overlay/ticket-overlay.componen
 import { KanbanComponent } from './kanban/kanban.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { ReportsComponent } from './reports/reports.component';
+import { TaskDetailsComponent } from './task-details/task-details.component';
 
 
 @NgModule({
@@ -42,7 +45,8 @@ import { ReportsComponent } from './reports/reports.component';
     TicketOverlayComponent,
     KanbanComponent,
     AdministrationComponent,
-    ReportsComponent
+    ReportsComponent,
+    TaskDetailsComponent
    ],
   imports: [
     CommonModule,
@@ -62,13 +66,15 @@ import { ReportsComponent } from './reports/reports.component';
     OverlayModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},
     LoginService,
     MatDatepickerModule,
-    KanbanTask
+    KanbanTask,
+    FormService
   ]
 })
 export class EmployeeAppModule { }
