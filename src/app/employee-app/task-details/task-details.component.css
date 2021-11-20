@@ -7,3 +7,17 @@ mat-card {
   width: 98%;
   margin: auto;
 }
+
+.progressBar {
+  margin: 15 5px;
+}
+
+.progressBarSection {
+  align-content: center;
+  align-items: center;
+}
+
+.shopCard {
+  float: right;
+  width: 15%;
+}

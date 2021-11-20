@@ -13,3 +13,11 @@ export class Subtask {
     manHour?: number;
     status?: Status;
   }
+
+  export class SubtaskNew {
+    id?: number;
+    kanbanTaskId?: number;
+    name?: string;
+    manHour?: number;
+    status?: Status;
+  }

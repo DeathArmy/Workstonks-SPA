@@ -11,7 +11,7 @@
       </mat-card-content>
       <hr>
       <h2>Lista rzeczy do wykonania:</h2>
-      <ng-container *ngFor="let subtask of taskDetails.subtasks">
+      <div *ngFor="let subtask of taskDetails.subtasks; let i = index" [attr.data-index]="i">
         <mat-form-field appearance="outline">
           <mat-label>Czynność</mat-label>
           <input matInput value="{{subtask.name}}">
@@ -24,38 +24,86 @@
         &nbsp;
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
-          <mat-select [(ngModel)]="selectedValue" name="status">
-            <mat-option *ngFor="let status of Statuses" [value]="subtask.status">
+          <mat-select [(ngModel)]="selectedValue[i]"  (selectionChange)="statusChanged($event, i)">
+            <mat-option [value]="status.value === selectedValue[i] ? selectedValue[i] : status.value" *ngFor="let status of this.Statuses">
               {{status.viewValue}}
             </mat-option>
           </mat-select>
         </mat-form-field>
+        &nbsp;
+        <button mat-mini-fab color="warn" (click)="deleteSubtask(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
         <br/>
+      </div>
+      <h3>Nowe zadanie:</h3>
+      <ng-container>
+        <mat-form-field appearance="outline">
+          <mat-label>Czynność</mat-label>
+          <input matInput [(ngModel)]="newSubtask.name" value="">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Planowana ilość rg [h]</mat-label>
+          <input matInput [(ngModel)]="newSubtask.manHour" value="">
+        </mat-form-field>
       </ng-container>
-      <mat-card-actions>
-        Miejsce na przyciski akcji
-      </mat-card-actions>
+      <br/>
+      <button mat-raised-button (click)="addNewSubtask()" color="primary">Dodaj</button>
     </mat-card>
   </div>
   <div class='col col-md-2'>
     <mat-card>
-        <mat-card-title>
-          {{taskDetails.name}}
-        </mat-card-title>
-        <mat-card-subtitle>
-          {{taskDetails.make}} {{taskDetails.model}}
-        </mat-card-subtitle>
+      <section class='progressBarSection'>
+        <mat-progress-bar class="progressBar" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue"></mat-progress-bar>
+        <br/>
+      </section>
+      <mat-card-title>
+        {{taskDetails.name}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{taskDetails.make}} {{taskDetails.model}}
+      </mat-card-subtitle>
+      <hr>
+      <mat-card-content>
+        VIN: {{taskDetails.vin}}<br/>
+        Rocznik: {{taskDetails.productionYear}}<br/>
+        Silnik: {{taskDetails.engineDescription}}<br/>
+        Moc: {{taskDetails.power}} KM
         <hr>
-        <mat-card-content>
-          VIN: {{taskDetails.vin}}<br/>
-          Rocznik: {{taskDetails.productionYear}}<br/>
-          Silnik: {{taskDetails.engineDescription}}<br/>
-          Moc: {{taskDetails.power}} KM
-          <hr>
-          {{customer.name}} {{customer.surname}}<br/>
-          Tel. {{customer.phoneNumber}}
-        </mat-card-content>
+        {{customer.name}} {{customer.surname}}<br/>
+        Tel. {{customer.phoneNumber}}
+      </mat-card-content>
+    </mat-card>
+    <br/><br/>
+    <mat-card>
+      <mat-card-title>
+        Koszyk
+      </mat-card-title>
+      <mat-card-content>
+        Zawartość koszyka placeholder
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
-
+<br/>
+<div>
+  <ng-container>
+    <mat-card>
+      <mat-card-content>
+        Wpisz komentarz placeholder
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>
+<br/>
+<div>
+  <ng-container>
+    <mat-card>
+      <mat-card-subtitle>
+        Nazwa użytkownika + Data dodania komentarza placeholders
+      </mat-card-subtitle>
+      Komentarze placeholder
+    </mat-card>
+  </ng-container>
+</div>

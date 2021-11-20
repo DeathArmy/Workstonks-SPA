@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { EmployeeAppRoutingModule } from './employee-app-routing.module';
 import { EmployeeAppComponent } from './employee-app.component';
@@ -67,7 +68,8 @@ import { TaskDetailsComponent } from './task-details/task-details.component';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressBarModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},

@@ -1,3 +1,4 @@
+import { Subtask } from './../Models/Subtask';
 import { KanbanTask, KanbanTaskDetails } from './../Models/KanbanTask';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -43,5 +44,32 @@ export class kanbanTasksService {
 
     let tempUrl = this.urlString + 'kanbanTask';
     return this.http.put<any>(tempUrl, task);
+  }
+
+  updateSubtask(subtask: Subtask) : Observable<Subtask> {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'subtask';
+    return this.http.put<Subtask>(tempUrl, subtask);
+  }
+
+  addSubtask(subtask: Subtask) : Observable<number>{
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'subtask';
+    return this.http.post<number>(tempUrl, subtask);
+  }
+
+  deleteSubtask(id: number) : Observable<any> {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('key');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'subtask?subtaskId=' + id;
+    return this.http.delete<any>(tempUrl);
   }
 }
