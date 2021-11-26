@@ -30,6 +30,7 @@ export class TaskDetailsComponent implements OnInit {
   selectedValue: number[] = [];
   newSubtask = new SubtaskNew;
   manHourSum: number = 0;
+  radioButtonChoose: 'true' | 'false' = 'false';
 
   Statuses: Status[] = [
     {value: 0, viewValue: 'Do zrobienia'},
@@ -54,7 +55,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setTimeout(() => {this.progressBarCalculations();}, 500);
+    setTimeout(() => {this.progressBarCalculations();}, 700);
   }
 
   statusChanged(event: MatSelectChange, index: number) {

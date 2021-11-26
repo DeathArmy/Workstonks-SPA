@@ -5,7 +5,7 @@
     <h2>Kanban board - {{date | date:'yyyy-MM-dd'}}</h2>
     <hr>
     <ng-container *ngIf="kanbanTasks.length != 0; else noTickets">
-      <div class="new">
+      <div class="new pb-1">
         <h2>Nowe</h2>
         <ng-container *ngFor="let task of newKT">
           <mat-card class="newTick" (click)="openTask(task.id ? task.id : 0)">
@@ -25,7 +25,7 @@
         </ng-container>
       </div>
 
-      <div class="toDo">
+      <div class="toDo pb-1">
         <h2>Do zrobienia</h2>
         <ng-container *ngFor="let task of todoKT">
           <mat-card class="todoTick" (click)="openTask(task.id ? task.id : 0)">
@@ -45,7 +45,7 @@
         </ng-container>
       </div>
 
-      <div class="inDiagnostics">
+      <div class="inDiagnostics pb-1">
         <h2>W diagnostyce</h2>
         <ng-container *ngFor="let task of inDiagKT">
           <mat-card class="diagTick" (click)="openTask(task.id ? task.id : 0)">
@@ -65,7 +65,7 @@
         </ng-container>
       </div>
 
-      <div class="inProgress">
+      <div class="inProgress pb-1">
         <h2>W trakcie</h2>
         <ng-container *ngFor="let task of inProgKT">
           <mat-card class="progTick" (click)="openTask(task.id ? task.id : 0)">
@@ -85,7 +85,7 @@
         </ng-container>
       </div>
 
-      <div class="frozen">
+      <div class="frozen pb-1">
         <h2>Wstrzymane</h2>
         <ng-container *ngFor="let task of frozenKT">
           <mat-card class="frozenTick" (click)="openTask(task.id ? task.id : 0)">
@@ -105,7 +105,7 @@
         </ng-container>
       </div>
 
-      <div class="done">
+      <div class="done pb-1">
         <h2>Zrobione</h2>
         <ng-container *ngFor="let task of doneKT">
           <mat-card class="doneTick" (click)="openTask(task.id ? task.id : 0)">

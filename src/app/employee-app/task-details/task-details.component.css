@@ -21,3 +21,11 @@ mat-card {
   float: right;
   width: 15%;
 }
+
+.setMargin {
+  margin: 0 10px;
+}
+
+.comment {
+  width: 100%;
+}

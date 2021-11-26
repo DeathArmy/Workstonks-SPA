@@ -8,6 +8,7 @@
   overflow: hidden;
   background-color: white;
   border-radius: 5px;
+  padding-bottom: 1rem;
 }
 
 mat-card {

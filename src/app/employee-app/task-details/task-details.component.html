@@ -14,12 +14,12 @@
       <div *ngFor="let subtask of taskDetails.subtasks; let i = index" [attr.data-index]="i">
         <mat-form-field appearance="outline">
           <mat-label>Czynność</mat-label>
-          <input matInput value="{{subtask.name}}">
+          <input matInput value="{{subtask.name}}" readonly>
         </mat-form-field>
         &nbsp;
         <mat-form-field appearance="outline">
           <mat-label>Planowana ilość roboczogodzin [h]</mat-label>
-          <input matInput value="{{subtask.manHour}}">
+          <input matInput value="{{subtask.manHour}}" readonly>
         </mat-form-field>
         &nbsp;
         <mat-form-field appearance="outline">
@@ -87,23 +87,38 @@
   </div>
 </div>
 <br/>
-<div>
-  <ng-container>
-    <mat-card>
-      <mat-card-content>
-        Wpisz komentarz placeholder
-      </mat-card-content>
-    </mat-card>
-  </ng-container>
+<div class="row">
+  <div class="col col-md-10">
+    <ng-container>
+      <mat-card>
+        <mat-card-content>
+          <mat-radio-group [(ngModel)]="radioButtonChoose">
+            <label class="setMargin">
+              Rodzaj komentarza:
+            </label>
+            <mat-radio-button class="setMargin" value="false">Komentarz wewnętrzny</mat-radio-button>
+            <mat-radio-button class="setMargin" value="true">Odpowiedź do klienta</mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field class="comment" appearance="outline">
+            <mat-label>Komentarz</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </div>
 </div>
 <br/>
-<div>
-  <ng-container>
-    <mat-card>
-      <mat-card-subtitle>
-        Nazwa użytkownika + Data dodania komentarza placeholders
-      </mat-card-subtitle>
-      Komentarze placeholder
-    </mat-card>
-  </ng-container>
+<div class="row">
+  <div class="col col-md-10">
+    <ng-container>
+      <mat-card>
+        <mat-card-subtitle>
+          Nazwa użytkownika + Data dodania komentarza placeholders
+        </mat-card-subtitle>
+        Komentarze placeholder
+      </mat-card>
+    </ng-container>
+  </div>
 </div>
+
