@@ -1,10 +1,9 @@
 <br/><br/><br/>
-
-<div class='row'>
-  <div class='col col-md-10'>
+<div class="row">
+  <div class="col col-md-10">
     <mat-card>
       <mat-card-title>
-        Opis
+        Opis problemu
       </mat-card-title>
       <mat-card-content>
         {{taskDetails.description}}
@@ -45,50 +44,13 @@
         &nbsp;
         <mat-form-field appearance="outline">
           <mat-label>Planowana ilość rg [h]</mat-label>
-          <input matInput [(ngModel)]="newSubtask.manHour" value="">
+          <input matInput [(ngModel)]="manHourValue" value="">
         </mat-form-field>
       </ng-container>
       <br/>
       <button mat-raised-button (click)="addNewSubtask()" color="primary">Dodaj</button>
     </mat-card>
-  </div>
-  <div class='col col-md-2'>
-    <mat-card>
-      <section class='progressBarSection'>
-        <mat-progress-bar class="progressBar" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue"></mat-progress-bar>
-        <br/>
-      </section>
-      <mat-card-title>
-        {{taskDetails.name}}
-      </mat-card-title>
-      <mat-card-subtitle>
-        {{taskDetails.make}} {{taskDetails.model}}
-      </mat-card-subtitle>
-      <hr>
-      <mat-card-content>
-        VIN: {{taskDetails.vin}}<br/>
-        Rocznik: {{taskDetails.productionYear}}<br/>
-        Silnik: {{taskDetails.engineDescription}}<br/>
-        Moc: {{taskDetails.power}} KM
-        <hr>
-        {{customer.name}} {{customer.surname}}<br/>
-        Tel. {{customer.phoneNumber}}
-      </mat-card-content>
-    </mat-card>
-    <br/><br/>
-    <mat-card>
-      <mat-card-title>
-        Koszyk
-      </mat-card-title>
-      <mat-card-content>
-        Zawartość koszyka placeholder
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
-<br/>
-<div class="row">
-  <div class="col col-md-10">
+    <br/>
     <ng-container>
       <mat-card>
         <mat-card-content>
@@ -101,24 +63,84 @@
           </mat-radio-group>
           <mat-form-field class="comment" appearance="outline">
             <mat-label>Komentarz</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput [(ngModel)]="this.newComment.content"></textarea>
           </mat-form-field>
+          <button mat-raised-button (click)="postComment()" color="primary">Umieść</button>
         </mat-card-content>
       </mat-card>
     </ng-container>
+    <br/>
+    <ng-container>
+      <div *ngFor="let comment of commentList.reverse(); let i = index" [attr.data-index]="i">
+        <mat-card class="commentCard">
+          <mat-card-subtitle>
+            {{comment.userName}} - {{comment.dateOfCreation | date: 'medium'}}
+        </mat-card-subtitle>
+        <mat-card-content>
+          {{comment.content}} <br/>
+          <button mat-button color='warn' (click)="deleteComment(i)">Usuń</button>
+        </mat-card-content>
+      </mat-card>
+      &nbsp;
+      </div>
+    </ng-container>
   </div>
-</div>
-<br/>
-<div class="row">
-  <div class="col col-md-10">
+  <div class="col col-md-2">
     <ng-container>
       <mat-card>
+        <section class='progressBarSection'>
+          <mat-progress-bar class="progressBar" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue"></mat-progress-bar>
+          <br/>
+        </section>
         <mat-card-subtitle>
-          Nazwa użytkownika + Data dodania komentarza placeholders
+          {{taskDetails.make}} {{taskDetails.model}}
         </mat-card-subtitle>
-        Komentarze placeholder
+        <hr>
+        <mat-card-content>
+          VIN: {{taskDetails.vin}}<br/>
+          Rocznik: {{taskDetails.productionYear}}<br/>
+          Silnik: {{taskDetails.engineDescription}}<br/>
+          Moc: {{taskDetails.power}} KM
+          <hr>
+          {{taskDetails.customer?.name}} {{taskDetails.customer?.surname}}<br/>
+          Tel. {{taskDetails.customer?.phoneNumber}}
+        </mat-card-content>
+      </mat-card>
+      <br/>
+      <mat-form-field appearance='fill' class='taskStatus'>
+        <mat-label>Status zadania</mat-label>
+        <mat-select [(ngModel)]="selectedTaskStatus" (selectionChange)="TaskStatusChanged($event)">
+          <mat-option [value]="status.value === selectedTaskStatus ? selectedTaskStatus : status.value" *ngFor="let status of this.TaskStatuses">
+            {{status.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+    <br/>
+    <ng-container>
+      <mat-card>
+        <mat-card-title>
+          Koszyk
+        </mat-card-title>
+        <mat-card-content>
+          Zawartość koszyka placeholder
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+    <br/>
+    <ng-container>
+      <mat-card>
+        <button mat-raised-button (click)='createPdf()' color='primary'>Pobierz protokół</button>
       </mat-card>
     </ng-container>
   </div>
 </div>
-
+<div class='row'>
+  <div class='col col-md-12'>
+    <ng-container>
+      <mat-card>
+        Placeholder na zdjęcia
+      </mat-card>
+    </ng-container>
+  </div> 
+</div>

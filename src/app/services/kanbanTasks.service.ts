@@ -1,8 +1,11 @@
 import { Subtask } from './../Models/Subtask';
 import { KanbanTask, KanbanTaskDetails } from './../Models/KanbanTask';
+import { Comment } from './../Models/Comment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { Jwt } from '../Models/Jwt';
 
 @Injectable()
 export class kanbanTasksService {
@@ -12,7 +15,7 @@ export class kanbanTasksService {
 
   createKanbanTask(task: KanbanTask) : Observable<any> {
     let httpHeaders = new HttpHeaders();
-    let token = sessionStorage.getItem('key');
+    let token = sessionStorage.getItem('token');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
 
     let tempUrl = this.urlString + 'kanbanTask';
@@ -21,7 +24,7 @@ export class kanbanTasksService {
 
   getKanbanTasks() : Observable<Array<KanbanTask>> {
     let httpHeaders = new HttpHeaders();
-    let token = sessionStorage.getItem('key');
+    let token = sessionStorage.getItem('token');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
 
     let tempUrl = this.urlString + 'kanbanTasks';
@@ -30,7 +33,7 @@ export class kanbanTasksService {
 
   getKanbanTask(id: number) : Observable<KanbanTaskDetails> {
     let httpHeaders = new HttpHeaders();
-    let token = sessionStorage.getItem('key');
+    let token = sessionStorage.getItem('token');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
 
     let tempUrl = this.urlString + 'kanbanTask?id=' + id;
@@ -39,7 +42,7 @@ export class kanbanTasksService {
 
   updateKanbanTask(task: KanbanTask) : Observable<any> {
     let httpHeaders = new HttpHeaders();
-    let token = sessionStorage.getItem('key');
+    let token = sessionStorage.getItem('token');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
 
     let tempUrl = this.urlString + 'kanbanTask';
@@ -48,7 +51,7 @@ export class kanbanTasksService {
 
   updateSubtask(subtask: Subtask) : Observable<Subtask> {
     let httpHeaders = new HttpHeaders();
-    let token = sessionStorage.getItem('key');
+    let token = sessionStorage.getItem('token');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
 
     let tempUrl = this.urlString + 'subtask';
@@ -57,7 +60,7 @@ export class kanbanTasksService {
 
   addSubtask(subtask: Subtask) : Observable<number>{
     let httpHeaders = new HttpHeaders();
-    let token = sessionStorage.getItem('key');
+    let token = sessionStorage.getItem('token');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
 
     let tempUrl = this.urlString + 'subtask';
@@ -66,10 +69,41 @@ export class kanbanTasksService {
 
   deleteSubtask(id: number) : Observable<any> {
     let httpHeaders = new HttpHeaders();
-    let token = sessionStorage.getItem('key');
+    let token = sessionStorage.getItem('token');
     httpHeaders = httpHeaders.append('Authorization', token? token : '');
 
     let tempUrl = this.urlString + 'subtask?subtaskId=' + id;
     return this.http.delete<any>(tempUrl);
+  }
+
+  getComments(id: number) : Observable<Array<Comment>> {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('token');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'comments?kanbanTaskId=' + id;
+    return this.http.get<Array<Comment>>(tempUrl);
+  }
+
+  postComment(comment: Comment) : Observable<any> {
+    let httpHeaders = new HttpHeaders();
+    const token: string  = sessionStorage.getItem('token')!;
+    httpHeaders = httpHeaders.append('Authorization', token);
+    const decoded = jwtDecode<JwtPayload>(token);
+    var jwtObject: Jwt = decoded as Jwt;
+
+    comment.userId = jwtObject.nameid;
+
+    let tempUrl = this.urlString + 'comments';
+    return this.http.post(tempUrl, comment);
+  }
+
+  deleteComment(id: number) : Observable<any> {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('token');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'comments?kanbanCommentId=' + id;
+    return this.http.delete(tempUrl);
   }
 }

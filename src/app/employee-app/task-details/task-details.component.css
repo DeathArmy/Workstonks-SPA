@@ -1,8 +1,3 @@
-mat-card {
-  width: 98%;
-  margin: auto;
-}
-
 .row {
   width: 98%;
   margin: auto;
@@ -17,15 +12,14 @@ mat-card {
   align-items: center;
 }
 
-.shopCard {
-  float: right;
-  width: 15%;
-}
-
 .setMargin {
   margin: 0 10px;
 }
 
 .comment {
+  width: 100%;
+}
+
+.taskStatus {
   width: 100%;
 }

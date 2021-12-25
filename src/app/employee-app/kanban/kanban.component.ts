@@ -31,16 +31,10 @@ export class KanbanComponent implements OnInit {
         else if (task.status == 4) this.frozenKT.push(task);
         else if (task.status == 5) this.doneKT.push(task);
       }
-    })
+    });
   }
 
   ngOnInit(): void {
-    //dla testów
-    this.todoKT = this.kanbanTasks;
-    this.inDiagKT = this.kanbanTasks;
-    this.inProgKT = this.kanbanTasks;
-    this.frozenKT = this.kanbanTasks;
-    this.doneKT = this.kanbanTasks;
   }
 
   openTask(id: number)

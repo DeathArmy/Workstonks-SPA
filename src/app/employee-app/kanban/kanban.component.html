@@ -10,17 +10,13 @@
         <ng-container *ngFor="let task of newKT">
           <mat-card class="newTick" (click)="openTask(task.id ? task.id : 0)">
             <div class='newDiv'>&nbsp;</div>
-            <mat-card-title-group>
               <mat-card-title>
-                {{task.name}}
+                <i>{{task.make}} {{task.model}}</i>
               </mat-card-title>
               <mat-card-subtitle>
+                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
                 Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
               </mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-card-content>
-              <i>{{task.make}} {{task.model}}</i>
-            </mat-card-content>
           </mat-card>
         </ng-container>
       </div>
@@ -30,17 +26,13 @@
         <ng-container *ngFor="let task of todoKT">
           <mat-card class="todoTick" (click)="openTask(task.id ? task.id : 0)">
             <div class='todoDiv'>&nbsp;</div>
-            <mat-card-title-group>
               <mat-card-title>
-                {{task.name}}
+                <i>{{task.make}} {{task.model}}</i>
               </mat-card-title>
               <mat-card-subtitle>
+                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
                 Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
               </mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-card-content>
-              <i>{{task.make}} {{task.model}}</i>
-            </mat-card-content>
           </mat-card>
         </ng-container>
       </div>
@@ -50,17 +42,13 @@
         <ng-container *ngFor="let task of inDiagKT">
           <mat-card class="diagTick" (click)="openTask(task.id ? task.id : 0)">
             <div class='diagDiv'>&nbsp;</div>
-            <mat-card-title-group>
               <mat-card-title>
-                {{task.name}}
+                <i>{{task.make}} {{task.model}}</i>
               </mat-card-title>
               <mat-card-subtitle>
+                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
                 Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
               </mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-card-content>
-              <i>{{task.make}} {{task.model}}</i>
-            </mat-card-content>
           </mat-card>
         </ng-container>
       </div>
@@ -70,17 +58,13 @@
         <ng-container *ngFor="let task of inProgKT">
           <mat-card class="progTick" (click)="openTask(task.id ? task.id : 0)">
             <div class='progDiv'>&nbsp;</div>
-            <mat-card-title-group>
               <mat-card-title>
-                {{task.name}}
+                <i>{{task.make}} {{task.model}}</i>
               </mat-card-title>
               <mat-card-subtitle>
+                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
                 Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
               </mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-card-content>
-              <i>{{task.make}} {{task.model}}</i>
-            </mat-card-content>
           </mat-card>
         </ng-container>
       </div>
@@ -90,17 +74,13 @@
         <ng-container *ngFor="let task of frozenKT">
           <mat-card class="frozenTick" (click)="openTask(task.id ? task.id : 0)">
             <div class='frozenDiv'>&nbsp;</div>
-            <mat-card-title-group>
               <mat-card-title>
-                {{task.name}}
+                <i>{{task.make}} {{task.model}}</i>
               </mat-card-title>
               <mat-card-subtitle>
+                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
                 Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
               </mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-card-content>
-              <i>{{task.make}} {{task.model}}</i>
-            </mat-card-content>
           </mat-card>
         </ng-container>
       </div>
@@ -110,17 +90,13 @@
         <ng-container *ngFor="let task of doneKT">
           <mat-card class="doneTick" (click)="openTask(task.id ? task.id : 0)">
             <div class='doneDiv'>&nbsp;</div>
-            <mat-card-title-group>
               <mat-card-title>
-                {{task.name}}
+                <i>{{task.make}} {{task.model}}</i>
               </mat-card-title>
               <mat-card-subtitle>
+                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
                 Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
               </mat-card-subtitle>
-            </mat-card-title-group>
-            <mat-card-content>
-              <i>{{task.make}} {{task.model}}</i>
-            </mat-card-content>
           </mat-card>
         </ng-container>
       </div>

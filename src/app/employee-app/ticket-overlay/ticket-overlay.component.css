@@ -10,20 +10,12 @@ div {
   width: 100%;
 }
 
-mat-card-header {
-  text-align: left;
-}
-
 button {
   margin-left: 10px;
 }
 
 .mat-icon {
   font-size: 100%;
-}
-
-::ng-deep .mat-card-header-text {
-  margin: 0 !important;
 }
 
 table {

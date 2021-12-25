@@ -64,17 +64,7 @@ mat-card {
   text-align: left;
 }
 
-.new, .toDo, .inDiagnostics, .inProgress, .frozen {
-  width: 15.5%;
-  text-align: center;
-  float: left;
-  background-color: #DDDDDD;
-  margin-left: 1%;
-  border: 1px solid #C1C1C1;
-  border-radius: 5px;
-}
-
-.done {
+.new, .toDo, .inDiagnostics, .inProgress, .frozen, .done {
   width: 15.5%;
   text-align: center;
   float: left;
@@ -92,7 +82,7 @@ mat-card {
 }
 
 .doneTick:hover {
-  border: 3px solid darkgreen;
+  box-shadow: inset 0 0 0 3px darkgreen;
   border-radius: 5px;
 }
 
@@ -104,7 +94,7 @@ mat-card {
 }
 
 .frozenTick:hover {
-  border: 3px solid brown;
+  box-shadow: inset 0 0 0 3px brown;
   border-radius: 5px;
 }
 
@@ -116,8 +106,8 @@ mat-card {
 }
 
 .newTick:hover {
-  border: 3px solid darkturquoise;
   border-radius: 5px;
+  box-shadow: inset 0 0 0 3px darkturquoise;
 }
 
 .toDo mat-card .todoDiv {
@@ -128,7 +118,7 @@ mat-card {
 }
 
 .todoTick:hover {
-  border: 3px solid dodgerblue;
+  box-shadow: inset 0 0 0 3px dodgerblue;
   border-radius: 5px;
 }
 
@@ -140,7 +130,7 @@ mat-card {
 }
 
 .diagTick:hover {
-  border: 3px solid gold;
+  box-shadow: inset 0 0 0 3px gold;
   border-radius: 5px;
 }
 
@@ -152,6 +142,6 @@ mat-card {
 }
 
 .progTick:hover {
-  border: 3px solid goldenrod;
+  box-shadow: inset 0 0 0 3px goldenrod;
   border-radius: 5px;
 }

@@ -37,7 +37,6 @@ export class TicketOverlayComponent implements OnInit {
   helpInt = false;
   kanbanTask = new KanbanTaskDetails();
 
-  //subtaskList = new Array<Subtask>();
   displayedColumns: string[] = ['index', 'select', 'name', 'manHour'];
   dataSource: any;
   selection = new SelectionModel<PeriodicElement>(true, []);
