@@ -15,9 +15,9 @@ const routes: Routes = [{ path: '', component: EmployeeAppComponent, children: [
   {path: 'config', component: EditConfigComponent},
   {path: 'kanban', component: KanbanComponent},
   {path: 'reports', component: ReportsComponent},
-  {path: 'administration', component: AdministrationComponent}
-]},
-  {path: 'task-details/:id', component: TaskDetailsComponent}];
+  {path: 'administration', component: AdministrationComponent},
+  {path: 'task-details/:id', component: TaskDetailsComponent}
+]}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
