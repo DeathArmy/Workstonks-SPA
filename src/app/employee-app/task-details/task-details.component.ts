@@ -10,6 +10,9 @@ import { MatSelectChange } from '@angular/material/select';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { PdfMaker } from 'src/app/services/pdfmaker.service';
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { Jwt } from '../../Models/Jwt';
+import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-task-details',
@@ -34,6 +37,8 @@ export class TaskDetailsComponent implements OnInit {
   radioButtonChoose: 'true' | 'false' = 'false';
   commentList: Array<Comment> = [];
   newComment = new Comment;
+  username: string = '';
+  editMode: Array<boolean> = Array(50).fill(false);
 
   Statuses: Status[] = [
     {value: 0, viewValue: 'Do zrobienia'},
@@ -66,12 +71,13 @@ export class TaskDetailsComponent implements OnInit {
       for(let subtask of this.taskDetails.subtasks) {
         let temp = this.getSelectedViewValue(subtask)
         this.selectedValue.push(temp? temp : 0);
-      }
+      };
+      this.getUsername();
     });
   }
 
   ngOnInit(): void {
-    setTimeout(() => {this.progressBarCalculations();}, 1000);
+    setTimeout(() => {this.progressBarCalculations()}, 1000);
   }
 
   statusChanged(event: MatSelectChange, index: number) {
@@ -135,7 +141,8 @@ export class TaskDetailsComponent implements OnInit {
   getComments() {
     this._ktService.getComments(this.taskDetails.id? this.taskDetails.id : 0).subscribe(response => {
       this.commentList = response;
-    })
+    });
+    setTimeout(() => {this.commentList.reverse();}, 700);
   }
 
   postComment() {
@@ -149,14 +156,32 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   deleteComment(id: number) {
-    this._ktService.deleteComment(this.commentList[this.commentList.length-1-id].id!).subscribe(response => {
+    this._ktService.deleteComment(this.commentList[id].id!).subscribe(response => {
       this.getComments();
     });
+  }
+
+  saveComment(id: number) {
+    this._ktService.editComment(this.commentList[id]).subscribe(response => {
+      this.getComments();
+    });
+  }
+
+  getUsername() {
+    const token: string  = sessionStorage.getItem('token')!;
+    const decoded = jwtDecode<JwtPayload>(token);
+    var jwtObject: Jwt = decoded as Jwt;
+
+    this.username = jwtObject.unique_name?.toString()!;
   }
 
   createPdf() {
     var pdfMaker = new PdfMaker();
     pdfMaker.CollectionProtokol(this.taskDetails);
+  }
+
+  editTask() {
+    console.log("Placeholder");
   }
 }
 

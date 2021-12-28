@@ -106,4 +106,13 @@ export class kanbanTasksService {
     let tempUrl = this.urlString + 'comments?kanbanCommentId=' + id;
     return this.http.delete(tempUrl);
   }
+
+  editComment(comment: Comment) : Observable<any> {
+    let httpHeaders = new HttpHeaders();
+    let token = sessionStorage.getItem('token');
+    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+
+    let tempUrl = this.urlString + 'comments';
+    return this.http.put(tempUrl, comment);
+  }
 }

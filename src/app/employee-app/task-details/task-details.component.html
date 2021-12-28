@@ -70,14 +70,26 @@
     </ng-container>
     <br/>
     <ng-container>
-      <div *ngFor="let comment of commentList.reverse(); let i = index" [attr.data-index]="i">
+      <div *ngFor="let comment of commentList; let i = index" [attr.data-index]="i">
         <mat-card class="commentCard">
           <mat-card-subtitle>
             {{comment.userName}} - {{comment.dateOfCreation | date: 'medium'}}
         </mat-card-subtitle>
         <mat-card-content>
-          {{comment.content}} <br/>
-          <button mat-button color='warn' (click)="deleteComment(i)">Usuń</button>
+          <ng-container *ngIf="!editMode[i]">{{comment.content}}</ng-container>
+          <ng-container *ngIf="editMode[i]">
+            <mat-form-field appearance="outline">
+              <input matInput type="text" [(ngModel)]="commentList[i].content">
+            </mat-form-field>
+          </ng-container>
+          <br/>
+          <button mat-button color='warn' (click)="deleteComment(i); editMode[i]==false">Usuń</button>
+          <ng-container *ngIf="username == comment.userName && editMode[i]==false">
+            <button mat-button color='warn' (click)="editMode[i]=true">Edytuj</button>
+          </ng-container>
+          <ng-container *ngIf="editMode[i]">
+            <button mat-button color='warn' (click)="editMode[i]=false; saveComment(i)">Zapisz</button>
+          </ng-container>
         </mat-card-content>
       </mat-card>
       &nbsp;
@@ -129,7 +141,8 @@
     <br/>
     <ng-container>
       <mat-card>
-        <button mat-raised-button (click)='createPdf()' color='primary'>Pobierz protokół</button>
+        <p><button mat-raised-button (click)='createPdf()' color='primary'>Pobierz protokół</button></p>
+        <p><button mat-raised-button (click)='editTask()' color='primary'>Edytuj zadanie</button></p>
       </mat-card>
     </ng-container>
   </div>
