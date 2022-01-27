@@ -7,14 +7,11 @@
         <form autocomplete="off">
           <mat-form-field appearance="fill">
             <mat-label>Login</mat-label>
-            <input type="text" [(ngModel)]="username" [ngModelOptions]="{standalone:true}" matInput name="login" required>
+            <input type="text" [(ngModel)]="credentials.username" [ngModelOptions]="{standalone:true}" matInput name="login" required>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Hasło</mat-label>
-            <input [(ngModel)]="password" [ngModelOptions]="{standalone:true}" matInput [type]="hide ? 'password' : 'text'" required>
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Ukryj hasło'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off_outline' : 'visibility'}}</mat-icon>
-            </button>
+            <input [(ngModel)]="credentials.password" [ngModelOptions]="{standalone:true}" matInput type="password" required>
           </mat-form-field>
         </form>
       </div>

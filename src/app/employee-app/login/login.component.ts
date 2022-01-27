@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { LoginService } from './../../services/login.service';
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -9,11 +9,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  hide = true;
-  username = "";
-  password = "";
+  credentials = new credentials();
   loginService: LoginService;
   localRouter: Router;
+  loginEvent = new EventEmitter();
+
   constructor(private ls: LoginService, private router: Router, private _snackBar: MatSnackBar) {
     this.loginService = ls;
     this.localRouter = router;
@@ -23,11 +23,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    let temp = new credentials();
-    temp.username = this.username;
-    temp.password = this.password;
-    this.loginService.postLogin(temp).subscribe(post => {
+    this.loginService.postLogin(this.credentials).subscribe(post => {
       sessionStorage.setItem('token', post.token.valueOf());
+      this.loginEvent.emit();
       this.localRouter.navigate(['employeeApp/home']);
     },
     (erorr) => {
@@ -37,7 +35,6 @@ export class LoginComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    console.log(event.key.toString());
     if(event.key.toString() == 'Enter') this.login();
   }
 

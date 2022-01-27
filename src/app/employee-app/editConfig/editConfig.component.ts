@@ -6,6 +6,7 @@ import { servicePrice } from '../../client-app/prices/prices.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-editConfig',
@@ -26,7 +27,7 @@ export class EditConfigComponent implements OnInit {
   contactEmpty: boolean = false;
   priceEmpty: boolean = false;
 
-  constructor(private configS: ConfigService) {
+  constructor(private configS: ConfigService, private _snackBar: MatSnackBar) {
     //download Home configuration
     this.configS.getConfig("home").subscribe(home => {
         if (home == null) {
@@ -147,9 +148,16 @@ export class EditConfigComponent implements OnInit {
 
   addServicePrice()
   {
-    this.servicesPrices.push(this.sp);
-    this.dataSource = new MatTableDataSource(this.servicesPrices);
-    this.sp = new servicePrice("", 0, 1);
+    if (this.sp.serviceName == "" || this.sp.price == 0)
+    {
+      this._snackBar.open("Brak nazwy usługi lub nie zdefiniowano ceny!", 'OK',{duration: 3000});
+    }
+    else
+    {
+      this.servicesPrices.push(this.sp);
+      this.dataSource = new MatTableDataSource(this.servicesPrices);
+      this.sp = new servicePrice("", 0, 1);
+    }
   }
 
   saveServicePriceConfig()

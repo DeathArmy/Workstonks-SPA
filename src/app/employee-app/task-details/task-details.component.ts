@@ -56,8 +56,8 @@ export class TaskDetailsComponent implements OnInit {
     {value: 5, viewValue: 'Zrobione'}
   ];
 
-  //temp Username list
-  UserList: string[] = [
+   //temp Username list
+   UserList: string[] = [
     'Administrator', 'Pracownik_1', 'Pracownik_2'
   ];
 
@@ -106,7 +106,7 @@ export class TaskDetailsComponent implements OnInit {
   caseOwnerChanged(event: MatSelectChange) {
 
   }
-
+  
   progressBarCalculations() {
     this.bufferValue = 0;
     this.value = 0;
@@ -204,6 +204,10 @@ export class TaskDetailsComponent implements OnInit {
     (error) => {
       console.log(error);
     })
+  }
+
+  cancelEditTask() {
+    this.taskEditMode = false;
   }
 }
 

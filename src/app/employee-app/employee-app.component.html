@@ -1,4 +1,6 @@
-<app-nab-bar></app-nab-bar>
+<ng-container *ngIf="loggedIn">
+    <app-nab-bar></app-nab-bar>
+</ng-container>
 <div class='setMargin'>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="loginHappen($event)"></router-outlet>
 </div>

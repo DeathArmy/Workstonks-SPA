@@ -203,8 +203,10 @@
         <p *ngIf="!taskEditMode"><button mat-raised-button (click)='createPdf()' color='primary'>Pobierz protokół</button></p>
         <p *ngIf="!taskEditMode"><button mat-raised-button (click)='editTask()' color='primary'>Edytuj zadanie</button></p>
         <p *ngIf="taskEditMode"><button mat-raised-button (click)='saveEditedTask()' color='primary'>Zapisz zmiany</button></p>
+        <p *ngIf="taskEditMode"><button mat-raised-button (click)='cancelEditTask()' color='primary'>Anuluj</button></p>
       </mat-card>
     </ng-container>
+    &nbsp;
   </div>
 </div>
 <div class='row'>
