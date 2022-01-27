@@ -35,6 +35,7 @@ import { KanbanComponent } from './kanban/kanban.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { ReportsComponent } from './reports/reports.component';
 import { TaskDetailsComponent } from './task-details/task-details.component';
+import { HistoryComponent } from './history/history.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { TaskDetailsComponent } from './task-details/task-details.component';
     KanbanComponent,
     AdministrationComponent,
     ReportsComponent,
-    TaskDetailsComponent
+    TaskDetailsComponent,
+    HistoryComponent
    ],
   imports: [
     CommonModule,

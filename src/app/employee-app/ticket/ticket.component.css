@@ -1,6 +1,6 @@
 mat-card {
-  width: 32%;
-  margin-left: 2%;
+  width: 98%;
+  margin: auto;
 }
 
 mat-card .tick {
