@@ -176,6 +176,15 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Opiekun zgłoszenia</mat-label>
+        <mat-select [(ngModel)]="selectedUser"  (selectionChange)="caseOwnerChanged($event)">
+          <mat-option [value]="user" *ngFor="let user of this.UserList">
+            {{user}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      &nbsp;
     </ng-container>
     <br/>
     <ng-container>
@@ -205,5 +214,5 @@
         Placeholder na zdjęcia
       </mat-card>
     </ng-container>
-  </div> 
+  </div>
 </div>

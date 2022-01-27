@@ -56,6 +56,13 @@ export class TaskDetailsComponent implements OnInit {
     {value: 5, viewValue: 'Zrobione'}
   ];
 
+  //temp Username list
+  UserList: string[] = [
+    'Administrator', 'Pracownik_1', 'Pracownik_2'
+  ];
+
+  selectedUser: string = 'Administrator';
+
   selectedTaskStatus: number = 0;
 
   constructor(private _ktService: kanbanTasksService, private router: Router, private routerData: ActivatedRoute, private _fromService: FormService) {
@@ -94,6 +101,10 @@ export class TaskDetailsComponent implements OnInit {
     this._ktService.updateKanbanTask(this.taskDetails).subscribe(response => {
       console.log(response);
     });
+  }
+
+  caseOwnerChanged(event: MatSelectChange) {
+
   }
 
   progressBarCalculations() {
