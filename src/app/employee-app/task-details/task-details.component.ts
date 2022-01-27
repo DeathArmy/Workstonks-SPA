@@ -39,6 +39,7 @@ export class TaskDetailsComponent implements OnInit {
   newComment = new Comment;
   username: string = '';
   editMode: Array<boolean> = Array(50).fill(false);
+  taskEditMode: boolean = false;
 
   Statuses: Status[] = [
     {value: 0, viewValue: 'Do zrobienia'},
@@ -181,7 +182,17 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   editTask() {
-    console.log("Placeholder");
+    this.taskEditMode = true;
+  }
+
+  saveEditedTask() {
+    this.taskEditMode = false;
+    this._ktService.updateKanbanTask(this.taskDetails).subscribe(response => {
+      console.log(response);
+    },
+    (error) => {
+      console.log(error);
+    })
   }
 }
 
