@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col col-md-10">
+  <div class="col col-md-9">
     <mat-card>
       <mat-card-title>
         Opis problemu
@@ -104,7 +104,7 @@
       </div>
     </ng-container>
   </div>
-  <div class="col col-md-2">
+  <div class="col col-md-3">
     <ng-container>
       <mat-card *ngIf="!taskEditMode">
         <section class='progressBarSection'>
@@ -130,25 +130,29 @@
           <mat-label>Marka</mat-label>
           <input matInput [(ngModel)]="taskDetails.make">
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        &nbsp;
+        <mat-form-field appearance="outline" class="model">
           <mat-label>Model</mat-label>
           <input matInput [(ngModel)]="taskDetails.model">
         </mat-form-field>
-        <hr>
+        <br/>
         <mat-card-content>
           <mat-form-field appearance="outline">
             <mat-label>VIN</mat-label>
             <input matInput [(ngModel)]="taskDetails.vin">
           </mat-form-field>
-          <mat-form-field appearance="outline">
+          &nbsp;
+          <mat-form-field appearance="outline" class="productionYear">
             <mat-label>Rocznik</mat-label>
             <input matInput [(ngModel)]="taskDetails.productionYear">
           </mat-form-field>
+          <br/>
           <mat-form-field appearance="outline">
             <mat-label>Silnik</mat-label>
             <input matInput [(ngModel)]="taskDetails.engineDescription">
           </mat-form-field>
-          <mat-form-field appearance="outline">
+          &nbsp;
+          <mat-form-field appearance="outline" class="power">
             <mat-label>Moc silnika (KM)</mat-label>
             <input matInput [(ngModel)]="taskDetails.power">
           </mat-form-field>
@@ -157,34 +161,38 @@
             <mat-label>Imię</mat-label>
             <input matInput [(ngModel)]="taskDetails.customer!.name">
           </mat-form-field>
-          <mat-form-field appearance="outline">
+          &nbsp;
+          <mat-form-field appearance="outline" class="surname">
             <mat-label>Nazwisko</mat-label>
             <input matInput [(ngModel)]="taskDetails.customer!.surname">
           </mat-form-field>
+          <br/>
           <mat-form-field appearance="outline">
             <mat-label>Telefon</mat-label>
             <input matInput [(ngModel)]="taskDetails.customer!.phoneNumber">
           </mat-form-field>
         </mat-card-content>
       </mat-card>
-      <br/>
-      <mat-form-field appearance='fill' class='taskStatus'>
-        <mat-label>Status zadania</mat-label>
-        <mat-select [(ngModel)]="selectedTaskStatus" (selectionChange)="TaskStatusChanged($event)">
-          <mat-option [value]="status.value === selectedTaskStatus ? selectedTaskStatus : status.value" *ngFor="let status of this.TaskStatuses">
-            {{status.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Opiekun zgłoszenia</mat-label>
-        <mat-select [(ngModel)]="selectedUser"  (selectionChange)="caseOwnerChanged($event)">
-          <mat-option [value]="user" *ngFor="let user of this.UserList">
-            {{user}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      &nbsp;
+      <ng-container *ngIf="!taskEditMode">
+        <br/>
+        <mat-form-field appearance='fill' class='taskStatus'>
+          <mat-label>Status zadania</mat-label>
+          <mat-select [(ngModel)]="selectedTaskStatus" (selectionChange)="TaskStatusChanged($event)">
+            <mat-option [value]="status.value === selectedTaskStatus ? selectedTaskStatus : status.value" *ngFor="let status of this.TaskStatuses">
+              {{status.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Opiekun zgłoszenia</mat-label>
+          <mat-select [(ngModel)]="selectedUser"  (selectionChange)="caseOwnerChanged($event)">
+            <mat-option [value]="user" *ngFor="let user of this.UserList">
+              {{user}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        &nbsp;
+      </ng-container>
     </ng-container>
     <br/>
     <ng-container>
@@ -192,8 +200,47 @@
         <mat-card-title>
           Koszyk
         </mat-card-title>
-        <mat-card-content>
-          Zawartość koszyka placeholder
+        <mat-card-content class="basket">
+          <ng-container *ngIf="taskEditMode">
+            <mat-form-field appearance="outline">
+              <mat-label>Opis</mat-label>
+              <input matInput [(ngModel)]="newBasketItem.itemName">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field appearance="outline" class='amount'>
+              <mat-label>Ilość</mat-label>
+              <input matInput [(ngModel)]="newBasketItem.amount">
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field appearance="outline" class='measureUnit'>
+              <mat-label>Miara</mat-label>
+              <mat-select [(ngModel)]="selectedMeasureUnit">
+                <mat-option [value]="measureUnit.value === selectedMeasureUnit ? selectedMeasureUnit : measureUnit.value" *ngFor="let measureUnit of this.measureUnitList">
+                  {{measureUnit.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p><button mat-raised-button (click)='addBasketItem()' color='primary'>Zamów</button></p>
+          </ng-container>
+          <table *ngIf="this.basketItemsList.length != 0" class='basketTable'>
+            <tr>
+              <th class="basketDescription">Opis</th>
+              <th class="basketAmount">Ilość</th>
+              <th class="basketMeasure">Miara</th>
+              <th *ngIf="taskEditMode" class="deleteBasket">Akcje</th>
+            </tr>
+            <ng-container>
+              <tr *ngFor="let item of this.basketItemsList; let i = index" [attr.data-index]="i">
+                <td>{{item.itemName}}</td>
+                <td>{{item.amount}}</td>
+                <td *ngIf="item.unitOfMeasure == 0">litr</td>
+                <td *ngIf="item.unitOfMeasure == 1">szt</td>
+                <td *ngIf="item.unitOfMeasure == 2">kg</td>
+                <td *ngIf="taskEditMode"><button mat-raised-button (click)='deleteBasketItem(i)' color='primary'>Usuń</button></td>
+              </tr>
+            </ng-container>
+          </table>
+          <p *ngIf="this.basketItemsList.length == 0">Koszyk jest pusty!</p>
         </mat-card-content>
       </mat-card>
     </ng-container>
@@ -204,6 +251,7 @@
         <p *ngIf="!taskEditMode"><button mat-raised-button (click)='editTask()' color='primary'>Edytuj zadanie</button></p>
         <p *ngIf="taskEditMode"><button mat-raised-button (click)='saveEditedTask()' color='primary'>Zapisz zmiany</button></p>
         <p *ngIf="taskEditMode"><button mat-raised-button (click)='cancelEditTask()' color='primary'>Anuluj</button></p>
+        <p *ngIf="!taskEditMode"><button mat-raised-button (click)='createInvoce()' color='primary'>Wygeneruj fakturę</button></p>
       </mat-card>
     </ng-container>
     &nbsp;

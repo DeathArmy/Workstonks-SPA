@@ -1,3 +1,4 @@
+import { BasketItem } from './../../Models/BasketItem';
 import { SubtaskNew, Subtask } from './../../Models/Subtask';
 import { Comment } from './../../Models/Comment';
 import { formFieldsModel } from 'src/app/Models/formFields';
@@ -12,7 +13,6 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 import { PdfMaker } from 'src/app/services/pdfmaker.service';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Jwt } from '../../Models/Jwt';
-import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-task-details',
@@ -37,6 +37,8 @@ export class TaskDetailsComponent implements OnInit {
   radioButtonChoose: 'true' | 'false' = 'false';
   commentList: Array<Comment> = [];
   newComment = new Comment;
+  newBasketItem = new BasketItem;
+  basketItemsList: Array<BasketItem> = [];
   username: string = '';
   editMode: Array<boolean> = Array(50).fill(false);
   taskEditMode: boolean = false;
@@ -61,8 +63,14 @@ export class TaskDetailsComponent implements OnInit {
     'Administrator', 'Pracownik_1', 'Pracownik_2'
   ];
 
-  selectedUser: string = 'Administrator';
+  measureUnitList: Status[] = [
+    {value: 0, viewValue: 'litr'},
+    {value: 1, viewValue: 'szt'},
+    {value: 2, viewValue: 'kg'}
+  ];
 
+  selectedUser: string = 'Administrator';
+  selectedMeasureUnit: number = 1;
   selectedTaskStatus: number = 0;
 
   constructor(private _ktService: kanbanTasksService, private router: Router, private routerData: ActivatedRoute, private _fromService: FormService) {
@@ -72,6 +80,7 @@ export class TaskDetailsComponent implements OnInit {
     this._ktService.getKanbanTask(this.taskId).subscribe(response => {
       this.taskDetails = response;
       this.selectedTaskStatus = this.taskDetails.status;
+      this.basketItemsList = this.taskDetails.basketItems;
       this._fromService.getSR(this.taskDetails.serviceRequestId? this.taskDetails.serviceRequestId : 0).subscribe(response => {
         this.taskDetails.customer = response.customer;
         this.getComments();
@@ -106,7 +115,7 @@ export class TaskDetailsComponent implements OnInit {
   caseOwnerChanged(event: MatSelectChange) {
 
   }
-  
+
   progressBarCalculations() {
     this.bufferValue = 0;
     this.value = 0;
@@ -208,6 +217,35 @@ export class TaskDetailsComponent implements OnInit {
 
   cancelEditTask() {
     this.taskEditMode = false;
+  }
+
+  addBasketItem() {
+    this.newBasketItem.unitOfMeasure = this.selectedMeasureUnit;
+    this.newBasketItem.kanbanTaskId = this.taskDetails.id;
+
+    this._ktService.postBasketItem(this.newBasketItem).subscribe(response => {
+      this.newBasketItem.id = response;
+    },
+    (error) => {
+      console.log(error);
+    });
+    this.basketItemsList.push(this.newBasketItem);
+    this.newBasketItem = new BasketItem();
+  }
+
+  deleteBasketItem(id: number) {
+    let idToDelete: number = this.basketItemsList[id].id!;
+    this._ktService.deleteBasketItem(idToDelete).subscribe(response => {
+      console.log(response);
+    },
+    (error) => {
+      console.log(error);
+    });
+    this.basketItemsList.splice(id, 1);
+  }
+
+  createInvoce() {
+
   }
 }
 

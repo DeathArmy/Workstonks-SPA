@@ -1,3 +1,4 @@
+import { BasketItem } from './BasketItem';
 import { Customer } from "./Customer";
 import { Subtask } from "./Subtask";
 
@@ -41,4 +42,6 @@ export class KanbanTaskDetails {
   power?: number;
   customer?: Customer;
   subtasks: Subtask[] = [];
+  basketItems: BasketItem[] = [];
+  comments: Comment[] = [];
 }

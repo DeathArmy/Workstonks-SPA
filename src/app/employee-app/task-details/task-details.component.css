@@ -23,3 +23,48 @@
 .taskStatus {
   width: 100%;
 }
+
+.measureUnit {
+  width: 17.5%;
+}
+
+.amount {
+  width: 16%;
+}
+
+.productionYear {
+  width: 35%;
+}
+
+.power {
+  width: 35%;
+}
+
+.model {
+  width: 35%;
+}
+
+.surname {
+  width: 35%;
+}
+
+.basketTable table{
+  width: 100%;
+
+}
+
+.basketDescription {
+  width: 60%;
+}
+
+.basketAmount {
+  width: 30%;
+}
+
+.basketMeasure {
+  width: 20%;
+}
+
+.deleteBasket {
+  width: 20%;
+}

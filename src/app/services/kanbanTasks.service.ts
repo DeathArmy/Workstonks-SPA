@@ -1,3 +1,4 @@
+import { BasketItem } from './../Models/BasketItem';
 import { Subtask } from './../Models/Subtask';
 import { KanbanTask, KanbanTaskDetails } from './../Models/KanbanTask';
 import { Comment } from './../Models/Comment';
@@ -114,5 +115,32 @@ export class kanbanTasksService {
 
     let tempUrl = this.urlString + 'comments';
     return this.http.put(tempUrl, comment);
+  }
+
+  postBasketItem(item: BasketItem) : Observable<any> {
+    let httpHeaders = new HttpHeaders();
+    const token: string  = sessionStorage.getItem('token')!;
+    httpHeaders = httpHeaders.append('Authorization', token);
+
+    let tempUrl = this.urlString + 'basketItem';
+    return this.http.post(tempUrl, item);
+  }
+
+  putBasketItem(item: BasketItem) : Observable<BasketItem> {
+    let httpHeaders = new HttpHeaders();
+    const token: string  = sessionStorage.getItem('token')!;
+    httpHeaders = httpHeaders.append('Authorization', token);
+
+    let tempUrl = this.urlString + 'basketItem';
+    return this.http.put(tempUrl, item);
+  }
+
+  deleteBasketItem(id: number) : Observable<any> {
+    let httpHeaders = new HttpHeaders();
+    const token: string  = sessionStorage.getItem('token')!;
+    httpHeaders = httpHeaders.append('Authorization', token);
+
+    let tempUrl = this.urlString + 'basketItem?basketItemId=' + id ;
+    return this.http.delete(tempUrl);
   }
 }
