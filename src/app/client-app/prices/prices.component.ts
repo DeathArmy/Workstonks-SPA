@@ -1,6 +1,6 @@
 import { ConfigService } from '../../services/config.service';
 import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-prices',

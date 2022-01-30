@@ -22,6 +22,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { EmployeeAppRoutingModule } from './employee-app-routing.module';
 import { EmployeeAppComponent } from './employee-app.component';
@@ -75,7 +76,8 @@ import { HistoryComponent } from './history/history.component';
     MatSelectModule,
     MatProgressBarModule,
     MatRadioModule,
-    MatStepperModule
+    MatStepperModule,
+    MatPaginatorModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},
