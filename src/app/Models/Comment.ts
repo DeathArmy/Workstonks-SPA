@@ -8,5 +8,5 @@ export class Comment {
     content?: string;
     userName?: string;
     dateOfCreation?: Date;
-    innerComment: boolean = true;
+    isInnerComment: boolean = true;
 }

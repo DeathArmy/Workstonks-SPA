@@ -22,41 +22,45 @@ export class FormService {
 
   getForms(state: number) : Observable<Array<formFieldsModel>>
   {
-    let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('token');
-    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
 
     let tempUrl = this.urlString + 'serviceRequests?state=' + state;
-    return this.http.get<Array<formFieldsModel>>(tempUrl);
+    return this.http.get<Array<formFieldsModel>>(tempUrl, header);
   }
 
   deleteTicket(id: number) : Observable <any>
   {
-    let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('token');
-    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
 
     let tempUrl = this.urlString + 'serviceRequest?serviceRequestId=' + id ;
-    return this.http.delete<any>(tempUrl);
+    return this.http.delete<any>(tempUrl, header);
   }
 
   abondTicket(id: number) : Observable <any>
   {
-    let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('token');
-    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
 
     let tempUrl = this.urlString + 'serviceRequest/reject?id=' + id ;
-    return this.http.put<any>(tempUrl, null);
+    return this.http.put<any>(tempUrl, null, header);
   }
 
   getSR(id: number) : Observable <formFieldsModel>
   {
-    let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('token');
-    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
 
     let tempUrl = this.urlString + 'serviceRequest?id=' + id ;
-    return this.http.get<formFieldsModel>(tempUrl);
+    return this.http.get<formFieldsModel>(tempUrl, header);
   }
 }

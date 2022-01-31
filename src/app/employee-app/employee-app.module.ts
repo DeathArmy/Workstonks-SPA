@@ -37,6 +37,7 @@ import { AdministrationComponent } from './administration/administration.compone
 import { ReportsComponent } from './reports/reports.component';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { HistoryComponent } from './history/history.component';
+import { BasketComponent } from './basket/basket.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { HistoryComponent } from './history/history.component';
     AdministrationComponent,
     ReportsComponent,
     TaskDetailsComponent,
-    HistoryComponent
+    HistoryComponent,
+    BasketComponent
    ],
   imports: [
     CommonModule,

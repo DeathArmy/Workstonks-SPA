@@ -1,4 +1,5 @@
 import { BasketItem } from './BasketItem';
+import { Comment } from './Comment';
 import { Customer } from "./Customer";
 import { Subtask } from "./Subtask";
 

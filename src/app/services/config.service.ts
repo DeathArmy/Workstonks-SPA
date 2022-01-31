@@ -11,36 +11,40 @@ export class ConfigService {
 
   getConfig(componentName: string): Observable<configResponse>
   {
-    let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('token');
-    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
 
-    return this.http.get<configResponse>(this.urlString + 'config?componentName=' + componentName);
+    return this.http.get<configResponse>(this.urlString + 'config?componentName=' + componentName, header);
   }
 
   postConfig(config: any, name: string) : Observable<configResponse>
   {
-    let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('token');
-    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
 
     let conf: configResponse = new configResponse();
     conf.componentName = name;
     conf.data = JSON.stringify(config);
     let tempUrl = this.urlString + 'config';
-    return this.http.post<configResponse>(tempUrl, conf);
+    return this.http.post<configResponse>(tempUrl, conf, header);
   }
 
   putConfig(config: any, name: string) : Observable<configResponse>
   {
-    let httpHeaders = new HttpHeaders();
     let token = sessionStorage.getItem('token');
-    httpHeaders = httpHeaders.append('Authorization', token? token : '');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
+
 
     let conf: configResponse = new configResponse();
     conf.componentName = name;
     conf.data = JSON.stringify(config);
     let tempUrl = this.urlString + 'config';
-    return this.http.put<configResponse>(tempUrl, conf);
+    return this.http.put<configResponse>(tempUrl, conf, header);
   }
 }

@@ -68,6 +68,10 @@ export class PdfMaker {
                         style: ['defaultStyle', 'centerText']
                     }
                 ]},
+                {
+                  text: 'Wyrażam zgodę na przetwarzanie moich danych osobowych w zakresie: imię, nazwisko, numer telefonu oraz adres e-mail w celu przekazania informacji związanych z naprawą pojazdu.',
+                  style: ['rodo']
+                },
                 {stack: [
                     {text: '-----------------------------------------------------------------------------------------------------------------------------------------------------------', style: 'defualtStyle'},
                     {text: 'Odbiór pojazdu', style: 'header', lineHeight: 1.5},
@@ -91,21 +95,27 @@ export class PdfMaker {
             ],
             styles: {
                 header: {
-                    fontSize: 14,
-                    alignment: 'center' as Alignment,
-                    bold: true
+                  fontSize: 14,
+                  alignment: 'center' as Alignment,
+                  bold: true
                 },
                 centerText: {
-                    alignment: 'center' as Alignment
+                  alignment: 'center' as Alignment
                 },
                 justifyText: {
-                    alignment: 'justify' as Alignment
+                  alignment: 'justify' as Alignment
                 },
                 defaultStyle: {
-                    fontSize: 10
+                  fontSize: 10
+                },
+                rodo: {
+                  fontSize: 8
                 }
             }
         };
         pdfMake.createPdf(pdfContent).open();
+    }
+    public invoice() {
+
     }
 }

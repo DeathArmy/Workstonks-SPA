@@ -1,0 +1,95 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      Zapotrzebowanie <ng-container *ngIf="basketList.length != 0">({{basketList.length}})</ng-container>
+    </mat-card-title>
+  </mat-card-header>
+  <hr>
+  <mat-card-content>
+    <ng-container *ngIf="basketList.length == 0">
+      <p style='color:red; font-weight: bold;'>Brak zapotrzebowania</p>
+    </ng-container>
+    <ng-container *ngIf="basketList.length != 0">
+
+      <mat-form-field appearance="standard">
+        <mat-label>Filtr</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filtr" #input>
+      </mat-form-field>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="kanbanTaskId">
+          <th mat-header-cell *matHeaderCellDef> Numer zgłoszenia </th>
+          <td mat-cell *matCellDef="let element"> <a routerLink="../task-details/{{element.kanbanTaskId}}">KT-{{element.kanbanTaskId}}</a> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="itemName">
+          <th mat-header-cell *matHeaderCellDef> Nazwa </th>
+          <td mat-cell *matCellDef="let element"> {{element.itemName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Ilość </th>
+          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unitOfMeasure">
+          <th mat-header-cell *matHeaderCellDef> Miara </th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.unitOfMeasure == 0">
+              litr
+            </ng-container>
+            <ng-container *ngIf="element.unitOfMeasure == 1">
+              szt
+            </ng-container>
+            <ng-container *ngIf="element.unitOfMeasure == 2">
+              kg
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateOfAddedToCart">
+          <th mat-header-cell *matHeaderCellDef> Data dodania do koszyka </th>
+          <td mat-cell *matCellDef="let element"> {{element.dateOfAddedToCart | date: "dd.MM.yyyy, HH:mm"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateOfPurchase">
+          <th mat-header-cell *matHeaderCellDef> Data zakupu </th>
+          <td mat-cell *matCellDef="let element"> {{element.dateOfPurchase | date: "dd.MM.yyyy, HH:mm"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateOfDelivery">
+          <th mat-header-cell *matHeaderCellDef> Data dostawy </th>
+          <td mat-cell *matCellDef="let element"> {{element.dateOfDelivery | date: "dd.MM.yyyy, HH:mm"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vin">
+          <th mat-header-cell *matHeaderCellDef> VIN </th>
+          <td mat-cell *matCellDef="let element"> {{element.vin}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="make">
+          <th mat-header-cell *matHeaderCellDef> Auto </th>
+          <td mat-cell *matCellDef="let element"> {{element.make}} {{element.model}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productionYear">
+          <th mat-header-cell *matHeaderCellDef> Rocznik </th>
+          <td mat-cell *matCellDef="let element"> {{element.productionYear}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="power">
+          <th mat-header-cell *matHeaderCellDef> Silnik </th>
+          <td mat-cell *matCellDef="let element"> {{element.engineDescription}} {{element.power}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Nie znaleziono wartości odpowiadającej: "{{input.value}}"</td>
+        </tr>
+      </table>
+
+    </ng-container>
+  </mat-card-content>
+</mat-card>

@@ -77,13 +77,21 @@ export class TaskDetailsComponent implements OnInit {
     this.routerData.params.subscribe(params => {
       this.taskId = params['id'];
     });
+    this.getKanbanTaskData();
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => {this.progressBarCalculations()}, 1000);
+  }
+
+  getKanbanTaskData() {
     this._ktService.getKanbanTask(this.taskId).subscribe(response => {
       this.taskDetails = response;
       this.selectedTaskStatus = this.taskDetails.status;
       this.basketItemsList = this.taskDetails.basketItems;
+      this.commentList = this.taskDetails.comments;
       this._fromService.getSR(this.taskDetails.serviceRequestId? this.taskDetails.serviceRequestId : 0).subscribe(response => {
         this.taskDetails.customer = response.customer;
-        this.getComments();
       });
       for(let subtask of this.taskDetails.subtasks) {
         let temp = this.getSelectedViewValue(subtask)
@@ -91,10 +99,6 @@ export class TaskDetailsComponent implements OnInit {
       };
       this.getUsername();
     });
-  }
-
-  ngOnInit(): void {
-    setTimeout(() => {this.progressBarCalculations()}, 1000);
   }
 
   statusChanged(event: MatSelectChange, index: number) {
@@ -167,8 +171,8 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   postComment() {
-    if (this.radioButtonChoose == 'true') this.newComment.innerComment = true;
-    else this.newComment.innerComment = false;
+    if (this.radioButtonChoose == 'true') this.newComment.isInnerComment = true;
+    else this.newComment.isInnerComment = false;
     this.newComment.kanbanTaskId = this.taskId;
     this._ktService.postComment(this.newComment).subscribe(response => {
       this.getComments();
@@ -203,6 +207,12 @@ export class TaskDetailsComponent implements OnInit {
 
   editTask() {
     this.taskEditMode = true;
+    this._ktService.updateKanbanTask(this.taskDetails).subscribe(respone => {
+      console.log(respone);
+    },
+    (error) => {
+      console.log(error);
+    });
   }
 
   saveEditedTask() {
@@ -222,30 +232,35 @@ export class TaskDetailsComponent implements OnInit {
   addBasketItem() {
     this.newBasketItem.unitOfMeasure = this.selectedMeasureUnit;
     this.newBasketItem.kanbanTaskId = this.taskDetails.id;
+    this.newBasketItem.dateOfAddedToCart = new Date();
 
     this._ktService.postBasketItem(this.newBasketItem).subscribe(response => {
-      this.newBasketItem.id = response;
+      console.log(response);
+      this.getKanbanTaskData();
+      this.newBasketItem = new BasketItem();
     },
     (error) => {
       console.log(error);
     });
-    this.basketItemsList.push(this.newBasketItem);
-    this.newBasketItem = new BasketItem();
   }
 
   deleteBasketItem(id: number) {
     let idToDelete: number = this.basketItemsList[id].id!;
     this._ktService.deleteBasketItem(idToDelete).subscribe(response => {
-      console.log(response);
+      this.getKanbanTaskData();
     },
     (error) => {
       console.log(error);
     });
-    this.basketItemsList.splice(id, 1);
   }
 
   createInvoce() {
+    var pdfMaker = new PdfMaker();
+    pdfMaker.invoice();
+  }
 
+  closeTicket() {
+    //
   }
 }
 

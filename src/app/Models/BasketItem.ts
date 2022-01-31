@@ -7,12 +7,32 @@ export class BasketItem {
   itemName?: string;
   price?: number;
   basketItemState?: ItemState;
+  amount?: number;
+  unitOfMeasure?: UnitOfMeasure;
   dateOfAddedToCart?: Date;
   dateOfPurchase?: Date;
   dateOfDelivery?: Date;
   kanbanTaskId?: number;
+}
+
+export class ExtendedBasketItem {
+  id?: number;
+  isActive?: boolean;
+  itemName?: string;
+  price?: number;
+  basketItemState?: ItemState;
   amount?: number;
   unitOfMeasure?: UnitOfMeasure;
+  dateOfAddedToCart?: Date;
+  dateOfPurchase?: Date;
+  dateOfDelivery?: Date;
+  kanbanTaskId?: number;
+  vin?: string;
+  make?: string;
+  model?: string;
+  productionYear?: number;
+  engineDescription?: string;
+  power?: number;
 }
 
 enum ItemState {
