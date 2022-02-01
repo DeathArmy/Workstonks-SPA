@@ -6,3 +6,12 @@ table {
   font-size: 14px;
   width: 100%;
 }
+
+.datePicker {
+  font-size: 12px;
+  width: 20%;
+}
+
+.priceInput {
+  width: 10%;
+}

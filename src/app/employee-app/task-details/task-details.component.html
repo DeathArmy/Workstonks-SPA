@@ -238,7 +238,9 @@
                 <td *ngIf="item.unitOfMeasure == 0">litr</td>
                 <td *ngIf="item.unitOfMeasure == 1">szt</td>
                 <td *ngIf="item.unitOfMeasure == 2">kg</td>
-                <td *ngIf="taskEditMode"><button mat-raised-button (click)='deleteBasketItem(i)' color='primary'>Usuń</button></td>
+                <td *ngIf="item.basketItemState == 2">Dostarczony</td>
+                <td *ngIf="item.basketItemState == 1">Zamówiony</td>
+                <td *ngIf="taskEditMode && item.basketItemState != 2 && item.basketItemState != 1"><button mat-raised-button (click)='deleteBasketItem(i)' color='primary'>Usuń</button></td>
               </tr>
             </ng-container>
           </table>

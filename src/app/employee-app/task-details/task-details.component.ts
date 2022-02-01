@@ -90,6 +90,7 @@ export class TaskDetailsComponent implements OnInit {
       this.selectedTaskStatus = this.taskDetails.status;
       this.basketItemsList = this.taskDetails.basketItems;
       this.commentList = this.taskDetails.comments;
+      this.commentList.reverse();
       this._fromService.getSR(this.taskDetails.serviceRequestId? this.taskDetails.serviceRequestId : 0).subscribe(response => {
         this.taskDetails.customer = response.customer;
       });
@@ -163,32 +164,25 @@ export class TaskDetailsComponent implements OnInit {
     this.progressBarCalculations();
   }
 
-  getComments() {
-    this._ktService.getComments(this.taskDetails.id? this.taskDetails.id : 0).subscribe(response => {
-      this.commentList = response;
-    });
-    setTimeout(() => {this.commentList.reverse();}, 700);
-  }
-
   postComment() {
     if (this.radioButtonChoose == 'true') this.newComment.isInnerComment = true;
     else this.newComment.isInnerComment = false;
     this.newComment.kanbanTaskId = this.taskId;
     this._ktService.postComment(this.newComment).subscribe(response => {
-      this.getComments();
+      this.getKanbanTaskData();
       this.newComment = new Comment();
     });
   }
 
   deleteComment(id: number) {
     this._ktService.deleteComment(this.commentList[id].id!).subscribe(response => {
-      this.getComments();
+      this.getKanbanTaskData();
     });
   }
 
   saveComment(id: number) {
     this._ktService.editComment(this.commentList[id]).subscribe(response => {
-      this.getComments();
+      this.getKanbanTaskData();
     });
   }
 
@@ -256,7 +250,7 @@ export class TaskDetailsComponent implements OnInit {
 
   createInvoce() {
     var pdfMaker = new PdfMaker();
-    pdfMaker.invoice();
+    pdfMaker.invoice(this.taskDetails);
   }
 
   closeTicket() {

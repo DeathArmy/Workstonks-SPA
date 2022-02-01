@@ -1,3 +1,4 @@
+import { KanbanTaskBasketDto } from './KanbanTask';
 import { Injectable } from "@angular/core";
 
 @Injectable()
@@ -27,12 +28,7 @@ export class ExtendedBasketItem {
   dateOfPurchase?: Date;
   dateOfDelivery?: Date;
   kanbanTaskId?: number;
-  vin?: string;
-  make?: string;
-  model?: string;
-  productionYear?: number;
-  engineDescription?: string;
-  power?: number;
+  kanbanTask?: KanbanTaskBasketDto;
 }
 
 enum ItemState {

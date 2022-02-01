@@ -115,7 +115,55 @@ export class PdfMaker {
         };
         pdfMake.createPdf(pdfContent).open();
     }
-    public invoice() {
+    public invoice(kanbanTask: KanbanTaskDetails) {
+      let todayDate = new Date().toLocaleDateString();
+      var pdfContent = {
+        info: {title: 'Faktura', author: 'workstonks-spa'},
+        watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.05},
+        header: [
+          ' ',
+          {text: ' Faktura nr: ', style: 'header'},
 
+      ],
+        content: [
+          {text: `Data wystawienia: ${todayDate} \n\n`, style: 'header2'},
+          {columns: [
+            {
+              width: '50%',
+              text: 'Sprzedawca\n',
+              style: ['defaultStyle', 'centerText']
+            },
+            {
+            width: '50%',
+            text: 'Kupujący\n',
+            style: ['defaultStyle', 'centerText']
+            }
+          ]
+          }
+        ],
+        styles: {
+            header: {
+              fontSize: 16,
+              bold: true
+            },
+            header2: {
+              fontSize: 12,
+              alignment: 'right' as Alignment
+            },
+            centerText: {
+              alignment: 'center' as Alignment
+            },
+            justifyText: {
+              alignment: 'justify' as Alignment
+            },
+            defaultStyle: {
+              fontSize: 10
+            },
+            rodo: {
+              fontSize: 8
+            }
+        }
+      };
+      pdfMake.createPdf(pdfContent).open();
     }
 }

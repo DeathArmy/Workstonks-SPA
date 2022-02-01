@@ -17,6 +17,21 @@
       </mat-form-field>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="kanbanTaskId">
           <th mat-header-cell *matHeaderCellDef> Numer zgłoszenia </th>
           <td mat-cell *matCellDef="let element"> <a routerLink="../task-details/{{element.kanbanTaskId}}">KT-{{element.kanbanTaskId}}</a> </td>
@@ -49,47 +64,96 @@
 
         <ng-container matColumnDef="dateOfAddedToCart">
           <th mat-header-cell *matHeaderCellDef> Data dodania do koszyka </th>
-          <td mat-cell *matCellDef="let element"> {{element.dateOfAddedToCart | date: "dd.MM.yyyy, HH:mm"}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.dateOfAddedToCart | date: "dd.MM, HH:mm"}} </td>
         </ng-container>
 
         <ng-container matColumnDef="dateOfPurchase">
           <th mat-header-cell *matHeaderCellDef> Data zakupu </th>
-          <td mat-cell *matCellDef="let element"> {{element.dateOfPurchase | date: "dd.MM.yyyy, HH:mm"}} </td>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.dateOfPurchase == '0001-01-01T00:00:00'">
+              ---
+            </ng-container>
+            <ng-container *ngIf="element.dateOfPurchase > element.dateOfAddedToCart">
+              {{element.dateOfPurchase | date: "dd.MM, HH:mm"}}
+            </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="dateOfDelivery">
           <th mat-header-cell *matHeaderCellDef> Data dostawy </th>
-          <td mat-cell *matCellDef="let element"> {{element.dateOfDelivery | date: "dd.MM.yyyy, HH:mm"}} </td>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element.dateOfDelivery == '0001-01-01T00:00:00'">
+              ---
+            </ng-container>
+            <ng-container *ngIf="element.dateOfDelivery > element.dateOfAddedToCart">
+              {{element.dateOfDelivery | date: "dd.MM.yyyy"}}
+            </ng-container>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="vin">
           <th mat-header-cell *matHeaderCellDef> VIN </th>
-          <td mat-cell *matCellDef="let element"> {{element.vin}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.kanbanTask.vin}} </td>
         </ng-container>
 
         <ng-container matColumnDef="make">
           <th mat-header-cell *matHeaderCellDef> Auto </th>
-          <td mat-cell *matCellDef="let element"> {{element.make}} {{element.model}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.kanbanTask.make}} {{element.kanbanTask.model}} </td>
         </ng-container>
 
         <ng-container matColumnDef="productionYear">
           <th mat-header-cell *matHeaderCellDef> Rocznik </th>
-          <td mat-cell *matCellDef="let element"> {{element.productionYear}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.kanbanTask.productionYear}} </td>
         </ng-container>
 
         <ng-container matColumnDef="power">
           <th mat-header-cell *matHeaderCellDef> Silnik </th>
-          <td mat-cell *matCellDef="let element"> {{element.engineDescription}} {{element.power}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.kanbanTask.engineDescription}}, {{element.kanbanTask.power}}KM </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
 
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="4">Nie znaleziono wartości odpowiadającej: "{{input.value}}"</td>
         </tr>
       </table>
-
+      <br/>
+      <ng-container *ngIf="!datePickingMode && !deliveryDatePickingMode">
+        <button mat-raised-button (click)="datePurchaseModeChange()">Oznacz wybrane jako zamówione</button>
+        &nbsp;
+        <button mat-raised-button (click)='datePickingModeChange()'> Wprowadź wybraną datę dostawy dla oznaczonych</button>
+      </ng-container>
+      <ng-container *ngIf="datePickingMode">
+        <mat-form-field appearance="outline" class='datePicker'>
+          <mat-label>Data dostawy</mat-label>
+          <input matInput [(ngModel)]="pickedDeliverDate" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <br/>
+        <button mat-raised-button (click)='setDeliveryDate()' color="primary">Zatwierdź</button>
+        &nbsp;
+        <button mat-raised-button (click)='datePickingModeChange()'>Anuluj</button>
+      </ng-container>
+      <br/>
+      <ng-container *ngIf="deliveryDatePickingMode">
+        <ng-container *ngFor="let element of selection.selected">
+          <mat-form-field appearance="outline" class="priceInput">
+            <mat-label>Cena burtto</mat-label>
+            <input matInput [(ngModel)]="element.price">
+          </mat-form-field>
+          {{element.itemName}} - {{element.amount}}
+          <ng-container *ngIf="element.unitOfMeasure == 0">litr</ng-container>
+          <ng-container *ngIf="element.unitOfMeasure == 1">szt</ng-container>
+          <ng-container *ngIf="element.unitOfMeasure == 2">kg</ng-container>
+          <br/>
+        </ng-container>
+        <br/>
+        <button mat-raised-button (click)='setPurchaseDate()' color="primary">Zatwierdź</button>
+        &nbsp;
+        <button mat-raised-button (click)='datePurchaseModeChange()'>Anuluj</button>
+      </ng-container>
     </ng-container>
   </mat-card-content>
 </mat-card>

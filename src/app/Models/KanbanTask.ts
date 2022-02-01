@@ -46,3 +46,13 @@ export class KanbanTaskDetails {
   basketItems: BasketItem[] = [];
   comments: Comment[] = [];
 }
+
+export class KanbanTaskBasketDto {
+  name?: string;
+  vin?: string;
+  make?: string;
+  model?: string;
+  productionYear?: number;
+  engineDescription?: string;
+  power?: number;
+}

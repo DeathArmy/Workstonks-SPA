@@ -24,26 +24,8 @@ export class HistoryComponent implements OnInit {
   expandedElement = {} as CarRepairHistory;
   vehicleIdNumber: string = "";
 
-  constructor() { 
+  constructor() {
 
-    let ch = new CarRepairHistory();
-    let hc = new CarRepairHistory();
-    let subtask = new Subtask();
-    ch.dateOfCarDelivery = new Date();
-    ch.totalPrice = 125.37;
-    ch.index = 1;
-    hc.dateOfCarDelivery = new Date();
-    hc.totalPrice = 69;
-    hc.index = 2;
-    subtask.manHour = 2;
-    subtask.name = "Wymiana oleju";
-    ch.subtasks.push(subtask);
-    hc.subtasks.push(subtask);
-    this.carRepairHistory.push(ch);
-    this.carRepairHistory.push(hc);
-    this.dataSource = new MatTableDataSource<CarRepairHistory>(this.carRepairHistory);
-
-     
   }
 
   ngOnInit(): void {
@@ -51,6 +33,6 @@ export class HistoryComponent implements OnInit {
 
   getHistoryByVin()
   {
-    
+
   }
 }
