@@ -9,6 +9,7 @@ enum Status {
   InDiagnostics,
   InRealization,
   Frozen,
+  WaitingForCustomer,
   Done
 }
 

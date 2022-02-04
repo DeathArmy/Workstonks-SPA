@@ -34,24 +34,27 @@ export class FormComponent implements OnInit {
   }
 
   Submit() {
-    if (this.email.invalid || this.vinControl.invalid || this.makeControl.invalid ||
+    if (this.form.customer.consentToTheProcessingOfPersonalData == false) this.snackBar.open("Wymagana akceptacja zgody na przetwarzanie danych osobowych!", "OK", {horizontalPosition: "center", verticalPosition: "bottom"})
+    else {
+      if (this.email.invalid || this.vinControl.invalid || this.makeControl.invalid ||
         this.modelControl.invalid || this.yearControl.invalid || this.engineControl.invalid ||
         this.powerControl.invalid || this.nameControl.invalid || this.surnameControl.invalid ||
         this.phoneControl.invalid || this.descriptionControl.invalid)
       {
         this.snackBar.open("Formularz zawiera błędy", "OK", {horizontalPosition: "center", verticalPosition: "bottom"});
       }
-    else {
-      this.fs.postForm(this.form).subscribe(post => {
-        console.log(post);},
-        error => {
-          console.log(error);
-        }
-      );
-      var resetForm:HTMLFormElement;
-      resetForm = <HTMLFormElement>document.getElementById('registrationForm');
-      resetForm.reset();
-      this.snackBar.open("Formularz został wysłany", "OK", {horizontalPosition: "center", verticalPosition: "bottom"});
+      else {
+        this.fs.postForm(this.form).subscribe(post => {
+          console.log(post);},
+          error => {
+            console.log(error);
+          }
+        );
+        var resetForm:HTMLFormElement;
+        resetForm = <HTMLFormElement>document.getElementById('registrationForm');
+        resetForm.reset();
+        this.snackBar.open("Formularz został wysłany", "OK", {horizontalPosition: "center", verticalPosition: "bottom"});
+      }
     }
   }
 }

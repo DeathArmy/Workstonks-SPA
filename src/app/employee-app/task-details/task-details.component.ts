@@ -55,7 +55,7 @@ export class TaskDetailsComponent implements OnInit {
     {value: 2, viewValue: 'W diagnostyce'},
     {value: 3, viewValue: 'W trakcie'},
     {value: 4, viewValue: 'Wstrzymane'},
-    {value: 5, viewValue: 'Zrobione'}
+    {value: 5, viewValue: 'Oczekuje na odbiór'}
   ];
 
    //temp Username list
@@ -254,7 +254,10 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   closeTicket() {
-    //
+    this.taskDetails.status = 6;
+    this._ktService.updateKanbanTask(this.taskDetails).subscribe(response => {
+      console.log(response);
+    });
   }
 }
 

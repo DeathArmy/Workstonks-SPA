@@ -4,4 +4,5 @@ export class Customer {
     surname?: string;
     phoneNumber?: string;
     email?: string;
+    consentToTheProcessingOfPersonalData: boolean = false;
   }

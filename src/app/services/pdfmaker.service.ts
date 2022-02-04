@@ -166,4 +166,8 @@ export class PdfMaker {
       };
       pdfMake.createPdf(pdfContent).open();
     }
+
+    public carHistory() {
+
+    }
 }

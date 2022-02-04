@@ -1,3 +1,4 @@
+import { CarRepairHistory } from 'src/app/Models/CarRepairHistory';
 import { ExtendedBasketItem, BasketItem } from './../Models/BasketItem';
 import { Subtask } from './../Models/Subtask';
 import { KanbanTask, KanbanTaskDetails } from './../Models/KanbanTask';
@@ -7,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Jwt } from '../Models/Jwt';
+import { Customer } from '../Models/Customer';
 
 @Injectable()
 export class kanbanTasksService {
@@ -44,11 +46,22 @@ export class kanbanTasksService {
     return this.http.get<KanbanTaskDetails>(tempUrl, header);
   }
 
-  updateKanbanTask(task: KanbanTask) : Observable<any> {
+  updateKanbanTask(task: KanbanTaskDetails) : Observable<any> {
     let token = sessionStorage.getItem('token');
     var header = {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
     };
+
+    if(!task.customer) {
+      let tempCustomer = new Customer();
+      tempCustomer.name = "Test";
+      tempCustomer.surname = "Test";
+      tempCustomer.email = "test@test.pl";
+      tempCustomer.consentToTheProcessingOfPersonalData = true;
+      tempCustomer.phoneNumber = '600100100';
+      task.customer = tempCustomer;
+    }
+    else if(task.customer.consentToTheProcessingOfPersonalData == false) task.customer.consentToTheProcessingOfPersonalData = true;
 
     let tempUrl = this.urlString + 'kanbanTask';
     return this.http.put<any>(tempUrl, task, header);
@@ -166,5 +179,15 @@ export class kanbanTasksService {
 
     let tempUrl = this.urlString + 'basketItems/uncompleted';
     return this.http.get<Array<ExtendedBasketItem>>(tempUrl, header);
+  }
+
+  getHistory(vin: string) : Observable<Array<CarRepairHistory>> {
+    let token = sessionStorage.getItem('token');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
+
+    let tempUrl = this.urlString + 'kanbanTasks?vin=' + vin;
+    return this.http.get<Array<CarRepairHistory>>(tempUrl, header);
   }
 }

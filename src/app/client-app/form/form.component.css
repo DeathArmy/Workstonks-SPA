@@ -20,3 +20,12 @@ mat-card-header {
 ::ng-deep .mat-card-header-text {
   margin: 0 !important;
 }
+
+::ng-deep .mat-checkbox-layout {
+  white-space: normal !important;
+}
+
+// rather than center the checkbox, put the checkbox in the first line
+::ng-deep .mat-checkbox-inner-container {
+  margin-top: 3px !important;
+}

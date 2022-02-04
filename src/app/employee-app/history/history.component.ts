@@ -1,8 +1,10 @@
+import { kanbanTasksService } from 'src/app/services/kanbanTasks.service';
 import { Component, OnInit } from '@angular/core';
 import { CarRepairHistory } from 'src/app/Models/CarRepairHistory';
 import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subtask } from 'src/app/Models/Subtask';
+import { PdfMaker } from 'src/app/services/pdfmaker.service';
 
 @Component({
   selector: 'app-history',
@@ -19,13 +21,13 @@ import { Subtask } from 'src/app/Models/Subtask';
 export class HistoryComponent implements OnInit {
 
   carRepairHistory: Array<CarRepairHistory> = [];
+  downloaded: boolean = false;
   displayedColumns: string[] = ['index', 'date', 'price'];
   dataSource: any;
   expandedElement = {} as CarRepairHistory;
   vehicleIdNumber: string = "";
 
-  constructor() {
-
+  constructor(private _ktService: kanbanTasksService) {
   }
 
   ngOnInit(): void {
@@ -33,6 +35,19 @@ export class HistoryComponent implements OnInit {
 
   getHistoryByVin()
   {
+    this._ktService.getHistory(this.vehicleIdNumber).subscribe(response => {
+      this.carRepairHistory = response;
+      this.downloaded = true;
+    },
+    error => {
+      console.log(error);
+    });
+  }
 
+  historyToPdf() {
+    let pdfMaker = new PdfMaker();
+    if(this.carRepairHistory.length > 0) {
+      pdfMaker.carHistory();
+    }
   }
 }
