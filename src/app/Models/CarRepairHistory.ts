@@ -5,12 +5,13 @@ import { Subtask } from './Subtask';
 
 @Injectable()
 export class CarRepairHistory {
-  Id: number = 0;
-  ServiceRequestId: number = 0;
-  Name: string = "";
-  Description: string = "";
-  DateOfActualRealization: Date = new Date();
-  Subtasks: Array<Subtask> = [];
-  BasketItems: Array<BasketItem> = [];
-  TotalBasketPrice: number = 0
+  id: number = 0;
+  serviceRequestId: number = 0;
+  name: string = "";
+  description: string = "";
+  dateOfActualRealization: Date = new Date();
+  subtasks: Array<Subtask> = [];
+  basketItems: Array<BasketItem> = [];
+  totalBasketPrice: number = 0;
+  totalWorkHoursCosts: number = 0;
 }

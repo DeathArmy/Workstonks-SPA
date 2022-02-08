@@ -1,3 +1,4 @@
+import { CarRepairHistory } from 'src/app/Models/CarRepairHistory';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Alignment } from 'pdfmake/interfaces';
@@ -167,7 +168,51 @@ export class PdfMaker {
       pdfMake.createPdf(pdfContent).open();
     }
 
-    public carHistory() {
-
-    }
+    public carHistory(carRepairHistory: Array<CarRepairHistory>) {
+      let todayDate = new Date().toLocaleDateString();
+      var pdfContent = {
+        info: {title: 'Historia pojazdu', author: 'workstonks-spa'},
+        watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.05},
+        header:
+        [
+          ' ',
+          {text: `Data wygenerowania: ${todayDate} \n\n`, style: 'header2'},
+        ],
+        content:
+        [
+          {
+            table:
+            {
+              headerRows: 4,
+              widths: ['*', 'auto', '100', '*'],
+              body:
+              [
+                ['Data', 'x', 'x', 'x'],
+                [ carRepairHistory[0].subtasks[0].name, 'val', 'val', 'val'],
+              ]
+            }
+          }
+        ],
+        styles: {
+            header: {
+              fontSize: 16,
+              bold: true
+            },
+            header2: {
+              fontSize: 12,
+              alignment: 'left' as Alignment
+            },
+            centerText: {
+              alignment: 'center' as Alignment
+            },
+            justifyText: {
+              alignment: 'justify' as Alignment
+            },
+            defaultStyle: {
+              fontSize: 10
+            },
+        }
+      };
+      //pdfMake.createPdf(pdfContent).open();
+  }
 }

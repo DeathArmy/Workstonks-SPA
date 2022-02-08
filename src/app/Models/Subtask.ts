@@ -11,6 +11,7 @@ export class Subtask {
     id?: number;
     name?: string;
     manHour?: number;
+    userId?: number;
     status?: Status;
   }
 
@@ -20,4 +21,5 @@ export class Subtask {
     name?: string;
     manHour?: number;
     status?: Status;
+    userId?: number;
   }

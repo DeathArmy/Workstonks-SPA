@@ -71,11 +71,15 @@ export class TicketOverlayComponent implements OnInit {
     this.kanbanTask.power = this.ticket.power;
     this.kanbanTask.vin = this.ticket.vin;
     this.kanbanTask.productionYear = this.ticket.productionYear;
-    this.kanbanTask.customer = this.ticket.customer;
+    this.kanbanTask.customerId = this.ticket.customer.id;
     this._kanbanService.createKanbanTask(this.kanbanTask).subscribe(response => {
-      //console.log(response);
+      console.log(response);
+      setTimeout(() => {this.closeOverlay.emit(true)}, 1000);
+    },
+    error => {
+      console.log(error);
+      setTimeout(() => {this.closeOverlay.emit(true)}, 1000);
     });
-    this.closeOverlay.emit(true);
   }
 
   abandoned() {

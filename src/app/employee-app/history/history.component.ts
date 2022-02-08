@@ -1,3 +1,4 @@
+import { BasketItem } from './../../Models/BasketItem';
 import { kanbanTasksService } from 'src/app/services/kanbanTasks.service';
 import { Component, OnInit } from '@angular/core';
 import { CarRepairHistory } from 'src/app/Models/CarRepairHistory';
@@ -28,9 +29,26 @@ export class HistoryComponent implements OnInit {
   vehicleIdNumber: string = "";
 
   constructor(private _ktService: kanbanTasksService) {
+
   }
 
   ngOnInit(): void {
+    let tempCarHistory = new CarRepairHistory();
+    let fakeBaasket = new BasketItem();
+    let fakeSubtask = new Subtask();
+    fakeSubtask.manHour = 1;
+    fakeSubtask.name = "zawieszenie przód";
+    fakeSubtask.manHour = 2;
+    tempCarHistory.subtasks.push(fakeSubtask);
+    fakeBaasket.amount = 1;
+    fakeBaasket.itemName = "końcówka drązka lewa";
+    fakeBaasket.price = 86.10;
+    tempCarHistory.basketItems.push(fakeBaasket);
+    tempCarHistory.dateOfActualRealization = new Date();
+    tempCarHistory.serviceRequestId = 1;
+    tempCarHistory.totalBasketPrice = 100;
+    tempCarHistory.totalWorkHoursCosts = 100;
+    this.carRepairHistory.push(tempCarHistory);
   }
 
   getHistoryByVin()
@@ -38,6 +56,7 @@ export class HistoryComponent implements OnInit {
     this._ktService.getHistory(this.vehicleIdNumber).subscribe(response => {
       this.carRepairHistory = response;
       this.downloaded = true;
+      this.dataSource = new MatTableDataSource(this.carRepairHistory);
     },
     error => {
       console.log(error);
@@ -47,7 +66,7 @@ export class HistoryComponent implements OnInit {
   historyToPdf() {
     let pdfMaker = new PdfMaker();
     if(this.carRepairHistory.length > 0) {
-      pdfMaker.carHistory();
+      pdfMaker.carHistory(this.carRepairHistory);
     }
   }
 }

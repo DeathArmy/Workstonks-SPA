@@ -91,9 +91,6 @@ export class TaskDetailsComponent implements OnInit {
       this.basketItemsList = this.taskDetails.basketItems;
       this.commentList = this.taskDetails.comments;
       this.commentList.reverse();
-      this._fromService.getSR(this.taskDetails.serviceRequestId? this.taskDetails.serviceRequestId : 0).subscribe(response => {
-        this.taskDetails.customer = response.customer;
-      });
       for(let subtask of this.taskDetails.subtasks) {
         let temp = this.getSelectedViewValue(subtask)
         this.selectedValue.push(temp? temp : 0);
@@ -257,7 +254,12 @@ export class TaskDetailsComponent implements OnInit {
     this.taskDetails.status = 6;
     this._ktService.updateKanbanTask(this.taskDetails).subscribe(response => {
       console.log(response);
+      this.router.navigate(['employeeApp/kanban']);
+    },
+    error => {
+      console.log(error);
     });
+
   }
 }
 
