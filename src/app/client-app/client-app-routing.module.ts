@@ -7,12 +7,14 @@ import { FormComponent } from './form/form.component';
 import { TrackingComponent } from './tracking/tracking.component';
 import { ContactComponent } from './contact/contact.component';
 
-const routes: Routes = [{ path: '', component: ClientAppComponent, children: [
-  {path: 'home', component: HomeComponent},
+const routes: Routes = [
+  {path: '', component: ClientAppComponent, children: [
   {path: 'contact', component: ContactComponent},
   {path: 'tracking', component: TrackingComponent},
+  {path: 'tracking?vin=:vin&protocolNumber=:protocolNumber', component: TrackingComponent},
   {path: 'form', component: FormComponent},
-  {path: 'pricelist', component: PricesComponent}]}
+  {path: 'pricelist', component: PricesComponent},
+  {path: 'home', component: HomeComponent}]}
 ];
 
 @NgModule({

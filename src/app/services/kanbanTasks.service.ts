@@ -23,7 +23,6 @@ export class kanbanTasksService {
     };
 
     let tempUrl = this.urlString + 'kanbanTask';
-    console.log(this.http.post<KanbanTaskDetails>(tempUrl, task, header));
     console.log(task);
     return this.http.post<KanbanTaskDetails>(tempUrl, task, header);
   }
@@ -43,7 +42,7 @@ export class kanbanTasksService {
     {
       tempUrl += "?DateExactly=" + exactlyDate.toDateString();
     }
-    
+
     return this.http.get<Array<KanbanTask>>(tempUrl, header);
   }
 
@@ -210,5 +209,10 @@ export class kanbanTasksService {
 
     let tempUrl = this.urlString + 'kanbanTask/protocol?kanbanTaskId=' + kanbanTaskId;
     return this.http.put<string>(tempUrl, '', header);
+  }
+
+  getTicketForClient(vin: string, protocolNumber: string) : Observable<KanbanTaskDetails> {
+    let tempUrl = this.urlString + `kanbanTask?VIN=${vin}&ProtocolNumber=${protocolNumber}`;
+    return this.http.get<KanbanTaskDetails>(tempUrl);
   }
 }

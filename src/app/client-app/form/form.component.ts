@@ -53,9 +53,8 @@ export class FormComponent implements OnInit {
         var resetForm:HTMLFormElement;
         resetForm = <HTMLFormElement>document.getElementById('registrationForm');
         resetForm.reset();
-        this.snackBar.open("Formularz został wysłany", "OK", {horizontalPosition: "center", verticalPosition: "bottom"});
+        this.snackBar.open("Formularz został wysłany", "OK", {horizontalPosition: "center", verticalPosition: "bottom", duration: 3000});
       }
     }
   }
 }
-

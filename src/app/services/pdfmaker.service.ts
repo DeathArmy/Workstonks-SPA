@@ -48,7 +48,7 @@ export class PdfMaker {
                     },
                     {
                         width: '80%',
-                        qr: 'Placeholder',
+                        qr: `localhost:4200/tracking?vin=${kanbanTask.vin}&protocolNumber=${kanbanTask.protocolNumber}`,
                         fit: 90
                     }
                 ]},
@@ -192,7 +192,7 @@ export class PdfMaker {
         {
           taskField += `${i+1}. ${record.subtasks[i].name} - ${record.subtasks[i].manHour} godz.\n`;
         }
-        
+
         body.push([{text: `${record.dateOfActualRealization}`, style: 'tableText'}, {text: `${record.totalBasketPrice} + ${record.totalWorkHoursCosts} = ${record.totalBasketPrice + record.totalWorkHoursCosts} zł`, style: 'tableText'}, {text: basketField, style: 'tableText'}, {text: taskField, style: 'tableText'}]);
       }
 

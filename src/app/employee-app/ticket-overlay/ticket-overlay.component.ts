@@ -10,6 +10,7 @@ import { Subtask } from '../../Models/Subtask';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { kanbanTasksService } from 'src/app/services/kanbanTasks.service';
+import { Customer } from 'src/app/Models/Customer';
 
 @Component({
   selector: 'app-ticket-overlay',
@@ -71,7 +72,17 @@ export class TicketOverlayComponent implements OnInit {
     this.kanbanTask.power = this.ticket.power;
     this.kanbanTask.vin = this.ticket.vin;
     this.kanbanTask.productionYear = this.ticket.productionYear;
-    this.kanbanTask.customerId = this.ticket.customer.id;
+    if (this.ticket.customer.id != undefined) {
+      this.kanbanTask.customerId = this.ticket.customer.id;
+    }
+    else {
+      this.kanbanTask.customer = new Customer();
+      this.kanbanTask.customer!.consentToTheProcessingOfPersonalData = true;
+      this.kanbanTask.customer!.email = this.ticket.customer.email;
+      this.kanbanTask.customer!.name = this.ticket.customer.name;
+      this.kanbanTask.customer!.surname = this.ticket.customer.surname;
+      this.kanbanTask.customer!.phoneNumber = this.ticket.customer.phoneNumber;
+    }
     this._kanbanService.createKanbanTask(this.kanbanTask).subscribe(response => {
       console.log(response);
       setTimeout(() => {this.closeOverlay.emit(true)}, 1000);

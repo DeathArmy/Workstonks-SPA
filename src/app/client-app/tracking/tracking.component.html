@@ -1,8 +1,8 @@
-<div class="col-md-5 order-md-1 centerDiv">
-  <h3 class="mb-3">Tutaj możesz sprawdzić status naprawy. W tym celu wypełnij poniższe informacje.</h3>
+<div class="col-md-6 order-md-1 centerDiv">
+  <h3 class="mb-4">Tutaj możesz sprawdzić status naprawy. W tym celu wypełnij poniższe informacje.</h3>
   <form class="trackingForm" (ngSubmit)="Submit()" autocomplete="off">
     <div class="row">
-      <div class="col mb-3">
+      <div class="col mb-4">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>VIN</mat-label>
           <input type="text" id="vinNumber" [(ngModel)]="vin" matInput [formControl]="vinFormControl" placeholder="ZAR93900009999999">
@@ -11,7 +11,7 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="col mb-3">
+      <div class="col mb-4">
         <mat-form-field class="full-width" appearance="fill">
           <mat-label>Numer protokołu odbioru</mat-label>
           <input type="text" id="protocolNumber" [(ngModel)]="protocolNumber" matInput [formControl]="protocolFormControl" matInput [placeholder]="protocolFormPlaceholder">
@@ -20,7 +20,7 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="col mb-3 subButton">
+      <div class="col mb-4 subButton">
         <button mat-raised-button type="submit" color="primary">Sprawdź</button>
       </div>
     </div>
@@ -28,14 +28,50 @@
 </div>
 
 <div *ngIf="trackingFilled == true">
+  <div class="taskStatusInfo">
+    <ng-container *ngIf="taskDetails.status == 0">Oczekiwanie za klientem</ng-container>
+    <ng-container *ngIf="taskDetails.status == 1">Przyjęto samochód</ng-container>
+    <ng-container *ngIf="taskDetails.status == 2">W trakcie diagnostyki</ng-container>
+    <ng-container *ngIf="taskDetails.status == 3">W trakice naprawy</ng-container>
+    <ng-container *ngIf="taskDetails.status == 4">Oczekuje za dostawą części</ng-container>
+    <ng-container *ngIf="taskDetails.status == 5">Do odbioru</ng-container>
+    <ng-container *ngIf="taskDetails.status == 6">Pojazd odebrany przez klienta</ng-container>
+  </div>
   <mat-card class="tracking-info">
     <mat-card-header>
-      <mat-card-title>{{protocolNumber}}</mat-card-title>
-      <mat-card-subtitle>{{vin}}</mat-card-subtitle>
+      <h2>
+        Podgląd prac dla {{taskDetails.vin}} ({{taskDetails.protocolNumber}})
+      </h2>
     </mat-card-header>
     <hr>
     <mat-card-content>
-      <p>Brak danych</p>
+      <div class="row">
+        <div class="col">
+          <ng-container>
+            Placeholder subtaski
+          </ng-container>
+          <br/>
+          <ng-container>
+            Placeholder komentarze
+          </ng-container>
+        </div>
+        <div class="col">
+          <ng-container>
+            Placeholder koszta?
+          </ng-container>
+          <br/>
+          <ng-container>
+            Placeholder koszyk
+          </ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <ng-container>
+            Placeholder zdjęcia
+          </ng-container>
+        </div>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

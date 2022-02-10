@@ -15,6 +15,12 @@
 
 .tracking-info {
   margin: auto;
-  max-width: 600px;
-  background-color: #CFCFCF;
+  width: 98%;
+  background-color: #DFDFDF;
+}
+
+.taskStatusInfo {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
 }

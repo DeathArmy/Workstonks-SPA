@@ -1,3 +1,4 @@
+import { TrackingComponent } from './client-app/tracking/tracking.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

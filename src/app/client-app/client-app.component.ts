@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-client-app',
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class ClientAppComponent implements OnInit {
 
   constructor(private router: Router) {
-    router.navigate(['/home']);
+    if (!router.url.includes('tracking?')) router.navigate(['/home']);
   }
 
   ngOnInit(): void {
