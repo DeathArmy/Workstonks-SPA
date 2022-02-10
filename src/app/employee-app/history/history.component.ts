@@ -66,7 +66,7 @@ export class HistoryComponent implements OnInit {
   historyToPdf() {
     let pdfMaker = new PdfMaker();
     if(this.carRepairHistory.length > 0) {
-      pdfMaker.carHistory(this.carRepairHistory);
+      pdfMaker.carHistory(this.carRepairHistory, this.vehicleIdNumber);
     }
   }
 }

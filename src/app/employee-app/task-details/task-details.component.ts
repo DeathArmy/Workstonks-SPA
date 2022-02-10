@@ -193,7 +193,18 @@ export class TaskDetailsComponent implements OnInit {
 
   createPdf() {
     var pdfMaker = new PdfMaker();
-    pdfMaker.CollectionProtokol(this.taskDetails);
+    if (this.taskDetails.protocolNumber == undefined) {
+      this._ktService.getProtocolNumber(this.taskDetails.id!).subscribe(response => {
+        this.taskDetails.protocolNumber = response;
+        pdfMaker.CollectionProtokol(this.taskDetails);
+      },
+      error => {
+        console.log(error);
+      });
+    }
+    else {
+      pdfMaker.CollectionProtokol(this.taskDetails);
+    }    
   }
 
   editTask() {

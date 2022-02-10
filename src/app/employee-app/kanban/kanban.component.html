@@ -1,106 +1,117 @@
 <ng-container>
   <div class='kanbanBoard'>
-    <h2>Kanban board - {{date | date:'yyyy-MM-dd'}}</h2>
+    <h2>Kanban</h2>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Wyświetlana data</mat-label>
+      <input matInput [(ngModel)]="choosenDate" [matDatepicker]="picker" (dateChange)="dateChanged()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
     <hr>
-    <ng-container *ngIf="kanbanTasks.length != 0; else noTickets">
-      <div class="new pb-1">
-        <h2>Nowe</h2>
-        <ng-container *ngFor="let task of newKT">
-          <mat-card class="newTick" (click)="openTask(task.id ? task.id : 0)">
-            <div class='newDiv'>&nbsp;</div>
-              <mat-card-title>
-                <i>{{task.make}} {{task.model}}</i>
-              </mat-card-title>
-              <mat-card-subtitle>
-                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
-                Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
-              </mat-card-subtitle>
-          </mat-card>
-        </ng-container>
-      </div>
-
-      <div class="toDo pb-1">
-        <h2>Do zrobienia</h2>
-        <ng-container *ngFor="let task of todoKT">
-          <mat-card class="todoTick" (click)="openTask(task.id ? task.id : 0)">
-            <div class='todoDiv'>&nbsp;</div>
-              <mat-card-title>
-                <i>{{task.make}} {{task.model}}</i>
-              </mat-card-title>
-              <mat-card-subtitle>
-                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
-                Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
-              </mat-card-subtitle>
-          </mat-card>
-        </ng-container>
-      </div>
-
-      <div class="inDiagnostics pb-1">
-        <h2>W diagnostyce</h2>
-        <ng-container *ngFor="let task of inDiagKT">
-          <mat-card class="diagTick" (click)="openTask(task.id ? task.id : 0)">
-            <div class='diagDiv'>&nbsp;</div>
-              <mat-card-title>
-                <i>{{task.make}} {{task.model}}</i>
-              </mat-card-title>
-              <mat-card-subtitle>
-                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
-                Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
-              </mat-card-subtitle>
-          </mat-card>
-        </ng-container>
-      </div>
-
-      <div class="inProgress pb-1">
-        <h2>W trakcie</h2>
-        <ng-container *ngFor="let task of inProgKT">
-          <mat-card class="progTick" (click)="openTask(task.id ? task.id : 0)">
-            <div class='progDiv'>&nbsp;</div>
-              <mat-card-title>
-                <i>{{task.make}} {{task.model}}</i>
-              </mat-card-title>
-              <mat-card-subtitle>
-                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
-                Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
-              </mat-card-subtitle>
-          </mat-card>
-        </ng-container>
-      </div>
-
-      <div class="frozen pb-1">
-        <h2>Wstrzymane</h2>
-        <ng-container *ngFor="let task of frozenKT">
-          <mat-card class="frozenTick" (click)="openTask(task.id ? task.id : 0)">
-            <div class='frozenDiv'>&nbsp;</div>
-              <mat-card-title>
-                <i>{{task.make}} {{task.model}}</i>
-              </mat-card-title>
-              <mat-card-subtitle>
-                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
-                Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
-              </mat-card-subtitle>
-          </mat-card>
-        </ng-container>
-      </div>
-
-      <div class="done pb-1">
-        <h2>Oczekujące na odbiór</h2>
-        <ng-container *ngFor="let task of doneKT">
-          <mat-card class="doneTick" (click)="openTask(task.id ? task.id : 0)">
-            <div class='doneDiv'>&nbsp;</div>
-              <mat-card-title>
-                <i>{{task.make}} {{task.model}}</i>
-              </mat-card-title>
-              <mat-card-subtitle>
-                Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
-                Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
-              </mat-card-subtitle>
-          </mat-card>
-        </ng-container>
-      </div>
-    </ng-container>
-    <ng-template #noTickets>
-      <p style="color:red; font-weight: bold;">Brak zadań na dziś!</p>
-    </ng-template>
+    <div class="row">
+      <ng-container *ngIf="kanbanTasks.length != 0; else noTickets">
+        <div class="new pb-1 col">
+          <h2>Nowe</h2>
+          <ng-container *ngFor="let task of newKT">
+            <mat-card class="newTick" (click)="openTask(task.id ? task.id : 0)">
+              <div class='newDiv'>&nbsp;</div>
+                <mat-card-title>
+                  <i>{{task.make}} {{task.model}}</i>
+                </mat-card-title>
+                <mat-card-subtitle>
+                  Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
+                  Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
+                </mat-card-subtitle>
+            </mat-card>
+          </ng-container>
+          <br/>
+        </div>
+        <div class="toDo pb-1 col">
+          <h2>Do zrobienia</h2>
+          <ng-container *ngFor="let task of todoKT">
+            <mat-card class="todoTick" (click)="openTask(task.id ? task.id : 0)">
+              <div class='todoDiv'>&nbsp;</div>
+                <mat-card-title>
+                  <i>{{task.make}} {{task.model}}</i>
+                </mat-card-title>
+                <mat-card-subtitle>
+                  Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
+                  Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
+                </mat-card-subtitle>
+            </mat-card>
+          </ng-container>
+          <br/>
+        </div>
+        <div class="inDiagnostics pb-1 col">
+          <h2>W diagnostyce</h2>
+          <ng-container *ngFor="let task of inDiagKT">
+            <mat-card class="diagTick" (click)="openTask(task.id ? task.id : 0)">
+              <div class='diagDiv'>&nbsp;</div>
+                <mat-card-title>
+                  <i>{{task.make}} {{task.model}}</i>
+                </mat-card-title>
+                <mat-card-subtitle>
+                  Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
+                  Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
+                </mat-card-subtitle>
+            </mat-card>
+          </ng-container>
+          <br/>
+        </div>
+        <div class="inProgress pb-1 col">
+          <h2>W trakcie</h2>
+          <ng-container *ngFor="let task of inProgKT">
+            <mat-card class="progTick" (click)="openTask(task.id ? task.id : 0)">
+              <div class='progDiv'>&nbsp;</div>
+                <mat-card-title>
+                  <i>{{task.make}} {{task.model}}</i>
+                </mat-card-title>
+                <mat-card-subtitle>
+                  Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
+                  Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
+                </mat-card-subtitle>
+            </mat-card>
+          </ng-container>
+          <br/>
+        </div>
+        <div class="frozen pb-1 col">
+          <h2>Wstrzymane</h2>
+          <ng-container *ngFor="let task of frozenKT">
+            <mat-card class="frozenTick" (click)="openTask(task.id ? task.id : 0)">
+              <div class='frozenDiv'>&nbsp;</div>
+                <mat-card-title>
+                  <i>{{task.make}} {{task.model}}</i>
+                </mat-card-title>
+                <mat-card-subtitle>
+                  Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
+                  Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
+                </mat-card-subtitle>
+            </mat-card>
+          </ng-container>
+          <br/>
+        </div>
+        <div class="done pb-1 col">
+          <h2>Oczekujące na odbiór</h2>
+          <ng-container *ngFor="let task of doneKT">
+            <mat-card class="doneTick" (click)="openTask(task.id ? task.id : 0)">
+              <div class='doneDiv'>&nbsp;</div>
+                <mat-card-title>
+                  <i>{{task.make}} {{task.model}}</i>
+                </mat-card-title>
+                <mat-card-subtitle>
+                  Oddany: {{task.dateOfCarDelivery | date:'yyyy-MM-dd'}} <br/>
+                  Termin: {{task.dateOfPlannedRealization | date:'yyyy-MM-dd'}}
+                </mat-card-subtitle>
+            </mat-card>
+          </ng-container>
+          <br/>
+        </div>
+      </ng-container>
+      <ng-template #noTickets>
+        <p style="color:red; font-weight: bold;">Brak zadań na dziś!</p>
+      </ng-template>
+    </div>
   </div>
 </ng-container>

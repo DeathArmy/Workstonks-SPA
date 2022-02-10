@@ -28,13 +28,22 @@ export class kanbanTasksService {
     return this.http.post<KanbanTaskDetails>(tempUrl, task, header);
   }
 
-  getKanbanTasks() : Observable<Array<KanbanTask>> {
+  getKanbanTasks(todayDate: Date, exactlyDate?: Date) : Observable<Array<KanbanTask>> {
     let token = sessionStorage.getItem('token');
     var header = {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
     };
-
     let tempUrl = this.urlString + 'kanbanTasks';
+    if (todayDate && exactlyDate == undefined)
+    {
+      tempUrl += "?DateFrom" + new Date("2021-01-01");
+      tempUrl += "&DateTo=" + todayDate.toDateString();
+    }
+    if (exactlyDate)
+    {
+      tempUrl += "?DateExactly=" + exactlyDate.toDateString();
+    }
+    
     return this.http.get<Array<KanbanTask>>(tempUrl, header);
   }
 
@@ -191,5 +200,15 @@ export class kanbanTasksService {
 
     let tempUrl = this.urlString + 'kanbanTasks?vin=' + vin;
     return this.http.get<Array<CarRepairHistory>>(tempUrl, header);
+  }
+
+  getProtocolNumber(kanbanTaskId: number) : Observable<string> {
+    let token = sessionStorage.getItem('token');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
+
+    let tempUrl = this.urlString + 'kanbanTask/protocol?kanbanTaskId=' + kanbanTaskId;
+    return this.http.put<string>(tempUrl, '', header);
   }
 }

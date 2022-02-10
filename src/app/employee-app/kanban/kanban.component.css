@@ -5,6 +5,7 @@
   background-color: white;
   border-radius: 5px;
   padding-bottom: 1rem;
+  text-align: center;
 }
 
 mat-card {
@@ -61,13 +62,13 @@ mat-card {
 }
 
 .new, .toDo, .inDiagnostics, .inProgress, .frozen, .done {
-  width: 15.5%;
+  min-width: 240px;
+  max-width: 300px;
   text-align: center;
-  float: left;
   background-color: #DDDDDD;
-  margin-left: 1%;
+  margin: 0.25%;
   border: 1px solid #C1C1C1;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .done mat-card .doneDiv {
@@ -140,4 +141,9 @@ mat-card {
 .progTick:hover {
   box-shadow: inset 0 0 0 3px goldenrod;
   border-radius: 5px;
+}
+
+div .row {
+  --bs-gutter-x: 0rem;
+  justify-content: center;
 }

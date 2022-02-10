@@ -17,7 +17,7 @@ export class PdfMaker {
             watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.05},
             header: [
                 ' ',
-                {text: 'PROTOKÓŁ PRZYJĘCIA POJAZDU NA WARSZTAT', style: 'header'}
+                {text: `PROTOKÓŁ PRZYJĘCIA POJAZDU NA WARSZTAT - ${kanbanTask.protocolNumber}`, style: 'header'}
             ],
             content: [
                 {text: 'Data ........................................, godzina ....................', style: ['defaultStyle', 'centerText']},
@@ -168,38 +168,54 @@ export class PdfMaker {
       pdfMake.createPdf(pdfContent).open();
     }
 
-    public carHistory(carRepairHistory: Array<CarRepairHistory>) {
+    public carHistory(carRepairHistory: Array<CarRepairHistory>, vin: string) {
       let todayDate = new Date().toLocaleDateString();
+
+      var body = [];
+
+      body.push([{text: 'Data', style: 'centerText'},{text: 'Suma brutto\n(części + robocizna)', style: 'centerText'}, {text: 'Części', style: 'centerText'}, {text: 'Zadania', style: 'centerText'}],);
+
+      for (let record of carRepairHistory)
+      {
+        var basketField = '';
+        var taskField = '';
+        for (let i = 0; i < record.basketItems.length; i++)
+        {
+          let amount = '';
+          if (record.basketItems[i].unitOfMeasure == 0) amount = 'l';
+          else if (record.basketItems[i].unitOfMeasure == 1) amount = 'szt';
+          else amount = 'kg';
+
+          basketField += `${i+1}. ${record.basketItems[i].itemName} - ${record.basketItems[i].amount} ${amount} / ${record.basketItems[i].price} zł\n`;
+        }
+        for (let i = 0; i < record.subtasks.length; i++)
+        {
+          taskField += `${i+1}. ${record.subtasks[i].name} - ${record.subtasks[i].manHour} godz.\n`;
+        }
+        
+        body.push([{text: `${record.dateOfActualRealization}`, style: 'tableText'}, {text: `${record.totalBasketPrice} + ${record.totalWorkHoursCosts} = ${record.totalBasketPrice + record.totalWorkHoursCosts} zł`, style: 'tableText'}, {text: basketField, style: 'tableText'}, {text: taskField, style: 'tableText'}]);
+      }
+
       var pdfContent = {
         info: {title: 'Historia pojazdu', author: 'workstonks-spa'},
-        watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.05},
+        watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.03},
         header:
         [
-          ' ',
-          {text: `Data wygenerowania: ${todayDate} \n\n`, style: 'header2'},
+          {text: `Wygenerowano: ${todayDate} dla ${vin}\n\n`, style: 'header2'},
         ],
         content:
         [
           {
-            table:
-            {
-              headerRows: 4,
-              widths: ['*', 'auto', '100', '*'],
-              body:
-              [
-                ['Data', 'x', 'x', 'x'],
-                [ carRepairHistory[0].subtasks[0].name, 'val', 'val', 'val'],
-              ]
+            table: {
+              headerRows: 1,
+              widths: [77, 108, '*', '*'],
+              body: body
             }
           }
         ],
         styles: {
-            header: {
-              fontSize: 16,
-              bold: true
-            },
             header2: {
-              fontSize: 12,
+              fontSize: 11,
               alignment: 'left' as Alignment
             },
             centerText: {
@@ -211,8 +227,12 @@ export class PdfMaker {
             defaultStyle: {
               fontSize: 10
             },
+            tableText: {
+              alignment: 'left' as Alignment,
+              fontSize: 8
+            }
         }
       };
-      //pdfMake.createPdf(pdfContent).open();
+      pdfMake.createPdf(pdfContent).open();
   }
 }

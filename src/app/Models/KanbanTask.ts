@@ -30,6 +30,7 @@ export class KanbanTaskDetails {
   customerId?: number;
   name?: string;
   description?: string;
+  protocolNumber?: string;
   dateOfCreation?: Date;
   dateOfPlannedRealization?: Date;
   dateOfActualRealization?: Date;
