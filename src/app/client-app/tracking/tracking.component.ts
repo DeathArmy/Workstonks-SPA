@@ -20,8 +20,10 @@ export class TrackingComponent implements OnInit {
   ]);
   vinErrorText = "Podanie numeru VIN jest niezbędne.";
   protocolErrorText = "Podanie numeru protokołu jest niezbędne.";
-  protocolFormPlaceholder = "0687/06/2021";
+  protocolFormPlaceholder = "abc887e6";
   taskDetails = new KanbanTaskDetails();
+  totalBasketPrice = 0;
+  totalManHourPrice = 0;
 
   vin = "";
   protocolNumber = "";
@@ -33,10 +35,7 @@ export class TrackingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.router.url);
-    console.log(this.routerData.data);
     this.routerData.queryParams.subscribe(params => {
-      console.log(params['vin'] + " " + params['protocolNumber']);
       this.vin = params['vin'];
       this.protocolNumber = params['protocolNumber'];
       if (this.vin != undefined && this.protocolNumber != undefined) this.Submit();
@@ -49,10 +48,19 @@ export class TrackingComponent implements OnInit {
       else {
         this.trackingFilled = true;
         this.taskDetails = response;
+        this.taskDetails.comments = this.taskDetails.comments.reverse();
+        this.calculateTotalBasketPrice()
       }
     },
     error => {
       console.log(error);
     });
+  }
+
+  calculateTotalBasketPrice() {
+    for(let item of this.taskDetails.basketItems) 
+    {
+      this.totalBasketPrice += item.price!;
+    }
   }
 }

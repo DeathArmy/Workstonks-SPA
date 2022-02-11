@@ -3,7 +3,7 @@
   <form class="trackingForm" (ngSubmit)="Submit()" autocomplete="off">
     <div class="row">
       <div class="col mb-4">
-        <mat-form-field class="full-width" appearance="fill">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>VIN</mat-label>
           <input type="text" id="vinNumber" [(ngModel)]="vin" matInput [formControl]="vinFormControl" placeholder="ZAR93900009999999">
           <mat-error *ngIf="vinFormControl.hasError('requred')">
@@ -12,7 +12,7 @@
         </mat-form-field>
       </div>
       <div class="col mb-4">
-        <mat-form-field class="full-width" appearance="fill">
+        <mat-form-field class="full-width" appearance="outline">
           <mat-label>Numer protokołu odbioru</mat-label>
           <input type="text" id="protocolNumber" [(ngModel)]="protocolNumber" matInput [formControl]="protocolFormControl" matInput [placeholder]="protocolFormPlaceholder">
           <mat-error *ngIf="protocolFormControl.hasError('requred')">
@@ -36,45 +36,68 @@
     <ng-container *ngIf="taskDetails.status == 4">Oczekuje za dostawą części</ng-container>
     <ng-container *ngIf="taskDetails.status == 5">Do odbioru</ng-container>
     <ng-container *ngIf="taskDetails.status == 6">Pojazd odebrany przez klienta</ng-container>
+    <br/><br/>
   </div>
   <mat-card class="tracking-info">
     <mat-card-header>
-      <h2>
+      <h1>
         Podgląd prac dla {{taskDetails.vin}} ({{taskDetails.protocolNumber}})
-      </h2>
+      </h1>
     </mat-card-header>
     <hr>
     <mat-card-content>
       <div class="row">
         <div class="col">
-          <ng-container>
-            Placeholder subtaski
+          <h2>Zakres prac:</h2>
+          <ng-container *ngFor="let subtask of taskDetails.subtasks; let i = index">
+            {{i+1}}. {{subtask.name}} - {{subtask.manHour}} rg - 
+            <ng-container *ngIf="subtask.status == 0">Oczekuje</ng-container>
+            <ng-container *ngIf="subtask.status == 1">W trakcie</ng-container>
+            <ng-container *ngIf="subtask.status == 2">Gotowe</ng-container>
+            <br/>
           </ng-container>
-          <br/>
-          <ng-container>
-            Placeholder komentarze
+          <hr>
+          <h2>Komentarze:</h2>
+          <ng-container *ngFor="let comment of taskDetails.comments">
+            <mat-card>
+              <mat-card-header>
+                {{comment.dateOfCreation | date: 'dd-MM-YYYY, HH:mm'}}
+              </mat-card-header>
+              <mat-card-content>
+                {{comment.content}} 
+              </mat-card-content>
+            </mat-card>
+            <br/>
           </ng-container>
         </div>
         <div class="col">
           <ng-container>
-            Placeholder koszta?
+            Koszt robocizny: {{totalManHourPrice}} zł<br/>
+            Koszt części: {{totalBasketPrice}} zł<br/>
+            <br/>
+            <h2>Razem: {{totalBasketPrice + totalManHourPrice}} zł</h2>
           </ng-container>
-          <br/>
-          <ng-container>
-            Placeholder koszyk
+          <hr>
+          <h2>Zamówione części:</h2>
+          <ng-container *ngFor="let item of taskDetails.basketItems; let i = index">
+            {{i+1}}. {{item.itemName}} - {{item.amount}}
+            <ng-container *ngIf="item.unitOfMeasure == 0">l</ng-container>
+            <ng-container *ngIf="item.unitOfMeasure == 1">szt</ng-container>
+            <ng-container *ngIf="item.unitOfMeasure == 2">kg</ng-container>
+            , <i>{{item.price}} zł</i>
+            <br/>
           </ng-container>
         </div>
       </div>
+      <hr>
       <div class="row">
-        <div class="col">
-          <ng-container>
-            Placeholder zdjęcia
+        <div class="col imgDiv">
+          <h2>Zdjęcia</h2>
+          <ng-container *ngFor="let photo of taskDetails.photos">
+            <img class='img' [src]="photo.url" [alt]="photo.name"><br/>
           </ng-container>
         </div>
       </div>
     </mat-card-content>
   </mat-card>
 </div>
-
-
-

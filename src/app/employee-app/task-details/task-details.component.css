@@ -68,3 +68,11 @@
 .deleteBasket {
   width: 20%;
 }
+
+.img {
+  max-width: 500px;
+}
+
+.imgDiv {
+  text-align: center;
+}

@@ -2,6 +2,7 @@ import { BasketItem } from './BasketItem';
 import { Comment } from './Comment';
 import { Customer } from "./Customer";
 import { Subtask } from "./Subtask";
+import { Photo } from "./Photo";
 
 enum Status {
   New,
@@ -47,6 +48,7 @@ export class KanbanTaskDetails {
   subtasks: Subtask[] = [];
   basketItems: BasketItem[] = [];
   comments: Comment[] = [];
+  photos: Photo[] = [];
 }
 
 export class KanbanTaskBasketDto {
