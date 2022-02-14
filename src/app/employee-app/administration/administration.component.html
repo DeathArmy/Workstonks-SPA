@@ -1,16 +1,138 @@
-<div class="row">
-  <div class="col">
-    <h2>Użytkownicy</h2>
-
-    <button mat-raised-button>Dodaj użytkownika</button>
-    &nbsp;
-    <button mat-raised-button>Zablokuj użytkownika</button>
-  </div>
-  <div class="col">
-    <h2>Role</h2>
-
-    <button mat-raised-button>Dodaj rolę</button>
-    &nbsp;
-    <button mat-raised-button>Usuń rolę</button>
+<div class="content">
+  <div class="row">
+    <div class="col col-lg-10 col-md-10">
+      <ng-container *ngIf="!addingNewUser">
+        <h2>Użytkownicy</h2>
+        <ng-container *ngIf="!selectedAllUsers">
+          <button mat-raised-button (click)="selectAllUserCheckboxes()">Zaznacz wszystkich użytkowników</button><br/><br/>
+        </ng-container>
+        <ng-container *ngIf="selectedAllUsers">
+          <button mat-raised-button (click)="selectAllUserCheckboxes()">Odznacz wszystkich użytkowników</button><br/><br/>
+        </ng-container>
+        <ng-container *ngFor="let user of userList; let i = index">
+          <mat-checkbox [checked]="userSelection[i]" (change)="selectionChange(i)"></mat-checkbox>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Login</mat-label>
+            <input matInput value="{{user.userName}}" readonly>
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Adres e-mail</mat-label>
+            <input matInput value="{{user.email}}">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Numer telefonu</mat-label>
+            <input matInput value="{{user.phoneNumber}}">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Imię</mat-label>
+            <input matInput value="{{user.name}}">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Nazwisko</mat-label>
+            <input matInput value="{{user.surname}}">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Stanowisko</mat-label>
+            <input matInput [(ngModel)]="user.jobTitle" value="{{user.jobTitle}}">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Wynagrodzenie [zł/h]</mat-label>
+            <input matInput [(ngModel)]="user.hourlyWage" value="{{user.hourlyWage}}">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Data zatrudnienia</mat-label>
+            <input matInput value="{{user.dateOfEmployment}}">
+          </mat-form-field>
+          &nbsp;
+          <mat-checkbox [checked]="user.isActive!" [disabled]="true">Aktywny</mat-checkbox>
+          <br/>
+        </ng-container>
+        <hr>
+        <button mat-raised-button color="primary" (click)="saveChanges()">Zapisz zmiany</button>
+        &nbsp;
+        <button mat-raised-button color="warn" (click)="blockUser()">Zablokuj użytkownika</button>
+        &nbsp;
+        <button mat-raised-button  (click)="newUserAction()">Dodaj użytkownika</button>
+      </ng-container>
+      <ng-container *ngIf="addingNewUser">
+        <mat-form-field appearance="outline">
+          <mat-label>Login</mat-label>
+          <input matInput [(ngModel)]="newUser.userName">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Hasło</mat-label>
+          <input matInput [(ngModel)]="newUser.password">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput [(ngModel)]="newUser.email">
+        </mat-form-field>
+        <br/>
+        <mat-form-field appearance="outline">
+          <mat-label>Imię</mat-label>
+          <input matInput [(ngModel)]="newUser.name">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Nazwisko</mat-label>
+          <input matInput [(ngModel)]="newUser.surname">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Nazwa stanowiska</mat-label>
+          <input matInput [(ngModel)]="newUser.jobTitle">
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Stawka godzinowa</mat-label>
+          <input matInput [(ngModel)]="newUser.hourlyWage">
+        </mat-form-field>
+        <br/>
+        <mat-form-field appearance="outline">
+          <mat-label>Początek umowy</mat-label>
+          <input matInput [(ngModel)]="newUser.dateOfEmployment" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Koniec umowy</mat-label>
+          <input matInput [(ngModel)]="newUser.dateOfTerminationOfEmployment" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <hr>
+        <button mat-raised-button  (click)="addUserAction()">Dodaj użytkownika</button>
+        &nbsp;
+        <button mat-raised-button  (click)="newUserAction()">Anuluj</button>
+      </ng-container>
+    </div>
+    <div class="col col-lg-2 col-md-2">
+      <ng-container *ngIf="!addingNewRole">
+        <h2>Lista ról:</h2>
+      <ng-container *ngFor="let role of roleList">
+        {{role.name}}<br/>
+      </ng-container>
+      <hr>
+      <button mat-raised-button>Dodaj rolę</button>
+      &nbsp;
+      <button mat-raised-button>Usuń rolę</button>
+      </ng-container>
+      <ng-container *ngIf="addingNewRole">
+      <button mat-raised-button>Zapisz</button>
+      &nbsp;
+      <button mat-raised-button>Anuluj</button>
+      </ng-container>
+    </div>
   </div>
 </div>

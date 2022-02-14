@@ -1,7 +1,7 @@
 export class User {
     id?: number;
     userName?: string;
-    normalizedUserName?: string;
+    password?: string;
     email?: string;
     emailConfirmed?: boolean;
     phoneNumber?: string;
