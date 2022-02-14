@@ -215,4 +215,14 @@ export class kanbanTasksService {
     let tempUrl = this.urlString + `kanbanTask?VIN=${vin}&ProtocolNumber=${protocolNumber}`;
     return this.http.get<KanbanTaskDetails>(tempUrl);
   }
+
+  deletePhoto(photoId: number) : Observable<any> {
+    let token = sessionStorage.getItem('token');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
+
+    let tempUrl = this.urlString + `kanbanTask/photo?photoId=${photoId}`;
+    return this.http.delete<any>(tempUrl, header);
+  }
 }

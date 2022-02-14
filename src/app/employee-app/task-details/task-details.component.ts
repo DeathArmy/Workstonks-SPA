@@ -161,6 +161,10 @@ export class TaskDetailsComponent implements OnInit {
     this.progressBarCalculations();
   }
 
+  subtaskLogTime(index: number) {
+    
+  }
+
   postComment() {
     if (this.radioButtonChoose == 'true') this.newComment.isInnerComment = true;
     else this.newComment.isInnerComment = false;
@@ -270,7 +274,15 @@ export class TaskDetailsComponent implements OnInit {
     error => {
       console.log(error);
     });
+  }
 
+  deletePhoto(photoId: number) {
+    this._ktService.deletePhoto(photoId).subscribe(response => {
+      console.log(response);
+    },
+    error => {
+      console.log(error);
+    });
   }
 }
 
