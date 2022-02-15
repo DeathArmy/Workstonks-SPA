@@ -22,6 +22,9 @@ export class kanbanTasksService {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
     };
 
+    task.dateOfPlannedRealization?.setHours(1);
+    task.dateOfCarDelivery?.setHours(1);
+
     let tempUrl = this.urlString + 'kanbanTask';
     console.log(task);
     return this.http.post<KanbanTaskDetails>(tempUrl, task, header);

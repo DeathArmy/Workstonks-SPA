@@ -60,7 +60,7 @@ export class userService {
       var header = {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
       };
-
+      user.dateOfEmployment!.setHours(6);
       let tempUrl = 'https://workstonks.herokuapp.com/api/Employee/employee';
       return this.http.put<any>(tempUrl, user, header);
     }

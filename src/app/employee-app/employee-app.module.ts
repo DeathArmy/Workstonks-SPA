@@ -23,6 +23,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AuthGuard } from './employee-app-routing.module';
 
 import { EmployeeAppRoutingModule } from './employee-app-routing.module';
 import { EmployeeAppComponent } from './employee-app.component';
@@ -38,6 +39,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { HistoryComponent } from './history/history.component';
 import { BasketComponent } from './basket/basket.component';
+import { PasswordComponent } from './password/password.component';
 
 
 @NgModule({
@@ -54,7 +56,8 @@ import { BasketComponent } from './basket/basket.component';
     ReportsComponent,
     TaskDetailsComponent,
     HistoryComponent,
-    BasketComponent
+    BasketComponent,
+    PasswordComponent
    ],
   imports: [
     CommonModule,
@@ -86,7 +89,8 @@ import { BasketComponent } from './basket/basket.component';
     LoginService,
     MatDatepickerModule,
     KanbanTask,
-    FormService
+    FormService,
+    AuthGuard
   ]
 })
 export class EmployeeAppModule { }

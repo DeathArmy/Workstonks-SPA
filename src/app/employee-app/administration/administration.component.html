@@ -19,22 +19,22 @@
           &nbsp;
           <mat-form-field appearance="outline">
             <mat-label>Adres e-mail</mat-label>
-            <input matInput value="{{user.email}}">
+            <input matInput [(ngModel)]="user.email" value="{{user.email}}">
           </mat-form-field>
           &nbsp;
           <mat-form-field appearance="outline">
             <mat-label>Numer telefonu</mat-label>
-            <input matInput value="{{user.phoneNumber}}">
+            <input matInput [(ngModel)]="user.phoneNumber" value="{{user.phoneNumber}}">
           </mat-form-field>
           &nbsp;
           <mat-form-field appearance="outline">
             <mat-label>Imię</mat-label>
-            <input matInput value="{{user.name}}">
+            <input matInput [(ngModel)]="user.name" value="{{user.name}}">
           </mat-form-field>
           &nbsp;
           <mat-form-field appearance="outline">
             <mat-label>Nazwisko</mat-label>
-            <input matInput value="{{user.surname}}">
+            <input matInput [(ngModel)]="user.surname" value="{{user.surname}}">
           </mat-form-field>
           &nbsp;
           <mat-form-field appearance="outline">
@@ -49,7 +49,9 @@
           &nbsp;
           <mat-form-field appearance="outline">
             <mat-label>Data zatrudnienia</mat-label>
-            <input matInput value="{{user.dateOfEmployment}}">
+            <input matInput [(ngModel)]="user.dateOfEmployment" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           &nbsp;
           <mat-checkbox [checked]="user.isActive!" [disabled]="true">Aktywny</mat-checkbox>
@@ -100,16 +102,23 @@
         <br/>
         <mat-form-field appearance="outline">
           <mat-label>Początek umowy</mat-label>
-          <input matInput [(ngModel)]="newUser.dateOfEmployment" [matDatepicker]="picker">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput [(ngModel)]="newUser.dateOfEmployment" [matDatepicker]="picker1">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
         &nbsp;
         <mat-form-field appearance="outline">
           <mat-label>Koniec umowy</mat-label>
-          <input matInput [(ngModel)]="newUser.dateOfTerminationOfEmployment" [matDatepicker]="picker">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput [(ngModel)]="newUser.dateOfTerminationOfEmployment" [matDatepicker]="picker2">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <mat-select multiple>
+            <mat-option *ngFor="let role of roleList" [value]="role">{{role.name}}</mat-option>
+          </mat-select>
         </mat-form-field>
         <hr>
         <button mat-raised-button  (click)="addUserAction()">Dodaj użytkownika</button>
@@ -123,16 +132,17 @@
       <ng-container *ngFor="let role of roleList">
         {{role.name}}<br/>
       </ng-container>
+      </ng-container>
       <hr>
-      <button mat-raised-button>Dodaj rolę</button>
+      <!-- <button mat-raised-button>Dodaj rolę</button>
       &nbsp;
       <button mat-raised-button>Usuń rolę</button>
-      </ng-container>
+
       <ng-container *ngIf="addingNewRole">
       <button mat-raised-button>Zapisz</button>
       &nbsp;
       <button mat-raised-button>Anuluj</button>
-      </ng-container>
+      </ng-container> -->
     </div>
   </div>
 </div>

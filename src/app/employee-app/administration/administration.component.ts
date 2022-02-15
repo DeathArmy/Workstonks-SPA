@@ -26,6 +26,8 @@ export class AdministrationComponent implements OnInit {
   }
 
   dataLoad() {
+    this.userSelection = [];
+    this.roleSelection = [];
     this._userService.getUserList().subscribe(response => {
       this.userList = response;
       for(let user of this.userList) this.userSelection.push(false);
@@ -72,6 +74,7 @@ export class AdministrationComponent implements OnInit {
     {
       if(this.userSelection[i])
       {
+        console.log(this.userList[i]);
         this._userService.editUser(this.userList[i]).subscribe(response => {
           console.log(response);
         },
