@@ -37,6 +37,7 @@ export class TicketOverlayComponent implements OnInit {
   changesCheck = new formFieldsModel();
   helpInt = false;
   kanbanTask = new KanbanTaskDetails();
+  manHourSum: number = 0;
 
   displayedColumns: string[] = ['index', 'select', 'name', 'manHour'];
   dataSource: any;
@@ -134,6 +135,7 @@ export class TicketOverlayComponent implements OnInit {
   addSubtask()
   {
     this.kanbanTask.subtasks?.push(this.sub);
+    this.manHourSum += Number(this.sub.manHour!);
     this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);
     this.sub = new Subtask();
   }
@@ -163,6 +165,7 @@ export class TicketOverlayComponent implements OnInit {
     console.log(this.selection.selected)
     this.selection.selected.forEach(e => {
       let index = this.kanbanTask.subtasks.findIndex(i => i.id == e.index)
+      this.manHourSum -= this.kanbanTask.subtasks[index].manHour!;
       this.kanbanTask.subtasks.splice(index, 1);
     });
     this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);

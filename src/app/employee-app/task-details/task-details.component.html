@@ -37,11 +37,28 @@
           </mat-select>
         </mat-form-field>
         &nbsp;
-        <button mat-raised-button (click)="subtaskLogTime(i)">Zaloguj czas</button>
-        &nbsp;
-        <button mat-mini-fab color="warn" (click)="deleteSubtask(i)">
-          <mat-icon>delete</mat-icon>
-        </button>
+        <ng-container *ngIf="!reportingTimeMode[i]">
+          <button mat-mini-fab color="warn" (click)="deleteSubtask(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          &nbsp;
+          <button mat-raised-button (click)="subtaskLogTime(i)">Zaloguj czas</button>
+        </ng-container>
+        <ng-container *ngIf="reportingTimeMode[i]">
+          <mat-form-field appearance="outline">
+            <mat-label>Czas</mat-label>
+            <input matInput [(ngModel)]="calendarEntryInfo.hours" value="">
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="outline">
+            <mat-label>Opis</mat-label>
+            <input matInput [(ngModel)]="calendarEntryInfo.description" value="">
+          </mat-form-field>
+          &nbsp;
+          <button mat-raised-button (click)="saveTime(i)">Zapisz</button>
+          &nbsp;
+          <button mat-raised-button (click)="subtaskLogTime(i)">Anuluj</button>
+        </ng-container>
         <br/>
       </div>
       <h3>Nowe zadanie:</h3>
@@ -187,15 +204,15 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <!-- <mat-form-field appearance="fill">
           <mat-label>Opiekun zgłoszenia</mat-label>
           <mat-select [(ngModel)]="selectedUser"  (selectionChange)="caseOwnerChanged($event)">
             <mat-option [value]="user" *ngFor="let user of this.UserList">
               {{user}}
             </mat-option>
           </mat-select>
-        </mat-form-field>
-        &nbsp;
+        </mat-form-field> 
+        &nbsp; -->
       </ng-container>
     </ng-container>
     <br/>

@@ -13,6 +13,8 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 import { PdfMaker } from 'src/app/services/pdfmaker.service';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Jwt } from '../../Models/Jwt';
+import { CalendarService } from 'src/app/services/calendar.service';
+import { CalendarEntry } from 'src/app/Models/Calendar';
 
 @Component({
   selector: 'app-task-details',
@@ -38,10 +40,12 @@ export class TaskDetailsComponent implements OnInit {
   commentList: Array<Comment> = [];
   newComment = new Comment;
   newBasketItem = new BasketItem;
+  calendarEntryInfo = new CalendarEntry;
   basketItemsList: Array<BasketItem> = [];
   username: string = '';
   editMode: Array<boolean> = Array(50).fill(false);
   taskEditMode: boolean = false;
+  reportingTimeMode: Array<boolean> = [];
 
   Statuses: Status[] = [
     {value: 0, viewValue: 'Do zrobienia'},
@@ -73,7 +77,7 @@ export class TaskDetailsComponent implements OnInit {
   selectedMeasureUnit: number = 1;
   selectedTaskStatus: number = 0;
 
-  constructor(private _ktService: kanbanTasksService, private router: Router, private routerData: ActivatedRoute, private _fromService: FormService) {
+  constructor(private _ktService: kanbanTasksService, private router: Router, private routerData: ActivatedRoute, private _fromService: FormService, private _calendarService: CalendarService) {
     this.routerData.params.subscribe(params => {
       this.taskId = params['id'];
     });
@@ -85,6 +89,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getKanbanTaskData() {
+    this.reportingTimeMode = [];
     this._ktService.getKanbanTask(this.taskId).subscribe(response => {
       this.taskDetails = response;
       this.selectedTaskStatus = this.taskDetails.status;
@@ -94,6 +99,7 @@ export class TaskDetailsComponent implements OnInit {
       for(let subtask of this.taskDetails.subtasks) {
         let temp = this.getSelectedViewValue(subtask)
         this.selectedValue.push(temp? temp : 0);
+        this.reportingTimeMode.push(false);
       };
       this.getUsername();
     });
@@ -114,9 +120,9 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
-  caseOwnerChanged(event: MatSelectChange) {
+  // caseOwnerChanged(event: MatSelectChange) {
 
-  }
+  // }
 
   progressBarCalculations() {
     this.bufferValue = 0;
@@ -162,7 +168,20 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   subtaskLogTime(index: number) {
-    
+    this.reportingTimeMode[index] = !this.reportingTimeMode[index];
+  }
+
+  saveTime(index: number) {
+    this.calendarEntryInfo.date = new Date();
+    this.calendarEntryInfo.subtaskId = this.taskDetails.subtasks[index].id;
+    this._calendarService.postEntry(this.calendarEntryInfo).subscribe(respone => {
+      this.calendarEntryInfo = new CalendarEntry;
+      this.reportingTimeMode[index] = false;
+    },
+    error => {
+      console.log(error);
+    }
+    )
   }
 
   postComment() {
