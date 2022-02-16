@@ -92,8 +92,10 @@
           </div>
         </div>
         <button mat-raised-button color="primary" matStepperNext>Dalej</button>
-        <button mat-raised-button color="warn" (click)="abandoned()">Rezygnacja</button>
-        <button mat-raised-button color="warn" (click)="delete()">Usuń</button>
+        <ng-container *ngIf="!componentData == undefined">
+          <button mat-raised-button color="warn" (click)="abandoned()">Rezygnacja</button>
+          <button mat-raised-button color="warn" (click)="delete()">Usuń</button>
+          </ng-container>
         <button mat-flat-button color="basic" (click)="closeWindow()">Zamknij</button>
       </mat-step>
       <mat-step>
@@ -164,42 +166,48 @@
           <p style="font-weight: bold;">Niezdefiniowano żadnego zadania</p>
         </ng-template>
         <button mat-raised-button color="primary" matStepperNext>Dalej</button>
+        <ng-container *ngIf="!componentData == undefined">
         <button mat-raised-button color="warn" (click)="abandoned()">Rezygnacja</button>
         <button mat-raised-button color="warn" (click)="delete()">Usuń</button>
+        </ng-container>
         <button mat-flat-button color="basic" (click)="closeWindow()">Zamknij</button>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Podsumowanie</ng-template>
         <div class="row">
-          <div class="col col-md-4">
-            <mat-form-field class="full-width" appearance="standard">
-              <mat-label>Nazwa zadania #doUsunieca</mat-label>
-              <input type="text" [(ngModel)]="kanbanTask.name" name="kanbanName" matInput>
-            </mat-form-field>
-          </div>
+
           <div class="col col-md-2">
             <mat-form-field appearance="standard">
               <mat-label>Data przyjęcia pojazdu</mat-label>
-              <input matInput [(ngModel)]="kanbanTask.dateOfCarDelivery" name="calendarCollectonDay" [matDatepicker]="picker">
+              <input matInput [(ngModel)]="kanbanTask.dateOfCarDelivery" (dateChange)="dateHasBeenChanged(input)" name="calendarCollectonDay" [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker touchUi #picker></mat-datepicker>
             </mat-form-field>
           </div>
-          <div class="col col-md-6 marginFix">
+          <div class="col col-md-2 marginFix">
             <mat-form-field appearance="standard">
               <mat-label>Data oddania pojazdu</mat-label>
-              <input matInput [(ngModel)]="kanbanTask.dateOfPlannedRealization" name="calendarRealizationDay" [matDatepicker]="picker2">
+              <input matInput [(ngModel)]="kanbanTask.dateOfPlannedRealization" name="calendarRealizationDay" [matDatepicker]="picker2" readonly #input>
               <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-              <mat-datepicker touchUi #picker2></mat-datepicker>
+              <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
+          </div>
+          <div class="col col-md-8">
+            <!-- <mat-form-field class="full-width" appearance="standard">
+              <mat-label>Nazwa zadania #doUsunieca</mat-label>
+              <input type="text" [(ngModel)]="kanbanTask.name" name="kanbanName" matInput>
+            </mat-form-field> -->
           </div>
         </div>
         <div>
-          <h2>Suma roboczogodzin: {{manHourSum}}</h2>
+          <h3>Suma roboczogodzin: {{manHourSum}}</h3>
+          <h3>Potrzebna ilość dni roboczych: {{daysToAdd + 1}}</h3>
         </div>
         <button mat-raised-button (click)="send()" color="primary">Przyjmij</button>
-        <button mat-raised-button color="warn" (click)="abandoned()">Rezygnacja</button>
-        <button mat-raised-button color="warn" (click)="delete()">Usuń</button>
+        <ng-container *ngIf="!componentData == undefined">
+          <button mat-raised-button color="warn" (click)="abandoned()">Rezygnacja</button>
+          <button mat-raised-button color="warn" (click)="delete()">Usuń</button>
+          </ng-container>
         <button mat-flat-button color="basic" (click)="closeWindow()">Zamknij</button>
       </mat-step>
     </form>

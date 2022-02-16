@@ -1,7 +1,7 @@
 import { KanbanTaskDetails } from './../../Models/KanbanTask';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { formFieldsModel } from 'src/app/Models/formFields';
 import { FormControl, Validators } from '@angular/forms';
 import { FormService } from '../../services/form.service';
@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { kanbanTasksService } from 'src/app/services/kanbanTasks.service';
 import { Customer } from 'src/app/Models/Customer';
+import { CalendarService } from 'src/app/services/calendar.service';
+import { userService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-ticket-overlay',
@@ -38,13 +40,20 @@ export class TicketOverlayComponent implements OnInit {
   helpInt = false;
   kanbanTask = new KanbanTaskDetails();
   manHourSum: number = 0;
+  calendarAssist = 0;
+  freeHours = 0;
+  restManHour: number = 0;
+  daysToAdd: number = 0;
+  carDeliveryDays: number = 0;
+  userCount: number = 0;
+  endDate = new Date();
 
   displayedColumns: string[] = ['index', 'select', 'name', 'manHour'];
   dataSource: any;
   selection = new SelectionModel<PeriodicElement>(true, []);
   sub: Subtask = new Subtask();
 
-  constructor(@Inject(FILE_PREVIEW_DIALOG_DATA) public componentData: any, private _snackBar: MatSnackBar, private _service: FormService, private _kanbanService: kanbanTasksService) {}
+  constructor(@Inject(FILE_PREVIEW_DIALOG_DATA) public componentData: any, private _snackBar: MatSnackBar, private _service: FormService, private _kanbanService: kanbanTasksService, private _calendarService: CalendarService, private _userService: userService, private changeDet:ChangeDetectorRef) {}
 
   ngOnInit() {
     if (this.componentData)
@@ -62,6 +71,9 @@ export class TicketOverlayComponent implements OnInit {
       this.changesCheck.customer.phoneNumber = this.ticket.customer.phoneNumber
       this.changesCheck.customer.surname = this.ticket.customer.surname
     }
+    this.kanbanTask.dateOfCarDelivery = new Date();
+    this.getUserCount();
+    this.kanbanTask.dateOfPlannedRealization = new Date();
   }
 
   send() {
@@ -138,6 +150,7 @@ export class TicketOverlayComponent implements OnInit {
     this.manHourSum += Number(this.sub.manHour!);
     this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);
     this.sub = new Subtask();
+    this.predictCarReturnDate();
   }
 
   isAllSelected() {
@@ -170,8 +183,171 @@ export class TicketOverlayComponent implements OnInit {
     });
     this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);
     this.selection.clear();
+    this.predictCarReturnDate();
   }
 
+  dateHasBeenChanged(input: HTMLInputElement) {
+    this.carDeliveryDays = this.kanbanTask.dateOfCarDelivery!.getDate() - new Date().getDate();
+    this.predictCarReturnDate();
+    console.log("Dostawa: " + this.kanbanTask.dateOfCarDelivery!.toDateString() + "\nRealizacja: " + this.kanbanTask.dateOfPlannedRealization!.toDateString());
+    input.value = this.kanbanTask.dateOfPlannedRealization!.toLocaleDateString();
+  }
+
+  getUserCount() {
+    this.userCount = 0;
+    this._userService.getUserList().subscribe(response => {
+      this.userCount = response.length;
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  predictCarReturnDate() {
+    this.daysToAdd = 0;
+    this.endDate.setDate(new Date().getDate() + this.carDeliveryDays);
+    let tempHoursSum: number = 0;
+    if (this.manHourSum == 0) {
+
+    }
+    else {
+      this._calendarService.getReservedTime(this.endDate).subscribe(response => {
+        for(let day of response)
+        {
+          tempHoursSum += day.hours!;
+        }
+      },
+      error => {
+        console.log(error);
+      });
+      if (this.endDate.getDay() == 6) {
+        this.freeHours = (4 * this.userCount) - tempHoursSum;
+      }
+      else
+      {
+        this.freeHours = (6 * this.userCount) - tempHoursSum;
+      }
+
+      if (this.manHourSum > 8)
+      {
+
+        if (this.freeHours < 8)
+        {
+          this.restManHour = this.manHourSum - this.freeHours;
+        }
+        else
+        {
+          this.restManHour = this.manHourSum - 8;
+          this.daysToAdd++;
+        }
+        while (this.restManHour > 0) {
+          this.endDate.setDate(new Date().getDate() + this.daysToAdd + this.carDeliveryDays);
+          if (this.endDate.getDay() == 0)
+          {
+            this.daysToAdd++;
+            this.endDate.setDate(new Date().getDate() + this.daysToAdd + this.carDeliveryDays);
+          }
+          this._calendarService.getReservedTime(this.endDate).subscribe(response => {
+            for(let day of response)
+            {
+              tempHoursSum += day.hours!;
+            }
+          },
+          error => {
+            console.log(error);
+          });
+          if (this.endDate.getDay() == 6) {
+            if (this.restManHour > 6)
+            {
+              this.restManHour -= 6;
+              this.daysToAdd++;
+            }
+            else {
+              if (this.restManHour < ((4 * this.userCount) - tempHoursSum))
+              {
+                this.restManHour = 0;
+              }
+              else
+              {
+                this.restManHour -= ((4 * this.userCount) - tempHoursSum);
+                this.daysToAdd++;
+              }
+            }
+          }
+          else {
+            if (this.restManHour > 8)
+            {
+              this.restManHour = this.restManHour - 8;
+              this.daysToAdd++;
+            }
+            else
+            {
+              if (this.restManHour < ((6 * this.userCount) - tempHoursSum))
+              {
+                this.restManHour = 0;
+              }
+              else
+              {
+                this.restManHour -= ((6 * this.userCount) - tempHoursSum);
+                this.daysToAdd++;
+              }
+            }
+          }
+        };
+      }
+      else {
+        if (this.manHourSum > this.freeHours)
+        {
+          this.daysToAdd++;
+          this.restManHour = this.manHourSum - this.freeHours;
+          while(this.restManHour > 0) {
+            this.endDate.setDate(new Date().getDate() + this.daysToAdd + this.carDeliveryDays);
+            if (this.endDate.getDay() == 0)
+            {
+              this.endDate.setDate(new Date().getDate() + this.daysToAdd + this.carDeliveryDays);
+              this.daysToAdd++;
+            }
+            this._calendarService.getReservedTime(this.endDate).subscribe(response => {
+              for(let day of response)
+              {
+                tempHoursSum += day.hours!;
+              }
+            },
+            error => {
+              console.log(error);
+            });
+            if (this.endDate.getDay() != 6)
+            {
+              if (this.restManHour < ((4 * this.userCount) - tempHoursSum))
+              {
+                this.restManHour = 0;
+              }
+              else
+              {
+                this.restManHour -= ((4 * this.userCount) - tempHoursSum);
+                this.daysToAdd++;
+              }
+            }
+            else
+            {
+              if (this.restManHour < ((6 * this.userCount) - tempHoursSum))
+              {
+                this.restManHour = 0;
+              }
+              else
+              {
+                this.restManHour -= ((6 * this.userCount) - tempHoursSum);
+                this.daysToAdd++;
+              }
+            }
+          }
+        }
+      }
+    }
+    console.log(this.endDate);
+    this.kanbanTask.dateOfPlannedRealization = this.endDate;
+    console.log(this.kanbanTask.dateOfPlannedRealization);
+  }
 }
 
 export class TicketOverlayRef {

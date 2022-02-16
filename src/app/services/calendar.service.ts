@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CalendarEntry, CalendarPlannedEntry } from '../Models/Calendar';
+import { CalendarEntry, CalendarPlannedEntry, FreeTimeInfo } from '../Models/Calendar';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Jwt } from '../Models/Jwt';
 
@@ -26,7 +26,7 @@ export class CalendarService {
       var header = {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
       };
-      
+
       const decoded = jwtDecode<JwtPayload>(token!);
       var jwtObject: Jwt = decoded as Jwt;
 
@@ -36,13 +36,13 @@ export class CalendarService {
       return this.http.post<any>(tempUrl, entry, header);
     }
 
-    getReservedTime(date: Date) : Observable<any> {
+    getReservedTime(date: Date) : Observable<Array<FreeTimeInfo>> {
       let token = sessionStorage.getItem('token');
       var header = {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
       };
-  
-      let tempUrl = this.urlString + `entries?DateFrom=${date.toDateString}&DateTo=${date.toDateString}&IsPlanned=true`;
-      return this.http.get<any>(tempUrl, header);
+
+      let tempUrl = this.urlString + `entries?DateFrom=${date.toDateString()}&DateTo=${date.toDateString()}&IsPlanned=true`;
+      return this.http.get<Array<FreeTimeInfo>>(tempUrl, header);
     }
 }
