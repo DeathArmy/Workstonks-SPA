@@ -111,7 +111,7 @@
               <mat-label>Ilość roboczogodzin</mat-label>
               <input type="text" name="subtaskManHour" [(ngModel)]="sub.manHour" matInput>
             </mat-form-field>
-            <button mat-raised-button type="submit" color="primary" (click)="addSubtask()">Dodaj usługę</button>
+            <button mat-raised-button type="submit" color="primary" (click)="addSubtask(input)">Dodaj usługę</button>
           </form>
         </div>
         <br/>
@@ -157,7 +157,7 @@
           <br/>
           <div class="row">
             <div class="col buttonCenter">
-              <button mat-raised-button type="submit" color="primary" (click)="deleteSelected()">Usuń zaznaczone</button>
+              <button mat-raised-button type="submit" color="primary" (click)="deleteSelected(input)">Usuń zaznaczone</button>
             </div>
           </div>
           <br/>

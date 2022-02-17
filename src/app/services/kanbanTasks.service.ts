@@ -16,7 +16,7 @@ export class kanbanTasksService {
 
   constructor(private http: HttpClient) {  }
 
-  createKanbanTask(task: KanbanTaskDetails) : Observable<any> {
+  createKanbanTask(task: KanbanTaskDetails) : Observable<number> {
     let token = sessionStorage.getItem('token');
     var header = {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
@@ -27,7 +27,7 @@ export class kanbanTasksService {
 
     let tempUrl = this.urlString + 'kanbanTask';
     console.log(task);
-    return this.http.post<KanbanTaskDetails>(tempUrl, task, header);
+    return this.http.post<number>(tempUrl, task, header);
   }
 
   getKanbanTasks(todayDate: Date, exactlyDate?: Date) : Observable<Array<KanbanTask>> {

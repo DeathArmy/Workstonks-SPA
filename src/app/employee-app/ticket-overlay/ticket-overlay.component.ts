@@ -13,6 +13,7 @@ import { kanbanTasksService } from 'src/app/services/kanbanTasks.service';
 import { Customer } from 'src/app/Models/Customer';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { userService } from 'src/app/services/user.service';
+import { CalendarPlannedEntry } from 'src/app/Models/Calendar';
 
 @Component({
   selector: 'app-ticket-overlay',
@@ -47,6 +48,7 @@ export class TicketOverlayComponent implements OnInit {
   carDeliveryDays: number = 0;
   userCount: number = 0;
   endDate = new Date();
+  startDate = new Date();
 
   displayedColumns: string[] = ['index', 'select', 'name', 'manHour'];
   dataSource: any;
@@ -74,6 +76,10 @@ export class TicketOverlayComponent implements OnInit {
     this.kanbanTask.dateOfCarDelivery = new Date();
     this.getUserCount();
     this.kanbanTask.dateOfPlannedRealization = new Date();
+    this._calendarService.getReservedTime(this.kanbanTask.dateOfCarDelivery).subscribe(response =>
+      {
+        console.log(response);
+      });
   }
 
   send() {
@@ -98,6 +104,12 @@ export class TicketOverlayComponent implements OnInit {
     }
     this._kanbanService.createKanbanTask(this.kanbanTask).subscribe(response => {
       console.log(response);
+      this._kanbanService.getKanbanTask(response).subscribe( response => {
+        this.kanbanTask = response;
+        this.savePredictedTime();
+      },
+      error => {console.log(error);}
+      );
       setTimeout(() => {this.closeOverlay.emit(true)}, 1000);
     },
     error => {
@@ -144,13 +156,13 @@ export class TicketOverlayComponent implements OnInit {
     }
   }
 
-  addSubtask()
+  addSubtask(input: HTMLInputElement)
   {
     this.kanbanTask.subtasks?.push(this.sub);
     this.manHourSum += Number(this.sub.manHour!);
     this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);
     this.sub = new Subtask();
-    this.predictCarReturnDate();
+    this.predictCarReturnDate(input);
   }
 
   isAllSelected() {
@@ -174,7 +186,7 @@ export class TicketOverlayComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.index + 1}`;
   }
 
-  deleteSelected(){
+  deleteSelected(input: HTMLInputElement){
     console.log(this.selection.selected)
     this.selection.selected.forEach(e => {
       let index = this.kanbanTask.subtasks.findIndex(i => i.id == e.index)
@@ -183,7 +195,7 @@ export class TicketOverlayComponent implements OnInit {
     });
     this.dataSource = new MatTableDataSource(this.kanbanTask.subtasks);
     this.selection.clear();
-    this.predictCarReturnDate();
+    this.predictCarReturnDate(input);
   }
 
   dateHasBeenChanged(input: HTMLInputElement) {
@@ -203,7 +215,7 @@ export class TicketOverlayComponent implements OnInit {
       });
   }
 
-  predictCarReturnDate() {
+  predictCarReturnDate(input?: HTMLInputElement) {
     this.daysToAdd = 0;
     this.endDate.setDate(new Date().getDate() + this.carDeliveryDays);
     let tempHoursSum: number = 0;
@@ -227,7 +239,6 @@ export class TicketOverlayComponent implements OnInit {
       {
         this.freeHours = (6 * this.userCount) - tempHoursSum;
       }
-
       if (this.manHourSum > 8)
       {
 
@@ -241,6 +252,7 @@ export class TicketOverlayComponent implements OnInit {
           this.daysToAdd++;
         }
         while (this.restManHour > 0) {
+          tempHoursSum = 0;
           this.endDate.setDate(new Date().getDate() + this.daysToAdd + this.carDeliveryDays);
           if (this.endDate.getDay() == 0)
           {
@@ -347,6 +359,78 @@ export class TicketOverlayComponent implements OnInit {
     console.log(this.endDate);
     this.kanbanTask.dateOfPlannedRealization = this.endDate;
     console.log(this.kanbanTask.dateOfPlannedRealization);
+    if(input) input.value = this.kanbanTask.dateOfPlannedRealization!.toLocaleDateString();
+  }
+
+  savePredictedTime() {
+    this.startDate = this.kanbanTask.dateOfCarDelivery!;
+    for (let subtask of this.kanbanTask.subtasks)
+    {
+      let calendarPlannedEntry = new CalendarPlannedEntry;
+      let dummyDate = new Date();
+      calendarPlannedEntry.isPlanned = true;
+      calendarPlannedEntry.subtaskId = subtask.id;
+      let manHours = subtask.manHour!;
+      while (manHours > 0)
+      {
+        let tempHoursSum = 0;
+        let freeHoursTemp = 0;
+        if (new Date(this.startDate).getDay() == 0)
+        {
+          dummyDate.setDate(new Date(this.startDate).getDate() + 1);
+          this.startDate = dummyDate;
+        }
+        this._calendarService.getReservedTime(this.startDate).subscribe(response => {
+          for(let day of response)
+          {
+            tempHoursSum += day.hours!;
+          }
+        },
+        error => {
+          console.log(error);
+        });
+        if (new Date(this.startDate).getDay() != 6) freeHoursTemp = (6 * this.userCount) - tempHoursSum;
+          else freeHoursTemp = (4 * this.userCount) - tempHoursSum;
+          console.log("Free time: " + freeHoursTemp);
+          if (freeHoursTemp == 0)
+          {
+            dummyDate.setDate(new Date(this.startDate).getDate() + 1);
+            this.startDate = dummyDate;
+          }
+          else if (freeHoursTemp > manHours && manHours <= 8)
+          {
+            calendarPlannedEntry.hours = manHours;
+            calendarPlannedEntry.date = this.startDate;
+            this._calendarService.postPlannedEntry(calendarPlannedEntry).subscribe(response => {console.log(response)}, error => {console.log(error)});
+            manHours = 0;
+          }
+          else if (freeHoursTemp > manHours && manHours > 8)
+          {
+            calendarPlannedEntry.hours = 8;
+            calendarPlannedEntry.date = this.startDate;
+            manHours -= 8;
+            this._calendarService.postPlannedEntry(calendarPlannedEntry).subscribe(response => {console.log(response)}, error => {console.log(error)});
+            dummyDate.setDate(new Date(this.startDate).getDate() + 1);
+            this.startDate = dummyDate;
+          }
+          else if (freeHoursTemp < manHours && manHours <= 8)
+          {
+            calendarPlannedEntry.hours = freeHoursTemp;
+            manHours -= freeHoursTemp;
+            this._calendarService.postPlannedEntry(calendarPlannedEntry).subscribe(response => {console.log(response)}, error => {console.log(error)});
+            dummyDate.setDate(new Date(this.startDate).getDate() + 1);
+            this.startDate = dummyDate;
+          }
+          else 
+          {
+            calendarPlannedEntry.hours = freeHoursTemp;
+            manHours -= freeHoursTemp;
+            this._calendarService.postPlannedEntry(calendarPlannedEntry).subscribe(response => {console.log(response)}, error => {console.log(error)});
+            dummyDate.setDate(new Date(this.startDate).getDate() + 1);
+            this.startDate = dummyDate;
+          }
+      };
+    }
   }
 }
 

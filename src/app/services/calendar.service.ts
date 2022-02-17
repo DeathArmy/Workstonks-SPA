@@ -41,8 +41,9 @@ export class CalendarService {
       var header = {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
       };
-
-      let tempUrl = this.urlString + `entries?DateFrom=${date.toDateString()}&DateTo=${date.toDateString()}&IsPlanned=true`;
+      console.log(date);
+      let tempUrl = this.urlString + 'entries?DateFrom=' + new Date(date).toDateString() + '&DateTo=' + new Date(date).toDateString() + '&IsPlanned=true';
+      console.log("date: " + date +'\n' + tempUrl + '\n');
       return this.http.get<Array<FreeTimeInfo>>(tempUrl, header);
     }
 }
