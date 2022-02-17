@@ -28,6 +28,12 @@ export class KanbanComponent implements OnInit {
   }
 
   getInitialData() {
+    this.todoKT = [];
+    this.newKT = [];
+    this.inDiagKT = [];
+    this.inProgKT = [];
+    this.frozenKT = [];
+    this.doneKT = [];
     this._ktService.getKanbanTasks(this.date).subscribe(tasks => {
       for (let task of tasks)
       {

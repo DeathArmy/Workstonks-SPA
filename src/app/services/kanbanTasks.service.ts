@@ -1,3 +1,4 @@
+import { Invoice } from './../Models/Invoice';
 import { CarRepairHistory } from 'src/app/Models/CarRepairHistory';
 import { ExtendedBasketItem, BasketItem } from './../Models/BasketItem';
 import { Subtask } from './../Models/Subtask';
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Jwt } from '../Models/Jwt';
 import { Customer } from '../Models/Customer';
+import { PostInvoice } from '../Models/Invoice';
 
 @Injectable()
 export class kanbanTasksService {
@@ -227,5 +229,25 @@ export class kanbanTasksService {
 
     let tempUrl = this.urlString + `kanbanTask/photo?photoId=${photoId}`;
     return this.http.delete<any>(tempUrl, header);
+  }
+
+  addInvoice(addInvoice: PostInvoice) : Observable<number> {
+    let token = sessionStorage.getItem('token');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
+
+    let tempUrl = `https://workstonks.herokuapp.com/api/Invoice`;
+    return this.http.post<number>(tempUrl, addInvoice, header);
+  }
+
+  getInvoice(invoiceId: number) : Observable<Invoice> {
+    let token = sessionStorage.getItem('token');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
+
+    let tempUrl = `https://workstonks.herokuapp.com/api/Invoice?invoiceId=${invoiceId}`;
+    return this.http.get<Invoice>(tempUrl, header);
   }
 }

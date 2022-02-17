@@ -14,13 +14,18 @@ export class HomeComponent implements OnInit {
   freeTime:number = 0;
 
   constructor(private _userService: userService, private _calendarService: CalendarService) {
+    this.getData();
+  }
+
+  async getData() {
     this._userService.getUserList().subscribe(response => {
       this.userCount = response.length;
     },
     error => {
       console.log(error)
     });
-    this._calendarService.getReservedTime(this.data).subscribe(response => {
+    await new Promise(f => setTimeout(f, 150));
+    this._calendarService.getReservedTime(this.data).then(response => {
       let dummyVar: number = 0;
       for (let record of response)
       {
@@ -29,11 +34,7 @@ export class HomeComponent implements OnInit {
       if(this.data.getDay() == 0) this.freeTime = 0;
       else if(this.data.getDay() == 6) this.freeTime = (this.userCount * 4) - dummyVar;
       else this.freeTime = (this.userCount * 6) - dummyVar;
-    },
-    error => {
-      console.log(error);
-    }
-    )
+    }).catch(error => {console.log(error);});
   }
 
   ngOnInit() {

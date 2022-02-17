@@ -36,14 +36,12 @@ export class CalendarService {
       return this.http.post<any>(tempUrl, entry, header);
     }
 
-    getReservedTime(date: Date) : Observable<Array<FreeTimeInfo>> {
+    getReservedTime(date: Date) {
       let token = sessionStorage.getItem('token');
       var header = {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
       };
-      console.log(date);
       let tempUrl = this.urlString + 'entries?DateFrom=' + new Date(date).toDateString() + '&DateTo=' + new Date(date).toDateString() + '&IsPlanned=true';
-      console.log("date: " + date +'\n' + tempUrl + '\n');
-      return this.http.get<Array<FreeTimeInfo>>(tempUrl, header);
+      return this.http.get<Array<FreeTimeInfo>>(tempUrl, header).toPromise();
     }
 }
