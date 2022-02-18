@@ -256,6 +256,7 @@ export class TicketOverlayComponent implements OnInit {
     else this.endDate.setDate(new Date().getDate() + this.daysToAdd);
     let tempHoursSum: number = 0;
     let manHoursSum: number = 0;
+    let daysToAdd2: number = this.daysToAdd;
     this.kanbanTask.subtasks.forEach(el => {manHoursSum += el.manHour!;});
     if (manHoursSum == 0) {
       this.kanbanTask.dateOfPlannedRealization = this.endDate;
@@ -269,16 +270,16 @@ export class TicketOverlayComponent implements OnInit {
         else restFreeHours = (6 * this.userCount) - tempHoursSum;
         if(manHoursSum > 8)
         {
-          this.daysToAdd++;
-          this.endDate.setDate(new Date().getDate() + this.daysToAdd + this.carDeliveryDays);
+          daysToAdd2++;
+          this.endDate.setDate(new Date().getDate() + daysToAdd2 + this.carDeliveryDays);
           manHoursSum -= 8;
         }
         else
         {
           if (manHoursSum > restFreeHours)
           {
-            this.daysToAdd++;
-            this.endDate.setDate(new Date().getDate() + this.daysToAdd + this.carDeliveryDays);
+            daysToAdd2++;
+            this.endDate.setDate(new Date().getDate() + daysToAdd2 + this.carDeliveryDays);
             manHoursSum -= restFreeHours;
           }
           else

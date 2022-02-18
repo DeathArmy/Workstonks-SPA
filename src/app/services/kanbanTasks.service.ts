@@ -250,4 +250,22 @@ export class kanbanTasksService {
     let tempUrl = `https://workstonks.herokuapp.com/api/Invoice?invoiceId=${invoiceId}`;
     return this.http.get<Invoice>(tempUrl, header);
   }
+
+  getInvoices(invoiceId?: number, userId?: number, kanbanTaskId?: number, dateFrom?: Date, dateTo?: Date) : Observable<Array<Invoice>> {
+    let token = sessionStorage.getItem('token');
+    var header = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+    };
+
+    let tempUrl = `https://workstonks.herokuapp.com/api/Invoice/invoices?`;
+    if (invoiceId != undefined) tempUrl += `InvoiceId=${invoiceId}&`;
+    if (userId != undefined) tempUrl += `UserId=${userId}&`;
+    if (kanbanTaskId != undefined) tempUrl += `KanbanTaskId=${kanbanTaskId}&`;
+    if (dateFrom != undefined) tempUrl += `KanbanTaskId=${dateFrom.toDateString()}&`;
+    if (dateTo != undefined) tempUrl += `KanbanTaskId=${dateTo.toDateString()}`;
+
+    if (tempUrl.slice(-1) == '&') tempUrl = tempUrl.slice(0,-1);
+
+    return this.http.get<Array<Invoice>>(tempUrl, header);
+  }
 }

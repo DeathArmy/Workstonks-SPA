@@ -3,6 +3,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Alignment } from 'pdfmake/interfaces';
 import { KanbanTaskDetails } from '../Models/KanbanTask';
+import { Invoice } from '../Models/Invoice';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -116,18 +117,17 @@ export class PdfMaker {
         };
         pdfMake.createPdf(pdfContent).open();
     }
-    public invoice(kanbanTask: KanbanTaskDetails) {
-      let todayDate = new Date().toLocaleDateString();
+    public invoice(invoiceData: Invoice) {
       var pdfContent = {
         info: {title: 'Faktura', author: 'workstonks-spa'},
         watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.05},
         header: [
           ' ',
-          {text: ' Faktura nr: ', style: 'header'},
+          {text: ` Faktura nr: ${invoiceData.invoiceCode}`, style: 'header'},
 
       ],
         content: [
-          {text: `Data wystawienia: ${todayDate} \n\n`, style: 'header2'},
+          {text: `Data wystawienia: ${invoiceData.dateOfCeation} \n\n`, style: 'header2'},
           {columns: [
             {
               width: '50%',

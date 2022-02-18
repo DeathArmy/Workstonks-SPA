@@ -2,21 +2,21 @@ import { User } from './User';
 import { KanbanTaskDetails } from './KanbanTask';
 import { Customer } from './Customer';
 
-export class Invoice{
-  Id?: number;
-  IsActive?: boolean;
-  Number?: number;
-  CustomerId?: number;
-  Customer?: Customer;
-  KanbanTaskId?: number;
-  KanbanTask?: KanbanTaskDetails;
-  UserId?: number;
-  User?: User;
-  DateOfCeation?: Date;
-  PriceBrutto?: number;
-  PriceNetto?: number;
-  VAT?: number;
-  InvoiceCode?: string;
+export class Invoice {
+  id?: number;
+  isActive?: boolean;
+  number?: number;
+  customerId?: number;
+  customer?: Customer;
+  kanbanTaskId?: number;
+  kanbanTask?: KanbanTaskDetails;
+  userId?: number;
+  user?: User;
+  dateOfCeation?: Date;
+  priceBrutto?: number;
+  priceNetto?: number;
+  vat?: number;
+  invoiceCode?: string;
 }
 
 export class PostInvoice {

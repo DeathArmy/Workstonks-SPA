@@ -15,6 +15,7 @@ import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { Jwt } from '../../Models/Jwt';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { CalendarEntry } from 'src/app/Models/Calendar';
+import { Invoice, PostInvoice } from 'src/app/Models/Invoice';
 
 @Component({
   selector: 'app-task-details',
@@ -279,9 +280,48 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
-  createInvoce() {
+  async createInvoce() {
     var pdfMaker = new PdfMaker();
-    pdfMaker.invoice(this.taskDetails);
+    let postInv = new PostInvoice;
+
+    postInv.CustomerId = this.taskDetails.customerId;
+    postInv.KanbanTaskId = this.taskDetails.id;
+
+    let token = sessionStorage.getItem('token')!;
+    const decoded = jwtDecode<JwtPayload>(token);
+    var jwtObject: Jwt = decoded as Jwt;
+
+    postInv.UserId = jwtObject.nameid;
+
+    let invoices: Array<Invoice> = [];
+    this._ktService.getInvoices(undefined, undefined, this.taskDetails.id).subscribe(response => {
+      invoices = response;
+    });
+    await new Promise(f => setTimeout(f, 250));
+    console.log(invoices);
+    if (invoices.length == 0)
+    {
+      let dummyVar: number = 0;
+      this._ktService.addInvoice(postInv).subscribe(response => {
+        dummyVar = response;
+      },
+      error => {
+        console.log(error);
+      });
+      await new Promise(f => setTimeout(f, 250));
+      this._ktService.getInvoice(dummyVar).subscribe(response =>
+        {
+          console.log("nie było" + response);
+          pdfMaker.invoice(response);
+        },
+        error => {
+          console.log(error);
+        });
+    }
+    else 
+    {
+      pdfMaker.invoice(invoices.filter(e => e.isActive == true)[0]);
+    }
   }
 
   closeTicket() {
