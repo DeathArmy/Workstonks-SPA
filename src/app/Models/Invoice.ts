@@ -17,6 +17,8 @@ export class Invoice {
   priceNetto?: number;
   vat?: number;
   invoiceCode?: string;
+  customerNameAndSurname?: string;
+  workHoursPriceNetto?: number;
 }
 
 export class PostInvoice {

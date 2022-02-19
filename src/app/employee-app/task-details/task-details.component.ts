@@ -228,7 +228,7 @@ export class TaskDetailsComponent implements OnInit {
     }
     else {
       pdfMaker.CollectionProtokol(this.taskDetails);
-    }    
+    }
   }
 
   editTask() {
@@ -293,12 +293,26 @@ export class TaskDetailsComponent implements OnInit {
 
     postInv.UserId = jwtObject.nameid;
 
+    let savedTimes: Array<number> = [];
+    for (let subtask of this.taskDetails.subtasks)
+    {
+      this._calendarService.getSavedTime(subtask.id!).subscribe( response =>
+        {
+          let dummyVar: number = 0;
+          response.forEach( el => {
+            dummyVar += el.hours!;
+          })
+          savedTimes.push(dummyVar);
+        },
+        error => {console.log(error);}
+      );
+    }
+    await new Promise(f => setTimeout(f, 500));
     let invoices: Array<Invoice> = [];
     this._ktService.getInvoices(undefined, undefined, this.taskDetails.id).subscribe(response => {
       invoices = response;
     });
     await new Promise(f => setTimeout(f, 250));
-    console.log(invoices);
     if (invoices.length == 0)
     {
       let dummyVar: number = 0;
@@ -311,16 +325,15 @@ export class TaskDetailsComponent implements OnInit {
       await new Promise(f => setTimeout(f, 250));
       this._ktService.getInvoice(dummyVar).subscribe(response =>
         {
-          console.log("nie było" + response);
-          pdfMaker.invoice(response);
+          pdfMaker.invoice(response, this.taskDetails, savedTimes);
         },
         error => {
           console.log(error);
         });
     }
-    else 
+    else
     {
-      pdfMaker.invoice(invoices.filter(e => e.isActive == true)[0]);
+      pdfMaker.invoice(invoices.filter(e => e.isActive == true)[0], this.taskDetails, savedTimes);
     }
   }
 

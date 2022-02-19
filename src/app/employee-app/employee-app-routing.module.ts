@@ -11,6 +11,7 @@ import { CanActivate, RouterModule, Routes } from '@angular/router';
 import { EmployeeAppComponent } from './employee-app.component';
 import { LoginComponent } from './login/login.component';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
+import { InvoicesComponent } from './invoices/invoices.component';
 
 export class AuthGuard implements CanActivate {
   canActivate() {
@@ -38,6 +39,7 @@ const routes: Routes = [{ path: '', component: EmployeeAppComponent, children: [
   {path: 'kanban', component: KanbanComponent},
   {path: 'reports', component: ReportsComponent},
   {path: 'administration', component: AdministrationComponent, canActivate: [AuthGuard]},
+  {path: 'invoices', component: InvoicesComponent, canActivate: [AuthGuard]},
   {path: 'task-details/:id', component: TaskDetailsComponent},
   {path: 'password', component: PasswordComponent}
 ]}];

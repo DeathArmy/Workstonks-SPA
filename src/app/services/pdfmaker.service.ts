@@ -1,8 +1,8 @@
+import { KanbanTaskDetails } from 'src/app/Models/KanbanTask';
 import { CarRepairHistory } from 'src/app/Models/CarRepairHistory';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Alignment } from 'pdfmake/interfaces';
-import { KanbanTaskDetails } from '../Models/KanbanTask';
 import { Invoice } from '../Models/Invoice';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -117,17 +117,36 @@ export class PdfMaker {
         };
         pdfMake.createPdf(pdfContent).open();
     }
-    public invoice(invoiceData: Invoice) {
+    public async invoice(invoiceData: Invoice, taskDetails: KanbanTaskDetails, savedTimes: Array<number>) {
+      let dateString: string = new Date(invoiceData.dateOfCeation!).toLocaleDateString();
+      let index: number = 0;
+      let i: number = 0;
+
+      var body = [];
+      body.push([{text: 'LP.', style: 'centerText'},{text: 'OPIS', style: 'centerText'}, {text: 'ILOŚĆ', style: 'centerText'}, {text: 'KWOTA', style: 'centerText'}],);
+
+      for (let item of taskDetails.basketItems)
+      {
+        index++;
+        let amount = '';
+        if (item.unitOfMeasure == 0) amount = 'l';
+        else if (item.unitOfMeasure == 1) amount = 'szt';
+        else amount = 'kg';
+        body.push([{text: `${index}`, style: 'defaultStyle'}, {text: `${item.itemName}`, style: 'defaultStyle'}, {text: `${item.amount} ${amount}`, style: 'defaultStyle'}, {text: `${item.price} zł`, style: 'defaultStyle'}],);
+      }
+
+      for (let service of taskDetails.subtasks)
+      {
+        index++;
+        body.push([{text: `${index}`, style: 'defaultStyle'}, {text: `${service.name}`, style: 'defaultStyle'}, {text: `${savedTimes[i]} rb`, style: 'defaultStyle'}, {text: `${savedTimes[i] * 100} zł`, style: 'defaultStyle'}],);
+        i++;
+      }
+
       var pdfContent = {
         info: {title: 'Faktura', author: 'workstonks-spa'},
-        watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.05},
-        header: [
-          ' ',
-          {text: ` Faktura nr: ${invoiceData.invoiceCode}`, style: 'header'},
-
-      ],
+        watermark: {text: 'WORKSTONKS-SPA', color: 'red', opacity: 0.02},
         content: [
-          {text: `Data wystawienia: ${invoiceData.dateOfCeation} \n\n`, style: 'header2'},
+          {text: `Wystawiono: ${dateString}, Poznań \n\n`, style: 'header2'},
           {columns: [
             {
               width: '50%',
@@ -136,11 +155,23 @@ export class PdfMaker {
             },
             {
             width: '50%',
-            text: 'Kupujący\n',
+            text: `Kupujący\n${taskDetails.customer?.name} ${taskDetails.customer?.surname}\n${taskDetails.customer?.email}\n${taskDetails.customer?.phoneNumber}\n\n\n\n`,
             style: ['defaultStyle', 'centerText']
             }
           ]
-          }
+          },
+          {text: `Faktura nr: ${invoiceData.invoiceCode}`, style: ['header', 'centerText']},
+          {text: '\n'},
+          {
+            table: {
+              headerRows: 1,
+              widths: [30, '*', 45, 80],
+              body: body
+            }
+          },
+          "\n",
+          {text: `Kwota netto: ${invoiceData.priceNetto} PLN \t VAT: ${invoiceData.vat}% \t Kwota brutto: ${invoiceData.priceBrutto} PLN`, style: 'right'},
+          {text: `\n\n\n\n\n\n _________________________________________________ \n Osoba upoważniona do wystawienia faktury VAT`, style: ['centerText', 'defaultStyle']}
         ],
         styles: {
             header: {
@@ -156,6 +187,10 @@ export class PdfMaker {
             },
             justifyText: {
               alignment: 'justify' as Alignment
+            },
+            right: {
+              alignment: 'right' as Alignment,
+              fontSize: 10
             },
             defaultStyle: {
               fontSize: 10
@@ -173,7 +208,7 @@ export class PdfMaker {
 
       var body = [];
 
-      body.push([{text: 'Data', style: 'centerText'},{text: 'Suma brutto\n(części + robocizna)', style: 'centerText'}, {text: 'Części', style: 'centerText'}, {text: 'Zadania', style: 'centerText'}],);
+      body.push([{text: 'Data', style: 'centerText'},{text: 'Suma netto\n(części + robocizna)', style: 'centerText'}, {text: 'Części', style: 'centerText'}, {text: 'Zadania', style: 'centerText'}],);
 
       for (let record of carRepairHistory)
       {

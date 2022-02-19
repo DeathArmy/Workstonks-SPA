@@ -44,4 +44,13 @@ export class CalendarService {
       let tempUrl = this.urlString + 'entries?DateFrom=' + new Date(date).toDateString() + '&DateTo=' + new Date(date).toDateString() + '&IsPlanned=true';
       return this.http.get<Array<FreeTimeInfo>>(tempUrl, header).toPromise();
     }
+
+    getSavedTime(subtaskId: number) : Observable<Array<FreeTimeInfo>>{
+      let token = sessionStorage.getItem('token');
+      var header = {
+        headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
+      };
+      let tempUrl = this.urlString + `entries?SubtaskId=${subtaskId}&IsPlanned=false`;
+      return this.http.get<Array<FreeTimeInfo>>(tempUrl, header);
+    }
 }

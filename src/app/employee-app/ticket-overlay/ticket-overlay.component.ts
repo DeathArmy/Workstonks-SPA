@@ -198,9 +198,9 @@ export class TicketOverlayComponent implements OnInit {
 
   dateHasBeenChanged(input: HTMLInputElement) {
     this.carDeliveryDays = this.kanbanTask.dateOfCarDelivery!.getDate() - new Date().getDate();
-    this.predictCarReturnDate();
+    this.predictCarReturnDate(input);
     //console.log("Dostawa: " + this.kanbanTask.dateOfCarDelivery!.toDateString() + "\nRealizacja: " + this.kanbanTask.dateOfPlannedRealization!.toDateString());
-    input.value = this.kanbanTask.dateOfPlannedRealization!.toLocaleDateString();
+    //input.value = this.kanbanTask.dateOfPlannedRealization!.toLocaleDateString();
   }
 
   getUserCount() {

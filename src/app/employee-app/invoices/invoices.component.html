@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col">
+    <mat-form-field appearance="outline">
+      <mat-label>Numer faktury</mat-label>
+      <input type="text" (change)="invoiceNumberInputValueChanged(inv)" matInput value="" #inv>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field appearance="outline">
+      <mat-label>Wystawiający FV</mat-label>
+      <mat-select (selectionChange)="employeeIssuingInvoiceSelectionChanged($event)" #us>
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.userName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field appearance="outline">
+      <mat-label>Numer zgłoszenia</mat-label>
+      <input type="text" matInput (change)="kanbanTaskNumberInputValueChanged(ktN)" value="" #ktN>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field appearance="outline" class='datePicker'>
+      <mat-label>Wystawiona po</mat-label>
+      <input matInput [(ngModel)]="dateFrom" [matDatepicker]="picker" #daFr>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  &nbsp;
+  <mat-form-field appearance="outline" class='datePicker'>
+    <mat-label>Wystawiona przed</mat-label>
+    <input matInput [(ngModel)]="dateTo" [matDatepicker]="picker2" #daTo>
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <button mat-raised-button color="primary" (click)="search()">Szukaj</button>
+    &nbsp;
+    <button mat-raised-button (click)="clearInputs(ktN, inv, daTo, daFr, us)">Wyczyść</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col">
+    <ng-container *ngIf="invoicesList.length == 0">
+      <p>Brak wyników</p>
+    </ng-container>
+    <ng-container *ngIf="invoicesList.length != 0">
+    <table class="resultTable">
+      <tr>
+        <th>Numer faktury</th>
+        <th>Data wystawienia</th>
+        <th>Klient</th>
+        <th>Zgłoszenie</th>
+        <th>Robocizna (netto)</th>
+        <th>Części (netto)</th>
+        <th>Razem (netto)</th>
+        <th>Razem (brutto)</th>
+      </tr>
+      <ng-container *ngFor="let element of invoicesList">
+        <tr>
+          <td>{{element.invoiceCode}}</td>
+          <td>{{element.dateOfCeation | date: 'dd-MM-yyyy'}}</td>
+          <td>{{element.customerNameAndSurname}}</td>
+          <td>KT-{{element.kanbanTaskId}}</td>
+          <td>{{element.workHoursPriceNetto}} PLN</td>
+          <td>{{element.priceNetto! - element.workHoursPriceNetto!}} PLN</td>
+          <td>{{element.priceNetto}} PLN</td>
+          <td>{{element.priceBrutto}} PLN</td>
+          <button mat-button (click)="invoicePreview(element)">Podgląd</button>
+          <button mat-button (click)="cancelInvoice(element.id!)">Usuń</button>
+        </tr>
+      </ng-container>
+    </table>
+    </ng-container>
+  </div>
+</div>
+

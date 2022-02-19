@@ -40,6 +40,7 @@ import { TaskDetailsComponent } from './task-details/task-details.component';
 import { HistoryComponent } from './history/history.component';
 import { BasketComponent } from './basket/basket.component';
 import { PasswordComponent } from './password/password.component';
+import { InvoicesComponent } from './invoices/invoices.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { PasswordComponent } from './password/password.component';
     TaskDetailsComponent,
     HistoryComponent,
     BasketComponent,
-    PasswordComponent
+    PasswordComponent,
+    InvoicesComponent
    ],
   imports: [
     CommonModule,
