@@ -23,3 +23,12 @@ export class Subtask {
     status?: Status;
     userId?: number;
   }
+
+  export class SubtaskHistory {
+    id?: number;
+    name?: string;
+    manHour?: number;
+    totalCalendarHours?: number;
+    userId?: number;
+    status?: Status;
+  }

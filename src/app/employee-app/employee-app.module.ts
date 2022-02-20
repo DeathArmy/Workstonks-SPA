@@ -41,6 +41,7 @@ import { HistoryComponent } from './history/history.component';
 import { BasketComponent } from './basket/basket.component';
 import { PasswordComponent } from './password/password.component';
 import { InvoicesComponent } from './invoices/invoices.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { InvoicesComponent } from './invoices/invoices.component';
     MatProgressBarModule,
     MatRadioModule,
     MatStepperModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ChartsModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},

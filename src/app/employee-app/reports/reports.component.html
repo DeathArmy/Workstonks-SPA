@@ -1,3 +1,53 @@
-<div>
-  <p>component works!</p>
+<div class="row">
+  <div class="col-xl-6 col-md-12">
+    <div class="center">
+      <h2>Ilość zapisanych roboczogodzin</h2>
+      <mat-form-field appearance="outline" class='datePicker'>
+        <mat-label>Od</mat-label>
+        <input matInput [(ngModel)]="dateFrom" [matDatepicker]="picker" (change)="loadDataFirstChart()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field appearance="outline" class='datePicker'>
+        <mat-label>Do</mat-label>
+        <input matInput [(ngModel)]="dateTo" [matDatepicker]="picker2" (change)="loadDataFirstChart()">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      </div>
+    <div style="display: block;">
+      <canvas baseChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [chartType]="pieChartType"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend">
+      </canvas>
+    </div>
+  </div>
+  <div class="col-xl-6 col-md-12">
+    <div class="center">
+      <h2>Ilość obsłużonych pojazdów</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Czas</mat-label>
+        <input type="number" matInput [(ngModel)]="year" (change)="loadDataSecondChart()">
+      </mat-form-field>
+    </div>
+    <div style="display: block; width: 95%;">
+      <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [chartType]="barChartType">
+      </canvas>
+    </div>
+  </div>
 </div>
+
+
+
+

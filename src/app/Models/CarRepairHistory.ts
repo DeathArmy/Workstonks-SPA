@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BasketItem } from './BasketItem';
-import { Subtask } from './Subtask';
+import { SubtaskHistory } from './Subtask';
 
 
 @Injectable()
@@ -10,7 +10,7 @@ export class CarRepairHistory {
   name: string = "";
   description: string = "";
   dateOfActualRealization: Date = new Date();
-  subtasks: Array<Subtask> = [];
+  subtasks: Array<SubtaskHistory> = [];
   basketItems: Array<BasketItem> = [];
   totalBasketPrice: number = 0;
   totalWorkHoursCosts: number = 0;

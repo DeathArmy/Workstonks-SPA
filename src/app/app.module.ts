@@ -1,3 +1,4 @@
+import { ReportService } from './services/report.service';
 import { kanbanTasksService } from './services/kanbanTasks.service';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OverlayServiceService } from './services/overlayService.service';
@@ -20,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfigService } from './services/config.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -58,7 +60,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatDatepickerModule,
     MatNativeDateModule,
     MatStepperModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ChartsModule
   ],
   providers: [{
     provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }
@@ -68,7 +71,8 @@ import { HttpClientModule } from '@angular/common/http';
    MatDatepickerModule,
    kanbanTasksService,
    userService,
-   CalendarService
+   CalendarService,
+   ReportService
   ],
   bootstrap: [AppComponent]
 })
