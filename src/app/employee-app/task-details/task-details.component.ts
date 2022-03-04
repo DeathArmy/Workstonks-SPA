@@ -89,7 +89,7 @@ export class TaskDetailsComponent implements OnInit {
     setTimeout(() => {this.progressBarCalculations()}, 1000);
   }
 
-  getKanbanTaskData() {
+  async getKanbanTaskData() {
     this.reportingTimeMode = [];
     this._ktService.getKanbanTask(this.taskId).subscribe(response => {
       this.taskDetails = response;
@@ -101,6 +101,7 @@ export class TaskDetailsComponent implements OnInit {
         let temp = this.getSelectedViewValue(subtask)
         this.selectedValue.push(temp? temp : 0);
         this.reportingTimeMode.push(false);
+        console.log(this.taskDetails.protocolNumber);
       };
       this.getUsername();
     });
@@ -215,20 +216,19 @@ export class TaskDetailsComponent implements OnInit {
     this.username = jwtObject.unique_name?.toString()!;
   }
 
-  createPdf() {
+  async createPdf() {
     var pdfMaker = new PdfMaker();
+    console.log(this.taskDetails.protocolNumber);
     if (this.taskDetails.protocolNumber == undefined) {
       this._ktService.getProtocolNumber(this.taskDetails.id!).subscribe(response => {
-        this.taskDetails.protocolNumber = response;
-        pdfMaker.CollectionProtokol(this.taskDetails);
       },
       error => {
         console.log(error);
       });
     }
-    else {
-      pdfMaker.CollectionProtokol(this.taskDetails);
-    }
+    this.getKanbanTaskData();
+    await new Promise(f => setTimeout(f, 400));
+    pdfMaker.CollectionProtokol(this.taskDetails);
   }
 
   editTask() {
@@ -308,13 +308,13 @@ export class TaskDetailsComponent implements OnInit {
       );
     }
     await new Promise(f => setTimeout(f, 500));
-    let invoices: Array<Invoice> = [];
-    this._ktService.getInvoices(undefined, undefined, this.taskDetails.id).subscribe(response => {
-      invoices = response;
-    });
-    await new Promise(f => setTimeout(f, 250));
-    if (invoices.length == 0)
-    {
+    // let invoices: Array<Invoice> = [];
+    // this._ktService.getInvoices(undefined, undefined, this.taskDetails.id).subscribe(response => {
+    //   invoices = response;
+    // });
+    // await new Promise(f => setTimeout(f, 250));
+    // if (invoices.length == 0)
+    // {
       let dummyVar: number = 0;
       this._ktService.addInvoice(postInv).subscribe(response => {
         dummyVar = response;
@@ -322,7 +322,7 @@ export class TaskDetailsComponent implements OnInit {
       error => {
         console.log(error);
       });
-      await new Promise(f => setTimeout(f, 250));
+      await new Promise(f => setTimeout(f, 300));
       this._ktService.getInvoice(dummyVar).subscribe(response =>
         {
           pdfMaker.invoice(response, this.taskDetails, savedTimes);
@@ -330,11 +330,11 @@ export class TaskDetailsComponent implements OnInit {
         error => {
           console.log(error);
         });
-    }
-    else
-    {
-      pdfMaker.invoice(invoices.filter(e => e.isActive == true)[0], this.taskDetails, savedTimes);
-    }
+    // }
+    // else
+    // {
+    //   pdfMaker.invoice(invoices.filter(e => e.isActive == true)[0], this.taskDetails, savedTimes);
+    // }
   }
 
   closeTicket() {

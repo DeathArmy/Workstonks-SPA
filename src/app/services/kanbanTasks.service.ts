@@ -206,14 +206,14 @@ export class kanbanTasksService {
     return this.http.get<Array<CarRepairHistory>>(tempUrl, header);
   }
 
-  getProtocolNumber(kanbanTaskId: number) : Observable<string> {
+  getProtocolNumber(kanbanTaskId: number) : Observable<any> {
     let token = sessionStorage.getItem('token');
     var header = {
       headers: new HttpHeaders().set('Authorization', `Bearer ${token? token : ''}`)
     };
 
     let tempUrl = this.urlString + 'kanbanTask/protocol?kanbanTaskId=' + kanbanTaskId;
-    return this.http.put<string>(tempUrl, '', header);
+    return this.http.put<any>(tempUrl, '', header);
   }
 
   getTicketForClient(vin: string, protocolNumber: string) : Observable<KanbanTaskDetails> {

@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PasswordComponent } from './password/password.component';
 import { Jwt } from './../Models/Jwt';
 import { TaskDetailsComponent } from './task-details/task-details.component';
@@ -6,14 +7,16 @@ import { ReportsComponent } from './reports/reports.component';
 import { KanbanComponent } from './kanban/kanban.component';
 import { EditConfigComponent } from './editConfig/editConfig.component';
 import { HomeComponent } from './home/home.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { CanActivate, RouterModule, Routes } from '@angular/router';
 import { EmployeeAppComponent } from './employee-app.component';
 import { LoginComponent } from './login/login.component';
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { InvoicesComponent } from './invoices/invoices.component';
 
+@Injectable()
 export class AuthGuard implements CanActivate {
+  constructor(public _snackBar: MatSnackBar) {}
   canActivate() {
     let token = sessionStorage.getItem('token')!;
     const decoded = jwtDecode<JwtPayload>(token);
@@ -26,6 +29,7 @@ export class AuthGuard implements CanActivate {
     if (response) return true
     else
     {
+      this._snackBar.open("Brak uprawnień!", "OK");
       console.log("Brak uprawnień!");
       return false;
     }

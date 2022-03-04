@@ -297,7 +297,7 @@ export class TicketOverlayComponent implements OnInit {
     for (let subtask of this.kanbanTask.subtasks)
     {
       let calendarPlannedEntry = new CalendarPlannedEntry;
-      let dummyDate = this.startDate;
+      let dummyDate = this.kanbanTask.dateOfCarDelivery!;
       calendarPlannedEntry.isPlanned = true;
       calendarPlannedEntry.subtaskId = subtask.id;
       let manHours = subtask.manHour!;

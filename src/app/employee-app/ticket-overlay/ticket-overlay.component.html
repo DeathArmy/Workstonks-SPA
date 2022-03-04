@@ -201,7 +201,7 @@
         </div>
         <div>
           <h3>Suma roboczogodzin: {{manHourSum}}</h3>
-          <h3>Potrzebna ilość dni roboczych: {{daysToAdd + 1}}</h3>
+          <h3>Potrzebna ilość dni roboczych: {{manHourSum / 8}}</h3>
         </div>
         <button mat-raised-button (click)="send()" color="primary">Przyjmij</button>
         <ng-container *ngIf="!componentData == undefined">
