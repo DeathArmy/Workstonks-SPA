@@ -90,6 +90,7 @@ export class TicketOverlayComponent implements OnInit {
     this.kanbanTask.power = this.ticket.power;
     this.kanbanTask.vin = this.ticket.vin;
     this.kanbanTask.productionYear = this.ticket.productionYear;
+    this.kanbanTask.dateOfActualRealizatoin = this.kanbanTask.dateOfPlannedRealization;
     if (this.ticket.customer.id != undefined) {
       this.kanbanTask.customerId = this.ticket.customer.id;
     }
@@ -297,7 +298,7 @@ export class TicketOverlayComponent implements OnInit {
     for (let subtask of this.kanbanTask.subtasks)
     {
       let calendarPlannedEntry = new CalendarPlannedEntry;
-      let dummyDate = this.kanbanTask.dateOfCarDelivery!;
+      let dummyDate = this.startDate;
       calendarPlannedEntry.isPlanned = true;
       calendarPlannedEntry.subtaskId = subtask.id;
       let manHours = subtask.manHour!;

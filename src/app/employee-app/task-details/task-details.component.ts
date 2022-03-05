@@ -226,6 +226,7 @@ export class TaskDetailsComponent implements OnInit {
         console.log(error);
       });
     }
+    await new Promise(f => setTimeout(f, 250));
     this.getKanbanTaskData();
     await new Promise(f => setTimeout(f, 400));
     pdfMaker.CollectionProtokol(this.taskDetails);
@@ -339,6 +340,7 @@ export class TaskDetailsComponent implements OnInit {
 
   closeTicket() {
     this.taskDetails.status = 6;
+    this.taskDetails.dateOfActualRealizatoin = new Date();
     this._ktService.updateKanbanTask(this.taskDetails).subscribe(response => {
       console.log(response);
       this.router.navigate(['employeeApp/kanban']);

@@ -9,7 +9,7 @@ export class CarRepairHistory {
   serviceRequestId: number = 0;
   name: string = "";
   description: string = "";
-  dateOfActualRealization: Date = new Date();
+  dateOfActualRealizatoin: Date = new Date();
   subtasks: Array<SubtaskHistory> = [];
   basketItems: Array<BasketItem> = [];
   totalBasketPrice: number = 0;

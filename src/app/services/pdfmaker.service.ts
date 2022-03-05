@@ -228,7 +228,7 @@ export class PdfMaker {
           taskField += `${i+1}. ${record.subtasks[i].name} - ${record.subtasks[i].totalCalendarHours} godz.\n`;
         }
 
-        body.push([{text: `${record.dateOfActualRealization}`, style: 'tableText'}, {text: `${record.totalBasketPrice} + ${record.totalWorkHoursCosts} = ${record.totalBasketPrice + record.totalWorkHoursCosts} zł`, style: 'tableText'}, {text: basketField, style: 'tableText'}, {text: taskField, style: 'tableText'}]);
+        body.push([{text: `${record.dateOfActualRealizatoin}`, style: 'tableText'}, {text: `${record.totalBasketPrice} + ${record.totalWorkHoursCosts} = ${record.totalBasketPrice + record.totalWorkHoursCosts} zł`, style: 'tableText'}, {text: basketField, style: 'tableText'}, {text: taskField, style: 'tableText'}]);
       }
 
       var pdfContent = {

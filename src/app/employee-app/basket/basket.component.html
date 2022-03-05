@@ -140,7 +140,7 @@
       <ng-container *ngIf="deliveryDatePickingMode">
         <ng-container *ngFor="let element of selection.selected">
           <mat-form-field appearance="outline" class="priceInput">
-            <mat-label>Cena netto</mat-label>
+            <mat-label>Cena netto(za szt)</mat-label>
             <input matInput [(ngModel)]="element.price">
           </mat-form-field>
           {{element.itemName}} - {{element.amount}}

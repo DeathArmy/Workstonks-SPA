@@ -33,22 +33,6 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let tempCarHistory = new CarRepairHistory();
-    let fakeBaasket = new BasketItem();
-    let fakeSubtask = new Subtask();
-    fakeSubtask.manHour = 1;
-    fakeSubtask.name = "zawieszenie przód";
-    fakeSubtask.manHour = 2;
-    tempCarHistory.subtasks.push(fakeSubtask);
-    fakeBaasket.amount = 1;
-    fakeBaasket.itemName = "końcówka drązka lewa";
-    fakeBaasket.price = 86.10;
-    tempCarHistory.basketItems.push(fakeBaasket);
-    tempCarHistory.dateOfActualRealization = new Date();
-    tempCarHistory.serviceRequestId = 1;
-    tempCarHistory.totalBasketPrice = 100;
-    tempCarHistory.totalWorkHoursCosts = 100;
-    this.carRepairHistory.push(tempCarHistory);
   }
 
   getHistoryByVin()
@@ -56,6 +40,7 @@ export class HistoryComponent implements OnInit {
     this._ktService.getHistory(this.vehicleIdNumber).subscribe(response => {
       this.carRepairHistory = response;
       this.downloaded = true;
+      console.log(this.carRepairHistory);
       this.dataSource = new MatTableDataSource(this.carRepairHistory);
     },
     error => {

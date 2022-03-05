@@ -18,7 +18,7 @@ export class KanbanTask {
   id?: number = 0;
   name?: string;
   dateOfPlannedRealization?: Date;
-  dateOfActualRealization?: Date;
+  dateOfActualRealizatoin?: Date;
   dateOfCarDelivery?: Date;
   status?: Status;
   make?: string;
@@ -34,7 +34,7 @@ export class KanbanTaskDetails {
   protocolNumber?: string;
   dateOfCreation?: Date;
   dateOfPlannedRealization?: Date;
-  dateOfActualRealization?: Date;
+  dateOfActualRealizatoin?: Date;
   dateOfCarDelivery?: Date;
   status: Status = 0;
   isActive: boolean = true;

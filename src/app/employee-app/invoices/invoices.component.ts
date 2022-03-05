@@ -86,7 +86,7 @@ export class InvoicesComponent implements OnInit {
     error => {
       console.log(error);
     });
-    await new Promise(f => setTimeout(f, 200));
+    await new Promise(f => setTimeout(f, 400));
     let savedTimes: Array<number> = [];
     for (let subtask of taskDetails.subtasks)
     {

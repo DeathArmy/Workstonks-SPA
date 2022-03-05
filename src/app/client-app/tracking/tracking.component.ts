@@ -49,7 +49,8 @@ export class TrackingComponent implements OnInit {
         this.trackingFilled = true;
         this.taskDetails = response;
         this.taskDetails.comments = this.taskDetails.comments.reverse();
-        this.calculateTotalBasketPrice()
+        this.calculateTotalBasketPrice();
+        this.getTotalManHourPrice();
       }
     },
     error => {
@@ -58,9 +59,15 @@ export class TrackingComponent implements OnInit {
   }
 
   calculateTotalBasketPrice() {
-    for(let item of this.taskDetails.basketItems) 
+    for(let item of this.taskDetails.basketItems)
     {
       this.totalBasketPrice += item.price!;
     }
+  }
+
+  getTotalManHourPrice() {
+    this._ktrService.getHistory(this.taskDetails.vin!).subscribe(response => {
+      this.totalManHourPrice = response.filter(el => el.id == this.taskDetails.id)[0].totalWorkHoursCosts;
+    })
   }
 }
